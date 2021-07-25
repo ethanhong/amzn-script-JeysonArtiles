@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Show Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.2
+// @version      0.2.1
 // @description  Show Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
@@ -15,8 +15,6 @@
 	"use strict";
 
 	localStorage.toggle = false;
-
-	console.log("update_Test2");
 
 	if (window.location.href.includes("jobId") && localStorage.toggle == false) {
 		// SHORTCUTS
@@ -60,7 +58,7 @@
 					? `${cells.lastKnownLocation.innerText} <span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block">${lastKnownLocation}</span>`
 					: cells.lastKnownLocation.innerHTML;
 
-			console.log(JSON.parse(localStorage["U8TR5AA2YGHAN6BB9PH2"]));
+			//console.log(JSON.parse(localStorage[""]));
 		});
 	};
 

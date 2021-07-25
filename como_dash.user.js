@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.2
+// @version      0.2.1
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719*
@@ -13,8 +13,6 @@
 
 (function () {
 	"use strict";
-
-	console.log("update_Test1");
 
 	if (!window.location.href.includes("dash")) {
 		// SHORTCUTS
@@ -61,7 +59,7 @@
     }, 200000)
 */
 
-	https: setTimeout(() => {
+	setTimeout(() => {
 		let tasks = document.querySelector("div.container-fluid.job-cards");
 
 		tasks.addEventListener("change", () => console.log("changing"));

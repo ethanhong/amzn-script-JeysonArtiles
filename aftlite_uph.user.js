@@ -25,6 +25,24 @@
 	// DEFAULT
 	zone.value = "--";
 
+	document.onkeyup = function (e) {
+		if (e.shiftKey && e.which == 82) {
+			checkRate();
+		}
+	};
+
+	let pickers = [...document.querySelectorAll("tbody")][1];
+
+	localStorage.currentRate = Number(
+		Number([...document.querySelectorAll("tr>td")].slice(2, 8)[1].innerText).toFixed(3)
+	);
+	localStorage.currentUnits = Number(
+		Number([...document.querySelectorAll("tr>td")].slice(2, 8)[3].innerText).toFixed(3)
+	);
+
+	localStorage.pickersCount = "--";
+	pickers.innerHTML += `<td id='rateTitle'></td><td id="rateValue"></td>`;
+
 	switch (path.value.toLowerCase()) {
 		case "pack":
 			document.querySelector("#rateTitle").innerText = "Pickers";
@@ -45,24 +63,6 @@
 			document.querySelector("#rateTitle").innerText = "AA's";
 			break;
 	}
-
-	document.onkeyup = function (e) {
-		if (e.shiftKey && e.which == 82) {
-			checkRate();
-		}
-	};
-
-	let pickers = [...document.querySelectorAll("tbody")][1];
-
-	localStorage.currentRate = Number(
-		Number([...document.querySelectorAll("tr>td")].slice(2, 8)[1].innerText).toFixed(3)
-	);
-	localStorage.currentUnits = Number(
-		Number([...document.querySelectorAll("tr>td")].slice(2, 8)[3].innerText).toFixed(3)
-	);
-
-	localStorage.pickersCount = "--";
-	pickers.innerHTML += `<td id='rateTitle'></td><td id="rateValue"></td>`;
 
 	const checkRate = () => {
 		let rate = prompt("Desired Rate", 70) || 70;

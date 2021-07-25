@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         UPH Drilldown - Check Rates
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.8
+// @version      0.9
 // @description  Highlight rates.
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown

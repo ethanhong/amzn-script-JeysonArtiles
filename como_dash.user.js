@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.1
+// @version      0.2
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719*
@@ -10,6 +10,7 @@
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
 // @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
 // ==/UserScript==
+console.log("update_Test1");
 
 if (!window.location.href.includes("dash")) {
 	// SHORTCUTS

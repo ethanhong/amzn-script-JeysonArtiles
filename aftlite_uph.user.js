@@ -14,6 +14,17 @@
 (function () {
 	"use strict";
 
+	const form = document.querySelector("form");
+	const authToken = form[1].value.replace(/[^a-z0-9]/gi, "");
+	const start = { month: form[2], day: form[3], year: form[4], hour: form[5] };
+	const end = { month: form[6], day: form[7], year: form[8], hour: form[9] };
+	const path = form[10];
+	const zone = form[11];
+	const submit = form[12];
+
+	// DEFAULT
+	zone.value = "--";
+
 	document.onkeyup = function (e) {
 		if (e.shiftKey && e.which == 82) {
 			checkRate();
@@ -22,14 +33,6 @@
 	};
 
 	let pickers = [...document.querySelectorAll("tbody")][1];
-	let path = document.querySelector("input[name=function]");
-	let zone = document.querySelector("input[name=zone]");
-
-	zone.value = "--";
-
-	document.querySelector("form").addEventListener("submit", (event) => {
-		pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;
-	});
 
 	localStorage.currentRate = Number(
 		Number([...document.querySelectorAll("tr>td")].slice(2, 8)[1].innerText).toFixed(3)
@@ -39,7 +42,7 @@
 	);
 
 	localStorage.pickersCount = "--";
-	pickers.innerHTML += `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;
+	pickers.innerHTML += `<td id='rateTitle'></td><td id="rateValue"></td>`;
 
 	const checkRate = () => {
 		let rate = prompt("Desired Rate", 70) || 70;
@@ -81,10 +84,17 @@
 
 			aa.agency = { root: picker.cells[1], value: picker.cells[1].innerText };
 			aa.units = { root: picker.cells[2], value: Number(picker.cells[2].innerText) };
-			aa.hours = { root: picker.cells[3], value: Number(picker.cells[3].innerText) };
+			aa.hours = {
+				root: picker.cells[3],
+				value: Number(picker.cells[3].innerText.split(" ")[0]),
+			};
 			aa.rate = { root: picker.cells[4], value: Number(picker.cells[4].innerText) };
 
-			if (aa.rate.value < rate && aa.hours.value < rate / aa.hours.value) {
+			if (
+				aa.rate.value < rate &&
+				aa.hours.value < rate / aa.hours.value &&
+				aa.hours.value > 0.3
+			) {
 				// aa.units.root.innerText += " (slow)";
 				picker.style.backgroundColor = "#F38BA0";
 				picker.setAttribute("class", "blink_me");
@@ -92,14 +102,31 @@
 				picker.style.backgroundColor = "#ACFFAD";
 				picker.removeAttribute("blink_me");
 			}
-
-			//const aa_name = aa.name.value.split(" ").pop();
-			//const aaName = `${count} - ${aa_name}`;
-			//aa.name.root.innerHTML = aaName;
 		});
 
-		localStorage.pickersCount = count;
+		switch (path.value.toLowerCase()) {
+			case "pack":
+				document.querySelector("#rateTitle").innerText = "Pickers";
+				break;
+			case "bcc":
+				document.querySelector("#rateTitle").innerText = "Counters";
+				break;
+			case "receive_direct":
+				document.querySelector("#rateTitle").innerText = "Stowers";
+				break;
+			case "receive2_direct":
+				document.querySelector("#rateTitle").innerText = "Stowers";
+				break;
+			case "stow":
+				document.querySelector("#rateTitle").innerText = "Stowers";
+				break;
+			default:
+				document.querySelector("#rateTitle").innerText = "AA's";
+				break;
+		}
 
-		pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;
+		document.querySelector("#rateValue").innerHTML = `<b>${count}</b>`;
+
+		//pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;
 	};
 })();

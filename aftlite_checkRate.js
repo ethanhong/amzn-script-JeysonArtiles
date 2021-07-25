@@ -1,3 +1,15 @@
+// ==UserScript==
+// @name         Check Rates
+// @namespace    mailto:jeyartil@amazon.com
+// @version      0.1
+// @description  Highlight rates.
+// @author       jeyartil
+// @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @grant        none
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_checkRate.js
+// ==/UserScript==
+
 document.onkeyup = function (e) {
 	if (e.shiftKey && e.which == 82) {
 		checkRate();

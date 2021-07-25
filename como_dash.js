@@ -1,3 +1,15 @@
+// ==UserScript==
+// @name         COMO - Get Routes
+// @namespace    mailto:jeyartil@amazon.com
+// @version      0.1
+// @description  Get Routes
+// @author       jeyartil
+// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719*
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @grant        none
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.js
+// ==/UserScript==
+
 if (!window.location.href.includes("dash")) {
 	// SHORTCUTS
 	document.onkeyup = function (e) {
@@ -7,6 +19,7 @@ if (!window.location.href.includes("dash")) {
 		}
 	};
 }
+//como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
 /*
     setInterval(() => {
         let tasks = document.querySelector(`h1[data-dtk-test-id="job-grid-title"]`);
@@ -42,7 +55,7 @@ if (!window.location.href.includes("dash")) {
     }, 200000)
 */
 
-setTimeout(() => {
+https: setTimeout(() => {
 	let tasks = document.querySelector("div.container-fluid.job-cards");
 
 	tasks.addEventListener("change", () => console.log("changing"));

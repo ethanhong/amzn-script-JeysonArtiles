@@ -1,3 +1,15 @@
+// ==UserScript==
+// @name         Find People
+// @namespace    mailto:jeyartil@amazon.com
+// @version      0.1
+// @description  Live Rate Indicator
+// @author       jeyartil
+// @match        https://aftlite-na.amazon.com/labor_tracking/find_people
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @grant        none
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.js
+// ==/UserScript==
+
 const convert_seconds = (min, sec) => {
 	return Number(min) * 60 + Number(sec);
 };

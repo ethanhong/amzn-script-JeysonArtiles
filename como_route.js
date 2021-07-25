@@ -1,3 +1,15 @@
+// ==UserScript==
+// @name         COMO - Show Routes
+// @namespace    mailto:jeyartil@amazon.com
+// @version      0.1
+// @description  Show Routes
+// @author       jeyartil
+// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @grant        none
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.js
+// ==/UserScript==
+
 localStorage.toggle = false;
 
 if (window.location.href.includes("jobId") && localStorage.toggle == false) {

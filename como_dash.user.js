@@ -7,8 +7,8 @@
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.js
-// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
+// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
 // ==/UserScript==
 
 if (!window.location.href.includes("dash")) {

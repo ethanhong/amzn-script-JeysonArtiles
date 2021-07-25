@@ -7,8 +7,8 @@
 // @match        https://aftlite-na.amazon.com/labor_tracking/find_people
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.js
-// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.user.js
+// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.user.js
 // ==/UserScript==
 
 const convert_seconds = (min, sec) => {

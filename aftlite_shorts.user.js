@@ -7,8 +7,8 @@
 // @match        https://aftlite-na.amazon.com/shorts_report*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_shorts.js
-// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_shorts.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_shorts.user.js
+// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_shorts.user.js
 // ==/UserScript==
 
 getTodaysDate = () => {

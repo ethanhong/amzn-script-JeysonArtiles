@@ -7,8 +7,8 @@
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_checkRate.js
-// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_checkRate.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_checkRate.user.js
+// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_checkRate.user.js
 // ==/UserScript==
 
 (function () {

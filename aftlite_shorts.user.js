@@ -11,21 +11,25 @@
 // @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_shorts.user.js
 // ==/UserScript==
 
-getTodaysDate = () => {
-	const today = new Date();
-	const date =
-		today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+(function () {
+	"use strict";
 
-	const year = today.getFullYear();
-	const month =
-		today.getMonth() + 1 < 10 ? `0${today.getMonth() + 1}` : today.getMonth() + 1;
-	const day = today.getDate();
+	getTodaysDate = () => {
+		const today = new Date();
+		const date =
+			today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
-	const todaysDate = `${year}-${month}-${day}`;
+		const year = today.getFullYear();
+		const month =
+			today.getMonth() + 1 < 10 ? `0${today.getMonth() + 1}` : today.getMonth() + 1;
+		const day = today.getDate();
 
-	const input = document.querySelector("input[name=date]");
+		const todaysDate = `${year}-${month}-${day}`;
 
-	input.value = todaysDate;
-};
-//s
-getTodaysDate();
+		const input = document.querySelector("input[name=date]");
+
+		input.value = todaysDate;
+	};
+	//s
+	getTodaysDate();
+})();

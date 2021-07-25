@@ -8,6 +8,7 @@
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.js
+// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_findPeople.js
 // ==/UserScript==
 
 const convert_seconds = (min, sec) => {

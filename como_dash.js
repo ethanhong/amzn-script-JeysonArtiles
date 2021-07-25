@@ -8,6 +8,7 @@
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.js
+// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.js
 // ==/UserScript==
 
 if (!window.location.href.includes("dash")) {

@@ -43,24 +43,31 @@
 	localStorage.pickersCount = "--";
 	pickers.innerHTML += `<td id='rateTitle'></td><td id="rateValue"></td>`;
 
-	const updateRateTitle = () => {
+	let defaultRate;
+
+	const updateThings = () => {
 		const rateValue = document.querySelector("#rateValue").innerText;
 
 		switch (path.value.toLowerCase()) {
 			case "pack":
 				document.querySelector("#rateTitle").innerText = "Pickers";
+				defaultRate = 70;
 				break;
 			case "bcc":
 				document.querySelector("#rateTitle").innerText = "Counters";
+				defaultRate = 200;
 				break;
 			case "receive_direct":
 				document.querySelector("#rateTitle").innerText = "Stowers";
+				defaultRate = 180;
 				break;
 			case "receive2_direct":
 				document.querySelector("#rateTitle").innerText = "Stowers";
+				defaultRate = 180;
 				break;
 			case "stow":
 				document.querySelector("#rateTitle").innerText = "Stowers";
+				defaultRate = 200;
 				break;
 			default:
 				document.querySelector("#rateTitle").innerText = "AA's";
@@ -68,10 +75,10 @@
 		}
 	};
 
-	//updateRateTitle();
-
 	const checkRate = () => {
-		let rate = prompt("Desired Rate", 70) || 70;
+		updateThings();
+
+		let rate = prompt("Desired Rate", defaultRate);
 
 		let table = [...document.querySelectorAll("tr>td")].slice(2, 8);
 
@@ -101,6 +108,8 @@
 		let aa = [...document.querySelectorAll(`tr[id=${path.value}]`)];
 
 		let count = 0;
+		let onTrack = 0;
+		let offTrack = 0;
 		aa.map((picker) => {
 			// console.log(picker.cells);
 			count++;
@@ -116,23 +125,24 @@
 			};
 			aa.rate = { root: picker.cells[4], value: Number(picker.cells[4].innerText) };
 
-			if (
-				aa.rate.value < rate &&
-				aa.hours.value < rate / aa.hours.value &&
-				aa.hours.value > 0.5
-			) {
+			//if (aa.hours.value < 0.5) console.log(aa.name.value, aa.rate.value, rate)
+
+			//				aa.hours.value < (rate / aa.hours.value) &&
+			if (aa.rate.value < rate || (aa.rate.value < rate && aa.hours.value > 0.5)) {
+				offTrack++;
 				// aa.units.root.innerText += " (slow)";
 				picker.style.backgroundColor = "#F38BA0";
 				picker.setAttribute("class", "blink_me");
 			} else {
+				onTrack++;
 				picker.style.backgroundColor = "#ACFFAD";
 				picker.removeAttribute("blink_me");
 			}
-
-			updateRateTitle();
 		});
 
-		document.querySelector("#rateValue").innerHTML = `<b>${count}</b>`;
+		document.querySelector(
+			"#rateValue"
+		).innerHTML = `<b>${count} ( <span style="color: green">⇑${onTrack}</span> / <span style="color: red">⇓${offTrack}</span> )</b>`;
 
 		//pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;
 	};

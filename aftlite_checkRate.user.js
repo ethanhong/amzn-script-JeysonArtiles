@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Check Rates
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.2
+// @version      0.3
 // @description  Highlight rates.
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown
@@ -23,6 +23,8 @@
 
 	let pickers = [...document.querySelectorAll("tbody")][1];
 	let path = document.querySelector("input[name=function]");
+
+	path.value = "--";
 
 	document.querySelector("form").addEventListener("submit", (event) => {
 		pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;

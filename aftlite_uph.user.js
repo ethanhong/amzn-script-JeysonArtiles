@@ -25,6 +25,27 @@
 	// DEFAULT
 	zone.value = "--";
 
+	switch (path.value.toLowerCase()) {
+		case "pack":
+			document.querySelector("#rateTitle").innerText = "Pickers";
+			break;
+		case "bcc":
+			document.querySelector("#rateTitle").innerText = "Counters";
+			break;
+		case "receive_direct":
+			document.querySelector("#rateTitle").innerText = "Stowers";
+			break;
+		case "receive2_direct":
+			document.querySelector("#rateTitle").innerText = "Stowers";
+			break;
+		case "stow":
+			document.querySelector("#rateTitle").innerText = "Stowers";
+			break;
+		default:
+			document.querySelector("#rateTitle").innerText = "AA's";
+			break;
+	}
+
 	document.onkeyup = function (e) {
 		if (e.shiftKey && e.which == 82) {
 			checkRate();
@@ -103,27 +124,6 @@
 				picker.removeAttribute("blink_me");
 			}
 		});
-
-		switch (path.value.toLowerCase()) {
-			case "pack":
-				document.querySelector("#rateTitle").innerText = "Pickers";
-				break;
-			case "bcc":
-				document.querySelector("#rateTitle").innerText = "Counters";
-				break;
-			case "receive_direct":
-				document.querySelector("#rateTitle").innerText = "Stowers";
-				break;
-			case "receive2_direct":
-				document.querySelector("#rateTitle").innerText = "Stowers";
-				break;
-			case "stow":
-				document.querySelector("#rateTitle").innerText = "Stowers";
-				break;
-			default:
-				document.querySelector("#rateTitle").innerText = "AA's";
-				break;
-		}
 
 		document.querySelector("#rateValue").innerHTML = `<b>${count}</b>`;
 

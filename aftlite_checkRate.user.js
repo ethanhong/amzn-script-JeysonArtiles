@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Check Rates
+// @name         UPH Drilldown - Check Rates
 // @namespace    mailto:jeyartil@amazon.com
 // @version      0.3
 // @description  Highlight rates.

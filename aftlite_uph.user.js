@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         UPH Drilldown - Check Rates
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.9
+// @version      1.0
 // @description  Highlight rates.
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown
@@ -43,26 +43,32 @@
 	localStorage.pickersCount = "--";
 	pickers.innerHTML += `<td id='rateTitle'></td><td id="rateValue"></td>`;
 
-	switch (path.value.toLowerCase()) {
-		case "pack":
-			document.querySelector("#rateTitle").innerText = "Pickers";
-			break;
-		case "bcc":
-			document.querySelector("#rateTitle").innerText = "Counters";
-			break;
-		case "receive_direct":
-			document.querySelector("#rateTitle").innerText = "Stowers";
-			break;
-		case "receive2_direct":
-			document.querySelector("#rateTitle").innerText = "Stowers";
-			break;
-		case "stow":
-			document.querySelector("#rateTitle").innerText = "Stowers";
-			break;
-		default:
-			document.querySelector("#rateTitle").innerText = "AA's";
-			break;
-	}
+	const updateRateTitle = () => {
+		const rateValue = document.querySelector("#rateValue").innerText;
+
+		switch (path.value.toLowerCase()) {
+			case "pack":
+				document.querySelector("#rateTitle").innerText = "Pickers";
+				break;
+			case "bcc":
+				document.querySelector("#rateTitle").innerText = "Counters";
+				break;
+			case "receive_direct":
+				document.querySelector("#rateTitle").innerText = "Stowers";
+				break;
+			case "receive2_direct":
+				document.querySelector("#rateTitle").innerText = "Stowers";
+				break;
+			case "stow":
+				document.querySelector("#rateTitle").innerText = "Stowers";
+				break;
+			default:
+				document.querySelector("#rateTitle").innerText = "AA's";
+				break;
+		}
+	};
+
+	//updateRateTitle();
 
 	const checkRate = () => {
 		let rate = prompt("Desired Rate", 70) || 70;
@@ -113,7 +119,7 @@
 			if (
 				aa.rate.value < rate &&
 				aa.hours.value < rate / aa.hours.value &&
-				aa.hours.value > 0.3
+				aa.hours.value > 0.5
 			) {
 				// aa.units.root.innerText += " (slow)";
 				picker.style.backgroundColor = "#F38BA0";
@@ -122,6 +128,8 @@
 				picker.style.backgroundColor = "#ACFFAD";
 				picker.removeAttribute("blink_me");
 			}
+
+			updateRateTitle();
 		});
 
 		document.querySelector("#rateValue").innerHTML = `<b>${count}</b>`;

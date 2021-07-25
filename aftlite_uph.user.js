@@ -29,6 +29,9 @@
 		if (e.shiftKey && e.which == 82) {
 			checkRate();
 		}
+		if (e.shiftKey && e.which == 13) {
+			form.submit();
+		}
 	};
 
 	let pickers = [...document.querySelectorAll("tbody")][1];
@@ -142,7 +145,7 @@
 
 		document.querySelector(
 			"#rateValue"
-		).innerHTML = `<b>${count} ( <span style="color: green">⇑${onTrack}</span> / <span style="color: red">⇓${offTrack}</span> )</b>`;
+		).innerHTML = `<b>${count} ( <span style="color: green">${onTrack}⇑</span> / <span style="color: red">${offTrack}⇓</span> )</b>`;
 
 		//pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;
 	};

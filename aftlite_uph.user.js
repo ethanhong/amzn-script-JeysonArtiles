@@ -49,7 +49,6 @@
 	document.onkeyup = function (e) {
 		if (e.shiftKey && e.which == 82) {
 			checkRate();
-			//location.reload()
 		}
 	};
 

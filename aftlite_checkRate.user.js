@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         UPH Drilldown - Check Rates
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.4
+// @version      0.5
 // @description  Highlight rates.
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown
@@ -23,8 +23,9 @@
 
 	let pickers = [...document.querySelectorAll("tbody")][1];
 	let path = document.querySelector("input[name=function]");
+	let zone = document.querySelector("input[name=zone]");
 
-	path.value = "--";
+	zone.value = "--";
 
 	document.querySelector("form").addEventListener("submit", (event) => {
 		pickers.lastElementChild.innerHTML = `<td>Pickers</td><td><b>${localStorage.pickersCount}</td></b>`;

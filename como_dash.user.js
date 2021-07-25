@@ -14,7 +14,7 @@
 (function () {
 	"use strict";
 
-	if (!window.location.href.includes("dash")) {
+	if (!window.location.href.includes("jobId")) {
 		// SHORTCUTS
 		document.onkeyup = function (e) {
 			if (e.shiftKey && e.which == 85) {

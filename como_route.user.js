@@ -16,12 +16,12 @@
 
 	localStorage.toggle = false;
 
-	if (window.location.href.includes("jobId") && localStorage.toggle == false) {
+	if (window.location.href.includes("jobId")) {
 		// SHORTCUTS
 		document.onkeyup = function (e) {
-			if (e.which == 85) {
-				alert("boo");
-				//getPackageDetails();
+			if (e.shiftKey && e.which == 84) {
+				checkPackage();
+				console.log("job");
 			}
 		};
 	}
@@ -57,10 +57,14 @@
 				lastKnownLocation && lastKnownLocation !== cells.lastKnownLocation.innerText
 					? `${cells.lastKnownLocation.innerText} <span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block">${lastKnownLocation}</span>`
 					: cells.lastKnownLocation.innerHTML;
-
-			//console.log(JSON.parse(localStorage[""]));
 		});
 	};
 
 	setTimeout(() => getPackageDetails(), 1500);
+
+	const checkPackage = () => {
+		let pkg = prompt("Enter tracking code");
+		//alert(JSON.parse(localStorage[pkg]).handoffLocation);
+		console.log(JSON.parse(localStorage[pkg]));
+	};
 })();

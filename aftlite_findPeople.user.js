@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Find People
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.1
+// @version      0.2
 // @description  Live Rate Indicator
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/labor_tracking/find_people

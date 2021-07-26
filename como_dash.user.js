@@ -21,8 +21,18 @@
 				getActiveJobSummary();
 				console.log(localStorage.length);
 			}
+            if (e.shiftKey && e.which == 84) {
+				checkPackage();
+				console.log("tracking");
+			}
 		};
 	}
+
+    const checkPackage = () => {
+		let pkg = prompt("Enter tracking code");
+		//alert(JSON.parse(localStorage[pkg]).handoffLocation);
+		alert(`${JSON.parse(localStorage[pkg]).handoffLocation} ${JSON.parse(localStorage[pkg]).lastKnownLocation}`);
+	};
 	//como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
 	/*
     setInterval(() => {

@@ -1,70 +1,143 @@
 // ==UserScript==
-// @name         COMO - Show Routes
+// @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
 // @version      0.4
-// @description  Show Routes
+// @description  Get Routes
 // @author       jeyartil
-// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
+// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js
-// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
+// @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
 // ==/UserScript==
 
 (function () {
 	"use strict";
 
-	localStorage.toggle = false;
-
-	if (window.location.href.includes("jobId")) {
+	if (!window.location.href.includes("jobId")) {
 		// SHORTCUTS
 		document.onkeyup = function (e) {
-			if (e.shiftKey && e.which == 84) {
+			if (e.shiftKey && e.which == 85) {
+				getActiveJobSummary();
+				console.log(localStorage.length);
+			}
+            if (e.shiftKey && e.which == 84) {
 				checkPackage();
-				console.log("job");
+				console.log("tracking");
 			}
 		};
 	}
 
-	const getPackageDetails = () => {
-		localStorage.toggle = true;
-		let packages = [
-			...document.querySelectorAll("tr[ng-repeat='pkg in ctrl.packages']"),
-		];
-
-		packages.map((pkg) => {
-			let cells = {};
-			cells.number = pkg.cells[1];
-			cells.status = pkg.cells[2];
-			cells.scannableId = pkg.cells[3];
-			cells.temp = pkg.cells[4];
-			cells.lastKnownLocation = pkg.cells[5];
-			cells.lastModifiedTime = pkg.cells[6];
-			cells.order = pkg.cells[7];
-
-			let root = JSON.parse(localStorage[`${cells.scannableId.innerText}`]);
-			let lastKnownLocation = root.handoffLocation;
-			let notStaged = root.locationId;
-			let staged = root.lastKnownLocation;
-			let temp = root.temperatureZone;
-
-			switch (temp) {
-			}
-
-			cells.temp;
-
-			cells.lastKnownLocation.innerHTML =
-				lastKnownLocation && lastKnownLocation !== cells.lastKnownLocation.innerText
-					? `${cells.lastKnownLocation.innerText} <span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block">${lastKnownLocation}</span>`
-					: cells.lastKnownLocation.innerHTML;
-		});
-	};
-
-	setTimeout(() => getPackageDetails(), 1500);
-
-	const checkPackage = () => {
+    const checkPackage = () => {
 		let pkg = prompt("Enter tracking code");
 		//alert(JSON.parse(localStorage[pkg]).handoffLocation);
-		console.log(JSON.parse(localStorage[pkg]));
+		alert(`${JSON.parse(localStorage[pkg]).handoffLocation} ${JSON.parse(localStorage[pkg]).lastKnownLocation}`);
 	};
+	//como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
+	/*
+    setInterval(() => {
+        let tasks = document.querySelector(`h1[data-dtk-test-id="job-grid-title"]`);
+        let jobCard = [...document.querySelectorAll(`div.row.job-card.no-margin`)];
+
+        let routes = jobCard.map((rte) => {
+            let routes = [...rte.children];
+
+            let route = {};
+            route.id = { root: routes[0] };
+            route.id.value = route.id.root.innerText;
+            route.destination = { root: routes[1] };
+            route.destination.value = route.destination.root.innerText;
+            route[`cart/s`] = { root: routes[2] };
+            route[`cart/s`].value = route[`cart/s`].root.innerText;
+            route.batcher = { root: routes[3] };
+            route.batcher.value = route.batcher.root.innerText;
+            route.ppst = { root: routes[4] };
+            route.ppst.value = route.ppst.root.innerText;
+            route.progress = { root: routes[5] };
+            route.progress.value = route.progress.root.innerText;
+
+            return route
+        });
+
+        let batchers = routes.filter((route) => route.batcher.value != "ASSIGNABLE");
+
+
+        tasks.innerHTML = tasks.innerText ? `${tasks.innerText} Batchers: ${batchers.length}` : tasks.innerText
+
+
+        console.log("tasking");
+    }, 200000)
+*/
+
+	setTimeout(() => {
+		let tasks = document.querySelector("div.container-fluid.job-cards");
+
+		tasks.addEventListener("change", () => console.log("changing"));
+	}, 2000);
+
+	const getActiveJobSummary = () => {
+		const url =
+			"https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/activeJobSummary";
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.responseType = "json";
+		xhr.onload = () => {
+			if (xhr.status !== 200) {
+				console.log(`Error ${xhr.status}: ${xhr.statusText}`);
+			} else {
+				const routes = xhr.response;
+
+				routes.map((route) => {
+					getRoute(route.jobId);
+				});
+			}
+		};
+		xhr.onerror = () =>
+			console.log(
+				"There was a network error. Check your internet connection and try again."
+			);
+		xhr.send();
+	};
+
+	const getRoute = (id) => {
+		const url = `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/job/${id}`;
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", url);
+		xhr.responseType = "json";
+		xhr.onload = () => {
+			if (xhr.status !== 200) {
+				console.log(`Error ${xhr.status}: ${xhr.statusText}`);
+			} else {
+				const route = xhr.response;
+
+				route.packageDetails.map((pkg) => {
+					/*
+                    let pack = {};
+                    pack.tracking = pkg.scannableId;
+                    pack.orderId = pkg.orderId;
+                    pack.batchId = pkg.lastKnownBatchId;
+                    pack.lastStaged = pkg.handoffLocation;
+                    pack.stowedDate = pkg.stowedDate;
+                    pack.lastModified = pkg.handoffLocation;
+                    pack.active = pkg.active;
+                    pack.status = pkg.status;
+                    */
+					if (!localStorage[`${pkg.scannableId}`] && pkg.handoffLocation) {
+						localStorage[`${pkg.scannableId}`] = JSON.stringify(pkg);
+					}
+					//localStorage[`${pkg.scannableId}`] = JSON.stringify(pkg);
+				});
+			}
+		};
+		xhr.onerror = () =>
+			console.log(
+				"There was a network error. Check your internet connection and try again."
+			);
+		xhr.send();
+	};
+
+	setInterval(() => {
+		getActiveJobSummary();
+		console.log(localStorage.length);
+	}, 6000);
 })();

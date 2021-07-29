@@ -14,7 +14,7 @@
 (function () {
 	"use strict";
 
-	// gh update test
+	// gh update test - working?
 
 	const convert_seconds = (min, sec) => {
 		return Number(min) * 60 + Number(sec);

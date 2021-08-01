@@ -34,14 +34,14 @@
         const data = await response.json();
         const tasks = {};
         tasks.total = data.length;
-        tasks.complete = data.filter(routae => route.operationState == "COMPLETED").length;
+        tasks.complete = data.filter(route => route.operationState == "COMPLETED").length;
         tasks.inProgress = data.filter(route => route.operationState == "IN_PROGRESS").length;
         tasks.current = data.filter(route => route.operationState == "NONE" || route.operationState == "IN_PROGRESS").length;
 
         localStorage.tasks = JSON.stringify(tasks);
     }
 
-    setInterval(() => { fetchData(); updateTasks(localStorage.tasks); }, 5000);
+    setInterval(() => { fetchData(); updateTasks(localStorage.tasks); }, 1500);
     let debugUpdating = 0;
 
     const updateTasks = (task) => {
@@ -55,18 +55,18 @@
         DOM.tasks.innerHTML = `Tasks (${tasks.current})
             <span id="recommendedBatchers" style="margin-left: 1em">Recommended Batchers:
             <span id="batchers">${tasks.inProgress} / ${recommendedBatchers}</span></span>
-            <span id="action"></span> <span style="margin: 1em">Update Debugger: ${debugUpdating}</span>`;
+            <span id="action"></span> <span style="margin: 1em" hidden>Update Debugger: ${debugUpdating}</span>`;
 
         DOM.recommendedBatchers = document.querySelector('#recommendedBatchers');
         DOM.batchers = document.querySelector('#batchers');
 
         DOM.action = document.querySelector('#action');
 
-        if(tasks.inProgress < recommendedBatchers) {
+        if(tasks.inProgress < (recommendedBatchers * .70)) {
             DOM.batchers.style.color = "red";
             DOM.batchers.style.fontWeight = "bold";
 
-            DOM.action.innerText = "(UPSTAFF)";
+            //DOM.action.innerText = "(UPSTAFF)";
             DOM.action.style.color = "red";
             DOM.action.style.fontWeight = "bold";
 
@@ -77,7 +77,7 @@
             DOM.batchers.style.color = "red";
             DOM.batchers.style.fontWeight = "bold";
 
-            DOM.action.innerText = "(DOWNSTAFF)";
+            //DOM.action.innerText = "(DOWNSTAFF)";
             DOM.action.style.color = "red";
             DOM.action.style.fontWeight = "bold";
 

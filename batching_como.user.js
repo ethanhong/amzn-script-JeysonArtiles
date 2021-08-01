@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
 // @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
-// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com-update-test
 // @grant        none
 // ==/UserScript==
 

@@ -5,8 +5,8 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
-// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js
+// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com-update-test
 // @grant        none
 // ==/UserScript==
@@ -64,7 +64,7 @@
 
         DOM.action = document.querySelector('#action');
 
-        if(tasks.inProgress < (recommendedBatchers * .70)) {
+        if((tasks.inProgress - recommendedBatchers) <= 2) {
             DOM.batchers.style.color = "red";
             DOM.batchers.style.fontWeight = "bold";
 
@@ -85,10 +85,6 @@
 
             //console.log("downstaff")
         }
-
-        //console.log("checking")
-
-        //console.log(DOM.tasks.innerText.replace(/\D/g,''))
     }
 
     })();

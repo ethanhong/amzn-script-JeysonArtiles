@@ -52,7 +52,7 @@
 
         const DOM = {};
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
-        const recommendedBatchers = Math.ceil(tasks.current / sessionStorage.tasksPerBatcher);
+        const recommendedBatchers = Math.ceil(tasks.total / sessionStorage.tasksPerBatcher);
 
         debugUpdating++;
         DOM.tasks.innerHTML = `Tasks (${tasks.current})
@@ -65,7 +65,7 @@
 
         DOM.action = document.querySelector('#action');
 
-        if(Math.abs(recommendedBatchers - tasks.inProgress) >= 2) {
+        if((recommendedBatchers - tasks.inProgress) < -2) {
             DOM.recommendedBatchers.style.color = "red";
             DOM.recommendedBatchers.style.fontWeight = "bold";
 
@@ -80,7 +80,7 @@
             //console.log("upstaff")
         }
 
-        if(tasks.inProgress > recommendedBatchers) {
+        if((recommendedBatchers - tasks.inProgress) > 2) {
             DOM.batchers.style.color = "red";
             DOM.batchers.style.fontWeight = "bold";
 

@@ -71,8 +71,6 @@
 
             DOM.batchers.style.fontWeight = "bold";
 
-
-
             //DOM.action.innerText = "(UPSTAFF)";
             DOM.action.style.color = "red";
             DOM.action.style.fontWeight = "bold";
@@ -81,7 +79,9 @@
         }
 
         if((recommendedBatchers - tasks.inProgress) > 2) {
-            DOM.batchers.style.color = "red";
+            DOM.recommendedBatchers.style.color = "red";
+            DOM.recommendedBatchers.style.fontWeight = "bold";
+
             DOM.batchers.style.fontWeight = "bold";
 
             //DOM.action.innerText = "(DOWNSTAFF)";

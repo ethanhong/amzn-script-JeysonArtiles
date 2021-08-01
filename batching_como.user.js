@@ -6,7 +6,7 @@
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
-// @updateURL     https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
+// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batching_como.user.js
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
 // ==/UserScript==

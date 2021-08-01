@@ -2,7 +2,7 @@
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
 // @version      0.2
-// @description  try to take over the world!
+// @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js

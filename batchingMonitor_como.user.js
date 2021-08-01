@@ -14,6 +14,8 @@
 (function() {
     'use strict';
 
+    localStorage.tasksPerBatcher = 4
+
     document.onkeyup = function (e) {
         if (e.shiftKey && e.which == 66) {
             const tasksPerBatcher = prompt("Enter desired tasks per batcher:", 4);
@@ -25,7 +27,6 @@
 
     setTimeout(() => {
         updateTasks();
-        localStorage.tasksPerBatcher = 4
     }, 500);
 
     const fetchData = async () => {

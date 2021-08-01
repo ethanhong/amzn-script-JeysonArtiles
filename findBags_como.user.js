@@ -5,6 +5,8 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/labor*
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
+// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
 // ==/UserScript==

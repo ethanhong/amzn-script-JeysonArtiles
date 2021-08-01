@@ -5,6 +5,8 @@
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/wms/*
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
+// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
 // ==/UserScript==

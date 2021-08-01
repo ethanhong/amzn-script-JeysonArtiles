@@ -14,7 +14,7 @@
 (function() {
     'use strict';
 
-    localStorage.tasksPerBatcher = 4
+    sessionStorage.tasksPerBatcher = 4
 
     document.onkeyup = function (e) {
         if (e.shiftKey && e.which == 66) {
@@ -23,7 +23,7 @@
         }
     };
 
-    const setTasksPerBatcher = (number) => { localStorage.tasksPerBatcher = number; };
+    const setTasksPerBatcher = (number) => { sessionStorage.tasksPerBatcher = number; };
 
     setTimeout(() => {
         updateTasks();
@@ -41,10 +41,10 @@
         tasks.inProgress = data.filter(route => route.operationState == "IN_PROGRESS").length;
         tasks.current = data.filter(route => route.operationState == "NONE" || route.operationState == "IN_PROGRESS").length;
 
-        localStorage.tasks = JSON.stringify(tasks);
+        sessionStorage.tasks = JSON.stringify(tasks);
     }
 
-    setInterval(() => { fetchData(); updateTasks(localStorage.tasks); }, 1500);
+    setInterval(() => { fetchData(); updateTasks(sessionStorage.tasks); }, 1500);
     let debugUpdating = 0;
 
     const updateTasks = (task) => {
@@ -52,7 +52,7 @@
 
         const DOM = {};
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
-        const recommendedBatchers = Math.ceil(tasks.total / localStorage.tasksPerBatcher);
+        const recommendedBatchers = Math.ceil(tasks.current / sessionStorage.tasksPerBatcher);
 
         debugUpdating++;
         DOM.tasks.innerHTML = `Tasks (${tasks.current})

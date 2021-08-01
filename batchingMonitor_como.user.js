@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
@@ -52,7 +52,11 @@
 
         const DOM = {};
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
-        const recommendedBatchers = Math.ceil(tasks.total / sessionStorage.tasksPerBatcher);
+        let recommendedBatchers = Math.ceil(tasks.total / sessionStorage.tasksPerBatcher);
+
+        if(tasks.total > tasks.current) recommendedBatchers = Math.ceil(tasks.current / sessionStorage.tasksPerBatcher);
+        if(tasks.current < 10) recommendedBatchers = 3;
+
 
         debugUpdating++;
         DOM.tasks.innerHTML = `Tasks (${tasks.current})

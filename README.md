@@ -1,8 +1,8 @@
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Updating Scripts](#updating-scripts)
-    1. [Automatic Update](#automatic-update)
-    2. [Manual Update](#manual-update)
+    * [Automatic Update](#automatic-update)
+    * [Manual Update](#manual-update)
 
 
 

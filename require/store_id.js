@@ -15,5 +15,8 @@
 const STORE_ID = () => {
   const REPLACE_WITH_YOUR_STORE_ID = "ENTER STORE ID AS A BACKUP IF YOU SO DESIRE";
   
-  localStorage.STORE_ID = window.location.href.split("store/")[1].split("/")[0] || REPLACE_WITH_YOUR_STORE_ID;
+  const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || REPLACE_WITH_YOUR_STORE_ID;
+  localStorage.STORE_ID = STORE_ID;
+  
+  return STORE_ID;
 }

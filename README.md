@@ -15,11 +15,11 @@ Placeholder...
 
 ### Automatic Update
 
-1. Click on **TamperMonkey Extension** in Browser. Select **DASHBOARD**.
+1. Click on **TamperMonkey Extension** in Browser. Select **Dashboard**.
 
 ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 
-2. Click **SETTINGS** (Top-Right Of Screen)
+2. Click **Settings** (Top-Right Of Screen)
 
 ![TM_UPDATE_SETUP_2](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_2.png)
 

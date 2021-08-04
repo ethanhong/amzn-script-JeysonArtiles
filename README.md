@@ -10,7 +10,7 @@ Placeholder...
 
 ### Automatic Updates
 
-1. Click on TamperMonkey Extension in Browser. Click **Dashboard**
+1. Click on TamperMonkey Extension in Browser. Click **DASHBOARD**
 
 ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 

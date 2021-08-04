@@ -8,7 +8,7 @@ Placeholder...
 
 ## Updating Scripts
 
-### Automatic Updates - Received Updated Scripts
+### Automatic Updates
 
 1. Click on TamperMonkey Extension in Browser. Click **Dashboard**
 

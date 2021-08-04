@@ -27,7 +27,7 @@ Placeholder...
 
 3. Select / Confirm **Every 6 Hours** Option Under **Userscript Update**
 
----
+
 
 ### Manual Update
 

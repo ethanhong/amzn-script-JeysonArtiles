@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -37,11 +37,14 @@
         const data = await response.json();
         const tasks = {};
         tasks.total = data.length;
-        tasks.complete = data.filter(route => route.operationState == "COMPLETED").length;
-        tasks.inProgress = data.filter(route => route.operationState == "IN_PROGRESS").length;
-        tasks.current = data.filter(route => route.operationState == "NONE" || route.operationState == "IN_PROGRESS").length;
+        tasks.inProgress = data.filter(({operationState}) => operationState == "IN_PROGRESS").length;
+        tasks.current = data.filter(({operationState}) => operationState == "NONE" || operationState == "IN_PROGRESS").length;
+        tasks.partial = data.filter(({operationState, fulfillmentComplete}) => operationState == "COMPLETED" && fulfillmentComplete == false).length;
+        tasks.complete = data.filter(({operationState}) => operationState == "COMPLETED").length - tasks.partial;
 
         sessionStorage.tasks = JSON.stringify(tasks);
+
+        //console.log(sessionStorage.tasks)
     }
 
     setInterval(() => { fetchData(); updateTasks(sessionStorage.tasks); }, 1500);
@@ -52,11 +55,12 @@
 
         const DOM = {};
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
-        let recommendedBatchers = (tasks.total / sessionStorage.tasksPerBatcher).toFixed(1);
+        let recommendedBatchers = (tasks.total / sessionStorage.tasksPerBatcher).toFixed(2);
 
         //if((tasks.total - tasks.current) / sessionStorage.tasksPErBatcher > tasks.current) recommendedBatchers = (tasks.current / sessionStorage.tasksPerBatcher).toFixed(1);
-        if(tasks.current < 10) recommendedBatchers = 3;
 
+        //if (recommendedBatchers > tasks.inProgress) recommendedBatchers = tasks.current;
+        //if (recommendedBatchers < tasks.inProgress) recommendedBatchers = tasks.inProgress;
 
         debugUpdating++;
         DOM.tasks.innerHTML = `Tasks (${tasks.current})

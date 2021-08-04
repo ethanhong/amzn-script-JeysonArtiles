@@ -3,8 +3,8 @@
 2. [Updating Scripts](#updating-scripts)
     1. [Manual Update](#manual-update)
 
-## This is the introduction <a name="introduction"></a>
-Some introduction text, formatted in heading 2 style
+## Introduction
+Placeholder...
 
 ## Updating Scripts
 

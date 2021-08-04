@@ -1,7 +1,10 @@
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Updating Scripts](#updating-scripts)
-    1. [Manual Update](#manual-update)
+    1. [Automatic Updates](#automatic-update)
+    2. [Manual Update](#manual-update)
+
+
 
 ## Introduction
 Placeholder...
@@ -10,7 +13,7 @@ Placeholder...
 
 ### Automatic Updates
 
-1. Click on TamperMonkey Extension in Browser. Select **DASHBOARD**.
+1. Click on **TamperMonkey Extension** in Browser. Select **DASHBOARD**.
 
 ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 

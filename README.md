@@ -15,7 +15,8 @@ Placeholder...
 
 ### Automatic Update
 
-1. Click on **TamperMonkey Extension** in Browser. Select **Dashboard**
+1. Click on **TamperMonkey Extension** in Browser. 
+* Select **Dashboard**
 
 ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 

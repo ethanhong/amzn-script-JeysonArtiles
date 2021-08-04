@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         UPH Drilldown - Check Rates
 // @namespace    mailto:jeyartil@amazon.com
-// @version      1.1
+// @version      1.0
 // @description  Highlight rates.
 // @author       jeyartil
 // @match        https://*.amazon.com/labor_tracking/uph_drilldown
@@ -79,10 +79,10 @@
     };
 
     const checkRate = () => {
+        updateThings();
+
         let rate = prompt("Desired Rate", defaultRate || 70);
         if(rate == null) return;
-
-        updateThings();
 
         let table = [...document.querySelectorAll("tr>td")].slice(2, 8);
 

@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
-// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
+// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js
 // @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js
-// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com-update-test
 // @grant        none
 // ==/UserScript==
 
@@ -52,9 +52,9 @@
 
         const DOM = {};
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
-        let recommendedBatchers = Math.ceil(tasks.total / sessionStorage.tasksPerBatcher);
+        let recommendedBatchers = (tasks.total / sessionStorage.tasksPerBatcher).toFixed(1);
 
-        if(tasks.total > tasks.current) recommendedBatchers = Math.ceil(tasks.current / sessionStorage.tasksPerBatcher);
+        if(tasks.total > tasks.current) recommendedBatchers = (tasks.current / sessionStorage.tasksPerBatcher).toFixed(1);
         if(tasks.current < 10) recommendedBatchers = 3;
 
 
@@ -69,7 +69,11 @@
 
         DOM.action = document.querySelector('#action');
 
-        if((recommendedBatchers - tasks.inProgress) < -2) {
+        /*
+
+        NTS: ADJUST DURING BATCHING
+
+        if( (tasks.inProgress % recommendedBatchers) > 3 && tasks.inProgress !== 0) {
             DOM.recommendedBatchers.style.color = "red";
             DOM.recommendedBatchers.style.fontWeight = "bold";
 
@@ -82,7 +86,7 @@
             //console.log("upstaff")
         }
 
-        if((recommendedBatchers - tasks.inProgress) > 2) {
+        if((recommendedBatchers - tasks.inProgress) > 2 && tasks.inProgress !== 0) {
             DOM.recommendedBatchers.style.color = "red";
             DOM.recommendedBatchers.style.fontWeight = "bold";
 
@@ -94,6 +98,11 @@
 
             //console.log("downstaff")
         }
+
+
+        */
+
+        if(tasks.inProgress == 0) DOM.recommendedBatchers.style.visibility = "hidden";
     }
 
     })();

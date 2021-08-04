@@ -10,11 +10,11 @@ Placeholder...
 
 ### Automatic Updates - Received Updated Scripts
 
-1. Click TamperMonkey Extension
+1. Click on TamperMonkey Extension in Browser. Click **Dashboard**
 
 ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 
-2. Select **SETTINGS** Tab; Top-Right of Screen
+2. Click **SETTINGS**; Top-Right of Screen
 
 ![TM_UPDATE_SETUP_2](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_2.png)
 

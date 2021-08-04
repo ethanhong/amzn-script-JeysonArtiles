@@ -32,3 +32,5 @@ Placeholder...
 ### Manual Update
 
 ![ManualUpdateTamperMonkey](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/ManualUpdateTamperMonkey.png)
+
+Click **Utilities**. Select **Check for userscript updates**

@@ -4,6 +4,7 @@
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
 
+---
 
 ## Introduction
 Placeholder...

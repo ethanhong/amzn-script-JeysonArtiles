@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -68,39 +68,6 @@
         DOM.batchers = document.querySelector('#batchers');
 
         DOM.action = document.querySelector('#action');
-
-        /*
-
-        NTS: ADJUST DURING BATCHING
-
-        if( (tasks.inProgress % recommendedBatchers) > 3 && tasks.inProgress !== 0) {
-            DOM.recommendedBatchers.style.color = "red";
-            DOM.recommendedBatchers.style.fontWeight = "bold";
-
-            DOM.batchers.style.fontWeight = "bold";
-
-            //DOM.action.innerText = "(UPSTAFF)";
-            DOM.action.style.color = "red";
-            DOM.action.style.fontWeight = "bold";
-
-            //console.log("upstaff")
-        }
-
-        if((recommendedBatchers - tasks.inProgress) > 2 && tasks.inProgress !== 0) {
-            DOM.recommendedBatchers.style.color = "red";
-            DOM.recommendedBatchers.style.fontWeight = "bold";
-
-            DOM.batchers.style.fontWeight = "bold";
-
-            //DOM.action.innerText = "(DOWNSTAFF)";
-            DOM.action.style.color = "red";
-            DOM.action.style.fontWeight = "bold";
-
-            //console.log("downstaff")
-        }
-
-
-        */
 
         if(tasks.inProgress == 0) DOM.recommendedBatchers.style.visibility = "hidden";
     }

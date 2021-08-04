@@ -9,6 +9,8 @@
 ## Introduction
 Placeholder...
 
+---
+
 ## Updating Scripts
 
 ### Automatic Update
@@ -24,6 +26,8 @@ Placeholder...
 3. Select / Confirm **Every 6 Hours** Option Under **Userscript Update**
 
 ![TM_UPDATE_SETUP_3](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_3.png)
+
+---
 
 ### Manual Update
 

@@ -1,7 +1,7 @@
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Updating Scripts](#updating-scripts)
-    1. [Automatic Updates](#automatic-update)
+    1. [Automatic Update](#automatic-update)
     2. [Manual Update](#manual-update)
 
 
@@ -11,7 +11,7 @@ Placeholder...
 
 ## Updating Scripts
 
-### Automatic Updates
+### Automatic Update
 
 1. Click on **TamperMonkey Extension** in Browser. Select **DASHBOARD**.
 

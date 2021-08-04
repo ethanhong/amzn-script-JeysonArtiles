@@ -54,7 +54,7 @@
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
         let recommendedBatchers = (tasks.total / sessionStorage.tasksPerBatcher).toFixed(1);
 
-        if(tasks.total > tasks.current) recommendedBatchers = (tasks.current / sessionStorage.tasksPerBatcher).toFixed(1);
+        if((tasks.total - tasks.current) / sessionStorage.tasksPErBatcher > tasks.current) recommendedBatchers = (tasks.current / sessionStorage.tasksPerBatcher).toFixed(1);
         if(tasks.current < 10) recommendedBatchers = 3;
 
 

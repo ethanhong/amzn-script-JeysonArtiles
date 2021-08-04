@@ -10,15 +10,15 @@ Placeholder...
 
 ### Automatic Updates
 
-1. Click on TamperMonkey Extension in Browser. Click **DASHBOARD**
+1. Click on TamperMonkey Extension in Browser. Select **DASHBOARD**.
 
 ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 
-2. Click **SETTINGS**; Top-Right of Screen
+2. Click **SETTINGS** (Top-Right Of Screen)
 
 ![TM_UPDATE_SETUP_2](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_2.png)
 
-3. Confirm **Every 6 Hours** Option In **Userscript Update**
+3. Select / Confirm **Every 6 Hours** Option Under **Userscript Update**
 
 ![TM_UPDATE_SETUP_3](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_3.png)
 

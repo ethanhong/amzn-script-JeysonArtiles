@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -47,7 +47,7 @@
         //console.log(sessionStorage.tasks)
     }
 
-    setInterval(() => { fetchData(); updateTasks(sessionStorage.tasks); }, 1500);
+    setInterval(() => { fetchData(); updateTasks(sessionStorage.tasks); }, 1000);
     let debugUpdating = 0;
 
     const updateTasks = (task) => {
@@ -55,12 +55,12 @@
 
         const DOM = {};
         DOM.tasks = document.querySelector("h1[data-dtk-test-id='job-grid-title']");
-        let recommendedBatchers = (tasks.total / sessionStorage.tasksPerBatcher).toFixed(2);
+        let recommendedBatchers = (tasks.current / sessionStorage.tasksPerBatcher).toFixed(2);
 
         //if((tasks.total - tasks.current) / sessionStorage.tasksPErBatcher > tasks.current) recommendedBatchers = (tasks.current / sessionStorage.tasksPerBatcher).toFixed(1);
 
         //if (recommendedBatchers > tasks.inProgress) recommendedBatchers = tasks.current;
-        //if (recommendedBatchers < tasks.inProgress) recommendedBatchers = tasks.inProgress;
+        if (recommendedBatchers < tasks.inProgress) recommendedBatchers = tasks.inProgress;
 
         debugUpdating++;
         DOM.tasks.innerHTML = `Tasks (${tasks.current})

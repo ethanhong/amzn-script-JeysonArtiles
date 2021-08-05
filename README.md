@@ -12,9 +12,9 @@
   * ![image](https://user-images.githubusercontent.com/12719223/128308803-cbaa1d62-eeb3-4f3c-8696-17a5bc602d29.png)
 4. Enter **Shift + B**
 * Set number of tasks per batcher
-   * ![image](https://user-images.githubusercontent.com/12719223/128309592-203d860f-94cd-40d0-86ab-b888ba0cbf61.png)
+    ![image](https://user-images.githubusercontent.com/12719223/128309592-203d860f-94cd-40d0-86ab-b888ba0cbf61.png)
 5. COMO shows correct # of batchers
-* ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
+ ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
 
 ---
 

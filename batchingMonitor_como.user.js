@@ -13,6 +13,8 @@
 
 (function() {
     'use strict';
+    
+    console.log("THIS IS A TEST FOR DYNAMIC UPDATE");
 
     sessionStorage.tasksPerBatcher = 4
 

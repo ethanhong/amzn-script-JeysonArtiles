@@ -1,6 +1,7 @@
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Updating Scripts](#updating-scripts)
+2. [Batching Monitor](#batching-monitor)
+3. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
 
@@ -9,6 +10,13 @@
 ## Introduction
 Placeholder...
 
+---
+## Batching Monitor
+1. Install Tampermonkey Script ( https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js )
+2. Go to COMO Dashboard
+3. Refresh once and confirm script is active
+  * ![image](https://user-images.githubusercontent.com/12719223/128308803-cbaa1d62-eeb3-4f3c-8696-17a5bc602d29.png)
+   
 ---
 
 ## Updating Scripts

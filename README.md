@@ -1,6 +1,7 @@
 # Table of Contents
-1. [Batching Monitor](#batching-monitor)
-2. [Updating Scripts](#updating-scripts)
+1. Scripts 
+* [Batching Monitor](#batching-monitor)
+3. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
 

@@ -1,7 +1,8 @@
 # Table of Contents
 1. [Batching Monitor](#batching-monitor)
 2. [UPH Check Rate](#uph-check-rate)
-3. [Updating Scripts](#updating-scripts)
+3. [COMO Fetch Route](#como-fetch-scripts)
+4. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
 

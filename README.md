@@ -1,5 +1,6 @@
 # Table of Contents
 1. [Batching Monitor](#batching-monitor)
+2. [UPH Check Rate](#uph-check-rate)
 3. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
@@ -20,6 +21,19 @@
 5. COMO shows correct # of batchers
 
  ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
+
+---
+## UPH Check Rate
+1. Install https://github.com/JeysonArtiles/amzn/blob/master/aftlite_uph.user.js
+2. After generating report; Hit **Shift + R**
+
+![image](https://user-images.githubusercontent.com/12719223/128310615-027d27d3-08f2-4f9b-bc7e-41425e91f90d.png)
+
+3. Script will show current number for selected function - picking / receiving / stowing / counting. An above:under rate and perform calculations showing number of units based on function.
+
+![image](https://user-images.githubusercontent.com/12719223/128311004-c8b640f4-f69f-4bcc-8089-8da826f7c8a1.png)
+
+![image](https://user-images.githubusercontent.com/12719223/128311027-7649156d-9a16-4bc8-b8a7-88e2b003514d.png)
 
 ---
 

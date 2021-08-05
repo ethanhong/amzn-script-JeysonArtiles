@@ -1,7 +1,7 @@
 # Table of Contents
 1. [Batching Monitor](#batching-monitor)
 2. [UPH Check Rate](#uph-check-rate)
-3. [COMO Fetch Route](#como-fetch-scripts)
+3. [COMO Last Staged](#como-last-staged)
 4. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
@@ -22,6 +22,9 @@
 5. COMO shows correct # of batchers
 
  ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
+
+---
+## COMO Last Staged
 
 ---
 ## UPH Check Rate

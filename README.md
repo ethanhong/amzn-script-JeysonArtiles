@@ -62,7 +62,10 @@
 
 ![image](https://user-images.githubusercontent.com/12719223/128460587-da7336fe-91b3-42dc-b5c2-3cbb535c9f5d.png)
 
-5. Go to: ![WMS](https://aftlite-na.amazon.com/wms) page and confirm your session is not expired (being prompted to login)
+5. Go to: **WMS** page and confirm your session is not expired (being prompted to login)
+
+![image](https://user-images.githubusercontent.com/12719223/128461735-bd974f95-8de5-4ca7-8db1-abb51970bfe2.png)
+
 * Script can not work with an inactive session
 
 6. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK

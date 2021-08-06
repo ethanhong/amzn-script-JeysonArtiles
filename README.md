@@ -62,11 +62,13 @@
 
 ![image](https://user-images.githubusercontent.com/12719223/128460587-da7336fe-91b3-42dc-b5c2-3cbb535c9f5d.png)
 
-5. Go to: **WMS** page and confirm your session is not expired (being prompted to login)
+5. Go to: **WMS** page 
 
-![image](https://user-images.githubusercontent.com/12719223/128461735-bd974f95-8de5-4ca7-8db1-abb51970bfe2.png)
+7. ![image](https://user-images.githubusercontent.com/12719223/128462044-c44ec35d-8a5a-49e9-87cf-406307c7c515.png)
 
-* Script can not work with an inactive session
+* Confirm your session is not expired (being prompted to login) as the script can not work with an inactive session
+
+![image](![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png))
 
 6. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK
 

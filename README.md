@@ -17,7 +17,7 @@
   ![image](https://user-images.githubusercontent.com/12719223/128308803-cbaa1d62-eeb3-4f3c-8696-17a5bc602d29.png)
   
 3. Enter **Shift + B**
-* Set number of tasks per batcher
+   * Set number of tasks per batcher
 
     ![image](https://user-images.githubusercontent.com/12719223/128309592-203d860f-94cd-40d0-86ab-b888ba0cbf61.png)
     

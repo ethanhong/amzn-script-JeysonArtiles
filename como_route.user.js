@@ -1,70 +1,75 @@
 // ==UserScript==
 // @name         COMO - Show Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.5
+// @version      0.6
 // @description  Show Routes
 // @author       jeyartil
-// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/jobdetails?jobId=*
+// @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        none
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js
 // @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js
 // ==/UserScript==
 
-(function () {
-	"use strict";
+(function (history) {
+	var pushState = history.pushState;
+	history.pushState = function (state) {
+		setTimeout(() => getPackageDetails(), 1203);
+		return pushState.apply(history, arguments);
+	};
+})(window.history);
 
-	sessionStorage.toggle = false;
+if (window.location.href.includes("jobId")) {
+	// SHORTCUTS
+	document.onkeyup = function (e) {
+		if (e.shiftKey && e.which == 84) {
+			checkPackage();
+			console.log("job");
+		}
+	};
+}
 
-	if (window.location.href.includes("jobId")) {
-		// SHORTCUTS
-		document.onkeyup = function (e) {
-			if (e.shiftKey && e.which == 84) {
-				checkPackage();
-				console.log("job");
-			}
-		};
-	}
+const getPackageDetails = () => {
+	let packages = [...document.querySelectorAll("tr[ng-repeat='pkg in ctrl.packages']")];
 
-	const getPackageDetails = () => {
-		sessionStorage.toggle = true;
-		let packages = [
-			...document.querySelectorAll("tr[ng-repeat='pkg in ctrl.packages']"),
-		];
+	console.log(packages);
 
-		packages.map((pkg) => {
-			let cells = {};
-			cells.number = pkg.cells[1];
-			cells.status = pkg.cells[2];
-			cells.scannableId = pkg.cells[3];
-			cells.temp = pkg.cells[4];
-			cells.lastKnownLocation = pkg.cells[5];
-			cells.lastModifiedTime = pkg.cells[6];
-			cells.order = pkg.cells[7];
+	const activeTasks = JSON.parse(sessionStorage.activeTasks);
 
-			let root = JSON.parse(sessionStorage[`${cells.scannableId.innerText}`]);
-			let lastKnownLocation = root.handoffLocation;
-			let notStaged = root.locationId;
-			let staged = root.lastKnownLocation;
-			let temp = root.temperatureZone;
+	const lastKnownLocationSpan = (lastKnownLocation) =>
+		`<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block">${lastKnownLocation}</span>`;
 
-			switch (temp) {
-			}
+	const matchedPackagesinnerHTML = [];
 
-			cells.temp;
+	packages.map((pkg) => {
+		let cells = {};
+		cells.number = pkg.cells[1];
+		cells.status = pkg.cells[2];
+		cells.scannableId = pkg.cells[3];
+		cells.temp = pkg.cells[4];
+		cells.lastKnownLocation = pkg.cells[5];
+		cells.lastModifiedTime = pkg.cells[6];
+		cells.order = pkg.cells[7];
 
-			cells.lastKnownLocation.innerHTML =
-				lastKnownLocation && lastKnownLocation !== cells.lastKnownLocation.innerText
-					? `${cells.lastKnownLocation.innerText} <span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block">${lastKnownLocation}</span>`
-					: cells.lastKnownLocation.innerHTML;
+		activeTasks.map((ssp) => {
+			ssp.map((packages) => {
+				if (cells.scannableId.innerText == packages.scannableId) {
+					cells.lastKnownLocation.innerHTML =
+						cells.lastKnownLocation.innerText !== packages.handoffLocation
+							? `${cells.lastKnownLocation.innerText} ${lastKnownLocationSpan(
+									packages.handoffLocation
+							  )}`
+							: cells.lastKnownLocation.innerHTML;
+				}
+			});
 		});
-	};
+	});
+};
 
-	setTimeout(() => getPackageDetails(), 1500);
+//setTimeout(() => getPackageDetails(), 2000);
 
-	const checkPackage = () => {
-		let pkg = prompt("Enter tracking code");
-		//alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
-		alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
-	};
-})();
+const checkPackage = () => {
+	let pkg = prompt("Enter tracking code");
+	//alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
+	alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
+};

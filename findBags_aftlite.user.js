@@ -19,7 +19,7 @@
         if (e.shiftKey && e.which == 70) {
             const TRACKING_NUMBER = prompt("ENTER TRACKING NUMBER:");
 		if (TRACKING_NUMBER == null) return;
-            alert("CONFIRM ACTIVE SESSION BY RELOADING PAGE. THIS MAY TAKE SOME TIME...PRESS ENTER.");
+            //alert("CONFIRM ACTIVE SESSION BY RELOADING PAGE. THIS MAY TAKE SOME TIME...PRESS ENTER.");
             findMissingBags(TRACKING_NUMBER);
         }
     };

@@ -1,4 +1,4 @@
-onsole.log("THIS IS A TEST FOR DYNAMIC UPDATE");
+console.log("THIS IS A TEST FOR DYNAMIC UPDATE");
 
 sessionStorage.tasksPerBatcher = 4;
 

@@ -70,7 +70,7 @@
 
    ![image](https://user-images.githubusercontent.com/12719223/128462044-c44ec35d-8a5a-49e9-87cf-406307c7c515.png)
 
-**Confirm your session is not expired (being prompted to login) as the script can not work with an inactive session**
+   **Confirm your session is not expired (being prompted to login) as the script can not work with an inactive session**
 
    ![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png)
 

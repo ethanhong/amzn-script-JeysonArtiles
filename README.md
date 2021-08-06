@@ -75,7 +75,7 @@
 
    ![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png)
 
-5. Hit **Shift + F**. Copy Scannable Id then Press **Enter Key** / cllick **OK**
+5. Hit **Shift + F**. Copy Scannable Id then Press **Enter Key** / **OK**
 
    ![image](https://user-images.githubusercontent.com/12719223/128460736-c104005e-bb77-44ee-a176-4c8754d54ecb.png)
 

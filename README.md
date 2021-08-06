@@ -9,7 +9,7 @@
 
 ---
 ## Batching Monitor
-**LINK** ![BATCHING MONITOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js)
+**LINK:** ![BATCHING MONITOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js)
 1. Go to **COMO Dashboard**
 2. Refresh page to confirm script is active
  
@@ -26,8 +26,7 @@
 
 ---
 ## COMO Last Staged
-![CLICK HERE TO INSTALL](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js)
-![CLICK HERE TO INSTALL](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
+**LINK:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
 1. Go to **COMO Dashboard** an refresh page to load data
 2. Open route page and last bin location for each bag will show next to CART
 

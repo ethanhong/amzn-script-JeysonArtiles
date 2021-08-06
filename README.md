@@ -14,17 +14,17 @@
 1. Go to **COMO Dashboard**
 2. Refresh page to confirm script is active
  
-  ![image](https://user-images.githubusercontent.com/12719223/128308803-cbaa1d62-eeb3-4f3c-8696-17a5bc602d29.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128308803-cbaa1d62-eeb3-4f3c-8696-17a5bc602d29.png)
   
 3. Enter **Shift + B**
-* Set number of tasks per batcher
+   * Set number of tasks per batcher
 
-    ![image](https://user-images.githubusercontent.com/12719223/128309592-203d860f-94cd-40d0-86ab-b888ba0cbf61.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128309592-203d860f-94cd-40d0-86ab-b888ba0cbf61.png)
     
 4. COMO shows correct # of batchers
    * For now will only indicate the need to upstaff batchers. Recommended batchers will equal current batchers to cover the entire batching window.
 
- ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
 
 ---
 ## COMO Last Staged
@@ -32,7 +32,7 @@
 1. Go to **COMO Dashboard** an refresh page to load data **browser may appear stuck during loading**
 2. Open route page and last bin location for each bag will show next to CART
 
-![image](https://user-images.githubusercontent.com/12719223/128463273-f41f42cb-49b6-4b92-8625-50e562d09a7d.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128463273-f41f42cb-49b6-4b92-8625-50e562d09a7d.png)
 
 
 ---
@@ -41,13 +41,13 @@
 
 1. After generating report; Hit **Shift + R**
 
-![image](https://user-images.githubusercontent.com/12719223/128310615-027d27d3-08f2-4f9b-bc7e-41425e91f90d.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128310615-027d27d3-08f2-4f9b-bc7e-41425e91f90d.png)
 
 2. Script will show current number for selected function - picking / receiving / stowing / counting. An above:under rate and perform calculations showing number of units based on function.
 
-![image](https://user-images.githubusercontent.com/12719223/128311004-c8b640f4-f69f-4bcc-8089-8da826f7c8a1.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128311004-c8b640f4-f69f-4bcc-8089-8da826f7c8a1.png)
 
-![image](https://user-images.githubusercontent.com/12719223/128311027-7649156d-9a16-4bc8-b8a7-88e2b003514d.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128311027-7649156d-9a16-4bc8-b8a7-88e2b003514d.png)
 
 ---
 ## Find Bags
@@ -55,45 +55,45 @@
 
 **LINKS:** ![AFTLITE WMS](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js) + ![COMO LABOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js)
 
-2. Go to COMO Dashboard > Click on **Labor** Tab
+1. Go to COMO Dashboard > Click on **Labor** Tab
 
-![image](https://user-images.githubusercontent.com/12719223/128458348-0bd10ec9-8501-4851-87c9-67f1dc5cc2dc.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128458348-0bd10ec9-8501-4851-87c9-67f1dc5cc2dc.png)
 
-3. Click **Details** next to picklist
+2. Click **Details** next to picklist
 
-![image](https://user-images.githubusercontent.com/12719223/128460572-4dfe36c0-65fd-43e3-a7c2-11d9d83b47af.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128460572-4dfe36c0-65fd-43e3-a7c2-11d9d83b47af.png)
 
-4. Copy Scannable Id
+3. Copy Scannable Id
 
-![image](https://user-images.githubusercontent.com/12719223/128460587-da7336fe-91b3-42dc-b5c2-3cbb535c9f5d.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128460587-da7336fe-91b3-42dc-b5c2-3cbb535c9f5d.png)
 
-5. Go to: **WMS** page 
+4. Go to: **WMS** page 
 
-![image](https://user-images.githubusercontent.com/12719223/128462044-c44ec35d-8a5a-49e9-87cf-406307c7c515.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128462044-c44ec35d-8a5a-49e9-87cf-406307c7c515.png)
 
-**Confirm your session is not expired (being prompted to login) as the script can not work with an inactive session**
+   **Confirm your session is not expired (being prompted to login) as the script can not work with an inactive session**
 
-![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png)
 
-6. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK
+5. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK
 
-![image](https://user-images.githubusercontent.com/12719223/128460736-c104005e-bb77-44ee-a176-4c8754d54ecb.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128460736-c104005e-bb77-44ee-a176-4c8754d54ecb.png)
 
-7. Wait for textbox below to pops up and copy text
+6. Wait for textbox below to pops up and copy text
 
-![image](https://user-images.githubusercontent.com/12719223/128460802-c3d1bec3-29c7-4a01-b7b1-089ea37ab09f.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128460802-c3d1bec3-29c7-4a01-b7b1-089ea37ab09f.png)
 
-8. Go back to COMO “Labor” Tab
+7. Go back to COMO “Labor” Tab
 
-![image](https://user-images.githubusercontent.com/12719223/128460865-69fcd31f-a267-4063-a66d-e81420835f6a.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128460865-69fcd31f-a267-4063-a66d-e81420835f6a.png)
 
-9. Press **Shift + F**. Paste text then Press Enter / OK
+8. Press **Shift + F**. Paste text then Press Enter / OK
 
-![image](https://user-images.githubusercontent.com/12719223/128461068-e1908e24-ae8c-4ddf-9616-c2fb8aafb50e.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128461068-e1908e24-ae8c-4ddf-9616-c2fb8aafb50e.png)
 
-10. Wait until results populate at the bottom of the page
+9. Wait until results populate at the bottom of the page
 
-![image](https://user-images.githubusercontent.com/12719223/128461115-091ef85d-3d9d-4586-9a89-837f82110aaa.png)
+   ![image](https://user-images.githubusercontent.com/12719223/128461115-091ef85d-3d9d-4586-9a89-837f82110aaa.png)
 
 ---
 
@@ -110,20 +110,20 @@
 1. Click on **TamperMonkey Extension** in Browser
    * Select **Dashboard**
 
-![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
+   ![TM_UPDATE_SETUP_1](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_1.png)
 
 2. Click **Settings** (Top-Right Of Screen)
 
-![TM_UPDATE_SETUP_2](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_2.png)
+   ![TM_UPDATE_SETUP_2](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_2.png)
 
 3. Select / Confirm **Every 6 Hours** Option Under **Userscript Update**
 
-![TM_UPDATE_SETUP_3](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_3.png)
+   ![TM_UPDATE_SETUP_3](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_3.png)
 
 
 ### Manual Update
 
 1. Click **Utilities**
    * Select **Check for userscript updates**
-
-![ManualUpdateTamperMonkey](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/ManualUpdateTamperMonkey.png)
+   
+   ![ManualUpdateTamperMonkey](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/ManualUpdateTamperMonkey.png)

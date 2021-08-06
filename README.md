@@ -9,7 +9,7 @@
 
 ---
 ## Batching Monitor
-1. Install https://git.io/JRYsL
+1. ![INSTALL](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js)
 2. Go to **COMO Dashboard**
 3. Refresh page to confirm script is active
  
@@ -26,13 +26,18 @@
 
 ---
 ## COMO Last Staged
-1. Install https://git.io/JRY35 & https://git.io/JRYs3
+1. Install
+
+https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
+
+https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js
+
 2. Go to **COMO Dashboard** an refresh page to load data
 3. Open route page and last bin location for each bag will show next to CART
 
 ---
 ## UPH Check Rate
-1. Install https://git.io/JRYsl
+1. Install https://github.com/JeysonArtiles/amzn/blob/master/aftlite_uph.user.js
 2. After generating report; Hit **Shift + R**
 
 ![image](https://user-images.githubusercontent.com/12719223/128310615-027d27d3-08f2-4f9b-bc7e-41425e91f90d.png)

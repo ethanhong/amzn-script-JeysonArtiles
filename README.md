@@ -3,7 +3,7 @@
 2. [UPH Check Rate](#uph-check-rate)
 3. [COMO Last Staged](#como-last-staged)
 4. [Find Bags ](#find-bags)
-      * [Troubleshoot ](#troubleshoot-find-bags)
+     * [Troubleshoot ](#troubleshoot-find-bags)
 6. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)

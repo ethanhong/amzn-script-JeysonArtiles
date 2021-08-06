@@ -46,7 +46,7 @@
 
 ---
 ## Find Bags
-### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE AT A MINIMUM #### ( TAKING INTO CONSIDERATION BIN UTILIZATION )
+### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE 
 
 **LINKS:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
 

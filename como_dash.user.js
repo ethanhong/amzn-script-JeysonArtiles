@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.3
+// @version      0.4
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*
@@ -11,133 +11,76 @@
 // @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
 // ==/UserScript==
 
-(function () {
-	"use strict";
+const REPLACE_WITH_YOUR_STORE_ID = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
+    // ------ ENTER YOUR STORE ID ABOVE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^;
 
-	if (!window.location.href.includes("jobId")) {
-		// SHORTCUTS
-		document.onkeyup = function (e) {
-			if (e.shiftKey && e.which == 85) {
-				getActiveJobSummary();
-				console.log(localStorage.length);
-			}
-            if (e.shiftKey && e.which == 84) {
-				checkPackage();
-				console.log("tracking");
-			}
-		};
-	}
+    const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || REPLACE_WITH_YOUR_STORE_ID;
 
-    const checkPackage = () => {
-		let pkg = prompt("Enter tracking code");
-		//alert(JSON.parse(localStorage[pkg]).handoffLocation);
-		alert(`${JSON.parse(localStorage[pkg]).handoffLocation} ${JSON.parse(localStorage[pkg]).lastKnownLocation}`);
-	};
-	//como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/jobdetails?jobId=*
-	/*
-    setInterval(() => {
-        let tasks = document.querySelector(`h1[data-dtk-test-id="job-grid-title"]`);
-        let jobCard = [...document.querySelectorAll(`div.row.job-card.no-margin`)];
+    const fetchAllPackages = async (STORE_ID) => {
+        const response = await fetch(`https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/packages`);
+        const data = await response.json();
 
-        let routes = jobCard.map((rte) => {
-            let routes = [...rte.children];
+        const packages = {};
+        packages.active = { all: data.filter( ({active}) => active == true) };
+        packages.staged = { all: data.filter( ({status}) => status == "STOWED") };
+        //packages.staged.bin = { all: packages.staged.all.filter( ({location}) => !location.includes("CART")) };
+        packages.collected = { all: data.filter( ({status}) => status == "COLLECTED") };
+        packages.notStaged = { all: data.filter( ({status}) => status !== "STOWED" && status !== "COLLECTED") };
 
-            let route = {};
-            route.id = { root: routes[0] };
-            route.id.value = route.id.root.innerText;
-            route.destination = { root: routes[1] };
-            route.destination.value = route.destination.root.innerText;
-            route[`cart/s`] = { root: routes[2] };
-            route[`cart/s`].value = route[`cart/s`].root.innerText;
-            route.batcher = { root: routes[3] };
-            route.batcher.value = route.batcher.root.innerText;
-            route.ppst = { root: routes[4] };
-            route.ppst.value = route.ppst.root.innerText;
-            route.progress = { root: routes[5] };
-            route.progress.value = route.progress.root.innerText;
+        const allPackages = [packages.active, packages.staged, packages.collected, packages.notStaged];
 
-            return route
+        const sortByZone = (PACKAGES_OBJ) => {
+            const zones = {};
+            zones.ambient = PACKAGES_OBJ.all.filter( ({temperatureZone}) => temperatureZone == "AMBIENT");
+            zones.chiller = PACKAGES_OBJ.all.filter( ({temperatureZone}) => temperatureZone == "COLD");
+            zones.freezer = PACKAGES_OBJ.all.filter( ({temperatureZone}) => temperatureZone == "FROZEN");
+
+            return zones;
+        }
+
+        allPackages.map((PACKAGES) => {
+            PACKAGES.byZone = sortByZone(PACKAGES);
+        })
+
+        //console.log(packages)
+
+        return packages
+    }
+
+    const fetchActiveJobSummary = async (STORE_ID) => {
+        const ALL_ACTIVE_PACKAGES = await (await fetchAllPackages(STORE_ID)).active;
+
+        const response = await fetch(
+            `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/activeJobSummary`
+        );
+        const data = await response.json();
+            console.log(ALL_ACTIVE_PACKAGES)
+
+        const fetchPackagesFromRoute = async (JOB_ID) => {
+            const response = await fetch(
+                `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/job/${JOB_ID}`
+        );
+            const data = await response.json();
+
+
+            const activePackagesCurrentWindow = data.filter(({packageDetails: { scannableId }}) => scannableId)
+
+            data.packageDetails.map((pkg) => {
+
+                //if (!sessionStorage[`${pkg.scannableId}`] && pkg.handoffLocation) sessionStorage[`${pkg.scannableId}`] = JSON.stringify(pkg);
+            });
+
+        }
+
+        data.map((route) => {
+            fetchPackagesFromRoute(route.jobId);
         });
+    };
 
-        let batchers = routes.filter((route) => route.batcher.value != "ASSIGNABLE");
+    fetchActiveJobSummary(STORE_ID);
 
-
-        tasks.innerHTML = tasks.innerText ? `${tasks.innerText} Batchers: ${batchers.length}` : tasks.innerText
-
-
-        console.log("tasking");
-    }, 200000)
-*/
-
-	setTimeout(() => {
-		let tasks = document.querySelector("div.container-fluid.job-cards");
-
-		tasks.addEventListener("change", () => console.log("changing"));
-	}, 2000);
-
-	const getActiveJobSummary = () => {
-		const url =
-			"https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/activeJobSummary";
-		const xhr = new XMLHttpRequest();
-		xhr.open("GET", url);
-		xhr.responseType = "json";
-		xhr.onload = () => {
-			if (xhr.status !== 200) {
-				console.log(`Error ${xhr.status}: ${xhr.statusText}`);
-			} else {
-				const routes = xhr.response;
-
-				routes.map((route) => {
-					getRoute(route.jobId);
-				});
-			}
-		};
-		xhr.onerror = () =>
-			console.log(
-				"There was a network error. Check your internet connection and try again."
-			);
-		xhr.send();
-	};
-
-	const getRoute = (id) => {
-		const url = `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/job/${id}`;
-		const xhr = new XMLHttpRequest();
-		xhr.open("GET", url);
-		xhr.responseType = "json";
-		xhr.onload = () => {
-			if (xhr.status !== 200) {
-				console.log(`Error ${xhr.status}: ${xhr.statusText}`);
-			} else {
-				const route = xhr.response;
-
-				route.packageDetails.map((pkg) => {
-					/*
-                    let pack = {};
-                    pack.tracking = pkg.scannableId;
-                    pack.orderId = pkg.orderId;
-                    pack.batchId = pkg.lastKnownBatchId;
-                    pack.lastStaged = pkg.handoffLocation;
-                    pack.stowedDate = pkg.stowedDate;
-                    pack.lastModified = pkg.handoffLocation;
-                    pack.active = pkg.active;
-                    pack.status = pkg.status;
-                    */
-					if (!localStorage[`${pkg.scannableId}`] && pkg.handoffLocation) {
-						localStorage[`${pkg.scannableId}`] = JSON.stringify(pkg);
-					}
-					//localStorage[`${pkg.scannableId}`] = JSON.stringify(pkg);
-				});
-			}
-		};
-		xhr.onerror = () =>
-			console.log(
-				"There was a network error. Check your internet connection and try again."
-			);
-		xhr.send();
-	};
-
-	setInterval(() => {
-		getActiveJobSummary();
-		console.log(localStorage.length);
-	}, 6000);
-})();
+    setInterval(() => {
+        fetchAllPackages(STORE_ID);
+        //getActiveJobSummary();
+        console.log(sessionStorage.length);
+    }, 600000);

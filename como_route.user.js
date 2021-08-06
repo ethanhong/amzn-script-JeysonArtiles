@@ -14,7 +14,7 @@
 (function () {
 	"use strict";
 
-	localStorage.toggle = false;
+	sessionStorage.toggle = false;
 
 	if (window.location.href.includes("jobId")) {
 		// SHORTCUTS
@@ -27,7 +27,7 @@
 	}
 
 	const getPackageDetails = () => {
-		localStorage.toggle = true;
+		sessionStorage.toggle = true;
 		let packages = [
 			...document.querySelectorAll("tr[ng-repeat='pkg in ctrl.packages']"),
 		];
@@ -42,7 +42,7 @@
 			cells.lastModifiedTime = pkg.cells[6];
 			cells.order = pkg.cells[7];
 
-			let root = JSON.parse(localStorage[`${cells.scannableId.innerText}`]);
+			let root = JSON.parse(sessionStorage[`${cells.scannableId.innerText}`]);
 			let lastKnownLocation = root.handoffLocation;
 			let notStaged = root.locationId;
 			let staged = root.lastKnownLocation;
@@ -64,7 +64,7 @@
 
 	const checkPackage = () => {
 		let pkg = prompt("Enter tracking code");
-		//alert(JSON.parse(localStorage[pkg]).handoffLocation);
-		alert(JSON.parse(localStorage[pkg]).handoffLocation);
+		//alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
+		alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
 	};
 })();

@@ -90,7 +90,9 @@
 10. Wait until results populate at the bottom of the page
 
 ![image](https://user-images.githubusercontent.com/12719223/128461115-091ef85d-3d9d-4586-9a89-837f82110aaa.png)
+
 ---
+
 ## Troubleshooting
 
 ### If a script is not working refresh the page
@@ -113,8 +115,6 @@
 3. Select / Confirm **Every 6 Hours** Option Under **Userscript Update**
 
 ![TM_UPDATE_SETUP_3](https://github.com/JeysonArtiles/amzn/blob/master/.documentation/TM_UPDATE_SETUP_3.png)
-
-
 
 
 ### Manual Update

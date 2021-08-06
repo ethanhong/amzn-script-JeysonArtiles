@@ -49,7 +49,7 @@
 ## Find Bags
 ### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE 
 
-**LINKS:** ![AFTLITE WMS](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js) + ![COMO LABOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js)
+**LINKS:** ![AFTLITE WMS](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js) + ![COMO LABOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js)
 
 2. Go to COMO Dashboard > Click on **Labor** Tab
 

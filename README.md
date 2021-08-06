@@ -48,14 +48,40 @@
 ## Find Bags
 ### DISCLAIMER: FOR THIS TO WORK; BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE AT A MINIMUM (TAKING INTO CONSIDERATION BIN UTILIZATION).
 **LINKS:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
-
-https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
-
-https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
-
 2. Go to COMO Dashboard > Click on **Labor** Tab
+
 ![image](https://user-images.githubusercontent.com/12719223/128458348-0bd10ec9-8501-4851-87c9-67f1dc5cc2dc.png)
-3. 
+
+3. Click **Details** next to picklist
+
+![image](https://user-images.githubusercontent.com/12719223/128460572-4dfe36c0-65fd-43e3-a7c2-11d9d83b47af.png)
+
+4. Copy Scannable Id
+
+![image](https://user-images.githubusercontent.com/12719223/128460587-da7336fe-91b3-42dc-b5c2-3cbb535c9f5d.png)
+
+5. Go to: ![WMS](https://aftlite-na.amazon.com/wms) page and confirm your session is not expired (being prompted to login)
+* Script can not work with an inactive session
+
+6. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK
+
+![image](https://user-images.githubusercontent.com/12719223/128460736-c104005e-bb77-44ee-a176-4c8754d54ecb.png)
+
+7. Wait for textbox below to pops up and copy text
+
+![image](https://user-images.githubusercontent.com/12719223/128460802-c3d1bec3-29c7-4a01-b7b1-089ea37ab09f.png)
+
+8. Go back to COMO “Labor” Tab
+
+![image](https://user-images.githubusercontent.com/12719223/128460865-69fcd31f-a267-4063-a66d-e81420835f6a.png)
+
+9. Press **Shift + F**. Paste text then Press Enter / OK
+
+![image](https://user-images.githubusercontent.com/12719223/128461068-e1908e24-ae8c-4ddf-9616-c2fb8aafb50e.png)
+
+10. Wait until results populate at the bottom of the page
+
+![image](https://user-images.githubusercontent.com/12719223/128461115-091ef85d-3d9d-4586-9a89-837f82110aaa.png)
 
 ---
 

@@ -22,6 +22,7 @@
     ![image](https://user-images.githubusercontent.com/12719223/128309592-203d860f-94cd-40d0-86ab-b888ba0cbf61.png)
     
 4. COMO shows correct # of batchers
+   * For now will only indicate the need to upstaff batchers. Recommended batchers will equal current batchers to cover the entire batching window.
 
  ![image](https://user-images.githubusercontent.com/12719223/128309551-dec06c13-6a98-4c49-be2d-dd46a27c565b.png)
 

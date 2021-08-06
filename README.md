@@ -52,8 +52,11 @@ https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js
 ## Find Bags
 ### DISCLAIMER: BATCHERS MUST STAGED BAGS IN THE SAME AREA FOR THIS TO WORK.
 1. Install
+
 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
+
 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
+
 2. Go to COMO Dashboard > Click on **Labor** Tab
 ![image](https://user-images.githubusercontent.com/12719223/128458348-0bd10ec9-8501-4851-87c9-67f1dc5cc2dc.png)
 3. 

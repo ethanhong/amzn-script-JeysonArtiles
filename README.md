@@ -26,18 +26,19 @@
 
 ---
 ## COMO Last Staged
-**LINK:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
+**LINKS:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
 1. Go to **COMO Dashboard** an refresh page to load data
 2. Open route page and last bin location for each bag will show next to CART
 
 ---
 ## UPH Check Rate
-1. Install https://github.com/JeysonArtiles/amzn/blob/master/aftlite_uph.user.js
-2. After generating report; Hit **Shift + R**
+**LINK:** ![AFTLITE UPH CHECK RATE](https://github.com/JeysonArtiles/amzn/blob/master/aftlite_uph.user.js)
+
+1. After generating report; Hit **Shift + R**
 
 ![image](https://user-images.githubusercontent.com/12719223/128310615-027d27d3-08f2-4f9b-bc7e-41425e91f90d.png)
 
-3. Script will show current number for selected function - picking / receiving / stowing / counting. An above:under rate and perform calculations showing number of units based on function.
+2. Script will show current number for selected function - picking / receiving / stowing / counting. An above:under rate and perform calculations showing number of units based on function.
 
 ![image](https://user-images.githubusercontent.com/12719223/128311004-c8b640f4-f69f-4bcc-8089-8da826f7c8a1.png)
 
@@ -45,8 +46,8 @@
 
 ---
 ## Find Bags
-### DISCLAIMER: BATCHERS MUST STAGED BAGS IN THE SAME AREA FOR THIS TO WORK.
-1. Install
+### DISCLAIMER: FOR THIS TO WORK; BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE AT A MINIMUM (TAKING INTO CONSIDERATION BIN UTILIZATION).
+**LINKS:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
 
 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
 

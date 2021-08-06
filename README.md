@@ -9,7 +9,7 @@
 
 ---
 ## Batching Monitor
-*  ![CLICK HERE TO INSTALL](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js)
+![CLICK HERE TO INSTALL](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js)
 1. Go to **COMO Dashboard**
 2. Refresh page to confirm script is active
  

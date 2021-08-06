@@ -3,7 +3,7 @@
 2. [UPH Check Rate](#uph-check-rate)
 3. [COMO Last Staged](#como-last-staged)
 4. [Find Bags ](#find-bags)
-     * [Troubleshoot ](#troubleshoot-find-bags)
+5. [Troubleshooting](#troubleshooting)
 6. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
@@ -90,6 +90,10 @@
 10. Wait until results populate at the bottom of the page
 
 ![image](https://user-images.githubusercontent.com/12719223/128461115-091ef85d-3d9d-4586-9a89-837f82110aaa.png)
+---
+## Troubleshooting
+
+### If a script is not working refresh the page
 
 ---
 

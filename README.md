@@ -2,7 +2,8 @@
 1. [Batching Monitor](#batching-monitor)
 2. [UPH Check Rate](#uph-check-rate)
 3. [COMO Last Staged](#como-last-staged)
-4. [Updating Scripts](#updating-scripts)
+4. [Find Bags ](#find-bags)
+5. [Updating Scripts](#updating-scripts)
     * [Automatic Update](#automatic-update)
     * [Manual Update](#manual-update)
 
@@ -43,6 +44,16 @@
 ![image](https://user-images.githubusercontent.com/12719223/128311004-c8b640f4-f69f-4bcc-8089-8da826f7c8a1.png)
 
 ![image](https://user-images.githubusercontent.com/12719223/128311027-7649156d-9a16-4bc8-b8a7-88e2b003514d.png)
+
+---
+## Find Bags
+### DISCLAIMER: BATCHERS MUST STAGED BAGS IN THE SAME AREA FOR THIS TO WORK.
+1. Install
+https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
+https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
+2. Go to COMO Dashboard > Click on **Labor** Tab
+![image](https://user-images.githubusercontent.com/12719223/128458348-0bd10ec9-8501-4851-87c9-67f1dc5cc2dc.png)
+3. 
 
 ---
 

@@ -51,16 +51,16 @@
 		let footerHTML = "";
 		const stagedLocations = stagedBags.map(
 			({ scannableId, lastKnownLocation, locationId, temperatureZone }) => {
-				//if(!(/CART|ZONE/.test(lastKnownLocation))) {
-				console.log(scannableId);
-				if (scannableId == tracking)
+				if (!/ZONE/.test(lastKnownLocation)) {
+					console.log(scannableId);
+					if (scannableId == tracking)
+						footerHTML = footerHTML.concat(
+							`<span style="font-size: 25px; background-color: #0bda51; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 650px; display: inline-block; margin: 10px;">${scannableId} : ${lastKnownLocation}</span> &nbsp;`
+						);
 					footerHTML = footerHTML.concat(
-						`<span style="font-size: 25px; background-color: #0bda51; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 650px; display: inline-block; margin: 10px;">${scannableId} : ${lastKnownLocation}</span> &nbsp;`
+						`<span style="font-size: 25px; background-color: black; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 650px; display: inline-block; margin: 10px;">${scannableId} : ${lastKnownLocation}</span> &nbsp;`
 					);
-				footerHTML = footerHTML.concat(
-					`<span style="font-size: 25px; background-color: black; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 650px; display: inline-block; margin: 10px;">${scannableId} : ${lastKnownLocation}</span> &nbsp;`
-				);
-				//}
+				}
 			}
 		);
 

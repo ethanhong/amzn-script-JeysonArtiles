@@ -51,7 +51,7 @@
 
 ---
 ## Find Bags
-### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE 
+### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE FOR THIS TO WORK
 
 **LINKS:** ![AFTLITE WMS](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js) + ![COMO LABOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js)
 
@@ -63,7 +63,7 @@
 
    ![image](https://user-images.githubusercontent.com/12719223/128460572-4dfe36c0-65fd-43e3-a7c2-11d9d83b47af.png)
 
-3. Copy Scannable Id
+3. Copy **Scannable Id**
 
    ![image](https://user-images.githubusercontent.com/12719223/128460587-da7336fe-91b3-42dc-b5c2-3cbb535c9f5d.png)
 
@@ -75,15 +75,15 @@
 
    ![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png)
 
-5. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK
+5. Hit **Shift + F**. Copy Scannable Id then Press **Enter Key** / cllick **OK**
 
    ![image](https://user-images.githubusercontent.com/12719223/128460736-c104005e-bb77-44ee-a176-4c8754d54ecb.png)
 
-6. Wait for textbox below to pops up and copy text
+6. Wait for textbox below to pop up and copy text
 
    ![image](https://user-images.githubusercontent.com/12719223/128460802-c3d1bec3-29c7-4a01-b7b1-089ea37ab09f.png)
 
-7. Go back to COMO “Labor” Tab
+7. Go back to COMO **Labor** Tab
 
    ![image](https://user-images.githubusercontent.com/12719223/128460865-69fcd31f-a267-4063-a66d-e81420835f6a.png)
 

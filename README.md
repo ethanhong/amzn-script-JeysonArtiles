@@ -79,7 +79,7 @@
 
    ![image](https://user-images.githubusercontent.com/12719223/128460736-c104005e-bb77-44ee-a176-4c8754d54ecb.png)
 
-6. Wait for textbox below to pops up and copy text
+6. Wait for textbox below to pop up and copy text
 
    ![image](https://user-images.githubusercontent.com/12719223/128460802-c3d1bec3-29c7-4a01-b7b1-089ea37ab09f.png)
 

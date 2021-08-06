@@ -46,8 +46,9 @@
 
 ---
 ## Find Bags
-### DISCLAIMER: FOR THIS TO WORK; BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE AT A MINIMUM (TAKING INTO CONSIDERATION BIN UTILIZATION).
+### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE AT A MINIMUM (TAKING INTO CONSIDERATION BIN UTILIZATION).
 **LINKS:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
+
 2. Go to COMO Dashboard > Click on **Labor** Tab
 
 ![image](https://user-images.githubusercontent.com/12719223/128458348-0bd10ec9-8501-4851-87c9-67f1dc5cc2dc.png)

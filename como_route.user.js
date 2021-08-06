@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Show Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.6
+// @version      0.7
 // @description  Show Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*

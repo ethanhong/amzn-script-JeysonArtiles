@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ FIND BAGS ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  try to take over the world!
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/labor*

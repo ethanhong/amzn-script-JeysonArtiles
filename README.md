@@ -28,8 +28,11 @@
 ---
 ## COMO Last Staged
 **LINKS:** ![COMO DASHBOARD](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js) + ![COMO ROUTE](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
-1. Go to **COMO Dashboard** an refresh page to load data
+1. Go to **COMO Dashboard** an refresh page to load data **browser may appear stuck during loading**
 2. Open route page and last bin location for each bag will show next to CART
+
+![image](https://user-images.githubusercontent.com/12719223/128463273-f41f42cb-49b6-4b92-8625-50e562d09a7d.png)
+
 
 ---
 ## UPH Check Rate

@@ -68,7 +68,7 @@
 
 * Confirm your session is not expired (being prompted to login) as the script can not work with an inactive session
 
-![image](![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png))
+![image](https://user-images.githubusercontent.com/12719223/128461829-da1130e7-26e7-4ed3-9b9a-e0758e10ad8e.png)
 
 6. Hit “Shift + F”. Copy Scannable Id then Press Enter Key / OK
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Show Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.6
+// @version      0.7
 // @description  Show Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*
@@ -15,11 +15,11 @@
     var pushState = history.pushState;
     history.pushState = function(state) {
         setTimeout(() => getPackageDetails(), 1203);
-      return pushState.apply(history, arguments);
+        return pushState.apply(history, arguments);
     };
 })(window.history);
 
-if (window.location.href.includes("jobId")) {
+if (window.location.href.includes("labor")) {
     // SHORTCUTS
     document.onkeyup = function (e) {
         if (e.shiftKey && e.which == 84) {
@@ -34,7 +34,7 @@ const getPackageDetails = () => {
         ...document.querySelectorAll("tr[ng-repeat='pkg in ctrl.packages']")
     ];
 
-    console.log(packages)
+    //console.log(packages)
 
     const activeTasks = JSON.parse(sessionStorage.activeTasks);
 
@@ -58,21 +58,27 @@ const getPackageDetails = () => {
                     //console.log(cells.lastKnownLocation, packages.handoffLocation)
                     cells.lastKnownLocation.innerHTML = cells.lastKnownLocation.innerText !== packages.handoffLocation ? `${cells.lastKnownLocation.innerText} ${lastKnownLocationSpan(packages.handoffLocation)}`
 					 : cells.lastKnownLocation.innerHTML;
-                    }
-                })
+                }
             })
-        });
-    };
+        })
+    });
+};
 
-setTimeout(() => getPackageDetails(), 2000);
+setTimeout(() => getPackageDetails(), 1500);
+//setTimeout(() => getPackageDetails(), 2000);
 
 const checkPackage = () => {
     let pkg = prompt("Enter tracking code");
-    //alert(JSON.parse(sessionStorage[pkg]).handoffLocation);
-    const allPackages = JSON.parse(sessionStorage.packages);
+    const findPackages = JSON.parse(sessionStorage.packages);
 
-    const result = allPackages.find(package => package.scannableId == pkg);
+    findPackages.map(package => {
+        if (package.scannaleId == "XKNQTKLKHN8XUCHXDUNB") console.log(package)
+    })
 
-    alert(result.handoffLocation)
+    //console.log(foundPackage)
+
+    //const result = findPackages.map(packages => packages.find(package => package.scannableId == pkg));
+
+    //console.log(result)
 
 };

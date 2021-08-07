@@ -11,92 +11,98 @@
 // @updateURL  	 https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_dash.user.js
 // ==/UserScript==
 
-console.log("start")
+// EXAMPLE (COMO LINK): https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
+// STORE ID = f170be3c-eda4-43dd-b6bd-2325b4d3c719
 
-    // EXAMPLE (COMO LINK): https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
-    // STORE ID = f170be3c-eda4-43dd-b6bd-2325b4d3c719
+const REPLACE_WITH_YOUR_STORE_ID = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
 
-    const REPLACE_WITH_YOUR_STORE_ID = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
+const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || REPLACE_WITH_YOUR_STORE_ID;
 
-    const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || REPLACE_WITH_YOUR_STORE_ID;
+const fetchAllPackages = async (STORE_ID) => {
+    const response = await fetch(`https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/packages`);
+    const data = await response.json();
 
-    const fetchAllPackages = async (STORE_ID) => {
-        const response = await fetch(`https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/packages`);
-        const data = await response.json();
+    const packages = {};
+    packages.active = data.filter( ({active}) => active == true);
+    packages.staged = data.filter( ({status}) => status == "STAGING_WALL");
+    packages.collected = data.filter( ({status}) => status == "COLLECTED");
+    packages.notStaged = data.filter( ({status, active, missing}) => status !== "STOWED" && status !== "COLLECTED" && status !== "DROPPING" && active == true);
 
-        const packages = {};
-        packages.active = data.filter( ({active}) => active == true);
-        packages.staged = data.filter( ({status}) => status == "STAGING_WALL");
-        packages.collected = data.filter( ({status}) => status == "COLLECTED");
-        packages.notStaged = data.filter( ({status, active, missing}) => status !== "STOWED" && status !== "COLLECTED" && status !== "DROPPING" && active == true);
+    const allPackages = [packages.active, packages.staged, packages.collected, packages.notStaged];
 
-        const allPackages = [packages.active, packages.staged, packages.collected, packages.notStaged];
+    const sortByZone = (PACKAGES_OBJ) => {
+        const zones = {};
+        zones.ambient = PACKAGES_OBJ.filter( ({temperatureZone}) => temperatureZone == "AMBIENT");
+        zones.chiller = PACKAGES_OBJ.filter( ({temperatureZone}) => temperatureZone == "COLD");
+        zones.freezer = PACKAGES_OBJ.filter( ({temperatureZone}) => temperatureZone == "FROZEN");
 
-        const sortByZone = (PACKAGES_OBJ) => {
-            const zones = {};
-            zones.ambient = PACKAGES_OBJ.filter( ({temperatureZone}) => temperatureZone == "AMBIENT");
-            zones.chiller = PACKAGES_OBJ.filter( ({temperatureZone}) => temperatureZone == "COLD");
-            zones.freezer = PACKAGES_OBJ.filter( ({temperatureZone}) => temperatureZone == "FROZEN");
-
-            return zones;
-        }
-
-        allPackages.map((PACKAGES) => {
-            PACKAGES.byZone = sortByZone(PACKAGES);
-        })
-
-        const storePackages = [];
-        packages.active.map(PACKAGE => {
-            const pkg = {};
-            pkg[PACKAGE.scannableId] = PACKAGE;
-
-            //storePackages.push(JSON.stringify(pkg));
-            storePackages.push(PACKAGE);
-        });
-
-        sessionStorage.packages = JSON.stringify(storePackages);
-
-        //console.log(storePackages.length)
-
-        return packages
+        return zones;
     }
 
-    const batchingTasks = async (STORE_ID) => {
-        const ALL_PACKAGES = await fetchAllPackages(STORE_ID);
-        const ALL_ACTIVE_PACKAGES = await (await fetchAllPackages(STORE_ID)).active;
+    allPackages.map((PACKAGES) => {
+        PACKAGES.byZone = sortByZone(PACKAGES);
+    })
 
-        const response = await fetch(
-            `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/activeJobSummary`
+    const storePackages = [];
+    packages.active.map(PACKAGE => {
+        const pkg = {};
+        pkg[PACKAGE.scannableId] = PACKAGE;
+
+        //storePackages.push(JSON.stringify(pkg));
+        storePackages.push(PACKAGE);
+    });
+
+    const storePackgesHandoff = storePackages.map(packages => {
+        if(packages.locationId.includes("CART")) packages.handoffLocation = "NOT STAGED"
+
+        if (!packages.handoffLocation) {
+            packages.handoffLocation = packages.locationId
+            return packages
+        }
+    })
+
+    sessionStorage.packages = JSON.stringify(storePackgesHandoff);
+
+    //console.log(storePackages.length)
+
+    return packages
+}
+
+const batchingTasks = async (STORE_ID) => {
+    const ALL_PACKAGES = await fetchAllPackages(STORE_ID);
+    const ALL_ACTIVE_PACKAGES = await (await fetchAllPackages(STORE_ID)).active;
+
+    const response = await fetch(
+        `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/activeJobSummary`
         );
-        const data = await response.json();
+    const data = await response.json();
 
-        const routes = {};
-        routes.all = data;
+    const routes = {};
+    routes.all = data;
 
-        const activeRoutes = routes.all.map(route => {
+    const activeRoutes = routes.all.map(route => {
         route.batchingTime = route.batchingTime / 60;
 
-            return route
-        })
+        return route
+    })
 
-        routes.assignable = routes.all.filter(({taskState, associateId}) => taskState == "ASSIGNABLE" && associateId == null);
-        routes.complete = routes.all.filter(({taskState}) => taskState == "COMPLETE");
-        routes.inProgress = routes.all.filter(({operationState}) => operationState == "IN_PROGRESS");
-        routes.partial = routes.all.filter(({operationState, fulfillmentComplete}) => operationState == "COMPLETED" && fulfillmentComplete == false);
-        routes.split = routes.all.filter(({tasksStateReason, fulfillmentComplete, taskState}) => tasksStateReason == "REBATCH_READY_FOR_PICKUP");
-        routes.psolve = routes.all.filter(({state}) => state == "SIDELINED");
-        routes.reverseStage = routes.all.filter(({destination}) => destination == "UNPACK");
+    routes.assignable = routes.all.filter(({taskState, associateId}) => taskState == "ASSIGNABLE" && associateId == null);
+    routes.complete = routes.all.filter(({taskState}) => taskState == "COMPLETE");
+    routes.inProgress = routes.all.filter(({operationState}) => operationState == "IN_PROGRESS");
+    routes.partial = routes.all.filter(({operationState, fulfillmentComplete}) => operationState == "COMPLETED" && fulfillmentComplete == false);
+    routes.split = routes.all.filter(({tasksStateReason, fulfillmentComplete, taskState}) => tasksStateReason == "REBATCH_READY_FOR_PICKUP");
+    routes.psolve = routes.all.filter(({state}) => state == "SIDELINED");
+    routes.reverseStage = routes.all.filter(({destination}) => destination == "UNPACK");
 
-        const fetchPackagesFromRoute = async (JOB_ID) => {
-            const response = await fetch(
-                `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/job/${JOB_ID}`
+    const fetchPackagesFromRoute = async (JOB_ID) => {
+        const response = await fetch(
+            `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/job/${JOB_ID}`
         );
             const routes = await response.json();
 
             const packagesInRoute = [];
             routes.packageDetails.map((pkg) => {
                 packagesInRoute.push(pkg);
-                //if (!sessionStorage[`${pkg.scannableId}`] && pkg.handoffLocation) sessionStorage[`${pkg.scannableId}`] = JSON.stringify(pkg);
             });
 
             return packagesInRoute
@@ -107,12 +113,11 @@ console.log("start")
         )
 
         sessionStorage.activeTasks = JSON.stringify(packagesFromRoute);
-    };
+};
 
+
+setInterval(() => {
     batchingTasks(STORE_ID);
 
-    setInterval(() => {
-        //fetchAllPackages(STORE_ID);
-        //getActiveJobSummary();
-        console.log(sessionStorage.length);
-    }, 6000000);
+    //console.log(JSON.parse(sessionStorage.packages));
+}, 6000);

@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         [ FIND BAGS ] AFTLITE
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.2
+// @version      0.3
 // @description  Get Routes
 // @author       jeyartil
-// @match        https://aftlite-na.amazon.com/wms/*
+// @match        https://aftlite-na.amazon.com/wms*
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
 // @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com-update-test

@@ -336,8 +336,6 @@
         picker.knownBags.relatedBags = relatedBags;
         picker.knownBags.foundBags = relatedBagsFiltered;
 
-        //console.log(picker.missingBag.tracking)
-
         prompt(
             "COPY THEN GO TO COMO & PRESS ( SHIFT + F ) THEN PASTE & PRESS ENTER",
             JSON.stringify(picker)

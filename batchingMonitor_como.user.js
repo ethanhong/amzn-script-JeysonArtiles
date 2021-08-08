@@ -117,19 +117,17 @@ const batchingTime = (allRoutes) => {
     const matchedTasksInProgress = inProgressRoutes.map(route => {
         const matchedTasks = batchingTasks.find(task => route.associateId == task.batcher.value);
         const matchedRoutes = inProgressRoutes.find(route => route.associateId == matchedTasks.batcher.value);
+        matchedRoutes.batchingTime = matchedRoutes.batchingTime / 60;
 
         const ppstSpan = matchedTasks.ppst.root.children[0].children[1];
         ppstSpan.innerText = `${matchedTasks.ppst.root.innerText.split(" [")[0]} [ ET : ${matchedRoutes.batchingTime.toFixed(2)} ] `;
 
-        if (matchedRoutes.batchingTime < (sessionStorage.maxTimePerTaskInMinutes - 600)) {
-            ppstSpan.style.color = "#65a765";
-            matchedTasks.batcher.root.style.color = "#65a765";
-
-            ppstSpan.style.fontWeight = "bold";
-            matchedTasks.batcher.root.style.fontWeight = "bold";
+        if (matchedRoutes.batchingTime < sessionStorage.maxTimePerTaskInMinutes) {
+            //ppstSpan.style.color = "#65a765";
+            //matchedTasks.batcher.root.style.color = "#65a765";
         }
 
-        if (matchedRoutes.batchingTime > sessionStorage.maxTimePerTaskInMinutes) {
+        if (matchedRoutes.batchingTime > Number(sessionStorage.maxTimePerTaskInMinutes) + 1) {
             ppstSpan.style.color = "orange";
             matchedTasks.batcher.root.style.color = "orange";
 
@@ -147,17 +145,10 @@ const batchingTime = (allRoutes) => {
 
         }
 
+
         return matchedTasks
     })
 
     }
-
-const stagedForPickup = (allRoutes) => {
-    const routes = JSON.parse(allRoutes);
-    const inProgressRoutes = routes.inProgress;
-
-    const DOM = {};
-    DOM.batchingTasks = [...document.querySelectorAll(`job-card.job-card-container`)];
-}
 
 setInterval(() => batchingTime(sessionStorage.allRoutes), 150);

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -121,17 +121,30 @@ const batchingTime = (allRoutes) => {
         const ppstSpan = matchedTasks.ppst.root.children[0].children[1];
         ppstSpan.innerText = `${matchedTasks.ppst.root.innerText.split(" [")[0]} [ ET : ${matchedRoutes.batchingTime.toFixed(2)} ] `;
 
-        if (matchedRoutes.batchingTime > sessionStorage.maxTimePerTaskInMinutes) {
-            ppstSpan.style.color = "red";
-            ppstSpan.style.fontWeight = "bold";
-            ppstSpan.style.fontSize = ".85em";
+        if (matchedRoutes.batchingTime < sessionStorage.maxTimePerTaskInMinutes) {
+            ppstSpan.style.color = "#65a765";
+            matchedTasks.batcher.root.style.color = "#65a765";
+        }
 
-            matchedTasks.batcher.root.style.color = "red";
+        if (matchedRoutes.batchingTime > sessionStorage.maxTimePerTaskInMinutes) {
+            ppstSpan.style.color = "orange";
+            matchedTasks.batcher.root.style.color = "orange";
+
+
+            ppstSpan.style.fontWeight = "bold";
             matchedTasks.batcher.root.style.fontWeight = "bold";
 
-
+            ppstSpan.style.fontSize = ".85em";
 
         }
+
+        if (matchedRoutes.batchingTime > Number(sessionStorage.maxTimePerTaskInMinutes) + 4) {
+            ppstSpan.style.color = "red";
+            matchedTasks.batcher.root.style.color = "red";
+
+        }
+
+
         return matchedTasks
     })
 

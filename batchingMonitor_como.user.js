@@ -122,8 +122,8 @@ const batchingTime = (allRoutes) => {
         ppstSpan.innerText = `${matchedTasks.ppst.root.innerText.split(" [")[0]} [ ET : ${matchedRoutes.batchingTime.toFixed(2)} ] `;
 
         if (matchedRoutes.batchingTime < sessionStorage.maxTimePerTaskInMinutes) {
-            ppstSpan.style.color = "#65a765";
-            matchedTasks.batcher.root.style.color = "#65a765";
+            //ppstSpan.style.color = "#65a765";
+            //matchedTasks.batcher.root.style.color = "#65a765";
         }
 
         if (matchedRoutes.batchingTime > sessionStorage.maxTimePerTaskInMinutes) {

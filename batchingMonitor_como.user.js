@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -13,15 +13,29 @@
 // ==/UserScript==
 
 
-sessionStorage.tasksPerBatcher = 4
+sessionStorage.tasksPerBatcher = 4;
+sessionStorage.maxTimePerTaskInMinutes = 9;
 
-hotkeys('shift+b', function() {
-    const tasksPerBatcher = prompt("Enter desired tasks per batcher:", 4);
-    if(!tasksPerBatcher) return;
-    setTasksPerBatcher(tasksPerBatcher);
+hotkeys('shift+b,shift+t,r,f', function (event, handler){
+    switch (handler.key) {
+        case 'shift+b': {
+            const tasksPerBatcher = prompt("Enter desired tasks per batcher:", 4);
+            if(!tasksPerBatcher) return;
+            setTasksPerBatcher(tasksPerBatcher);
+        };
+            break;
+        case 'shift+t': {
+            const maxTimePerTaskInMinutes = prompt("Enter maximum time per task:", 9);
+            if(!maxTimePerTaskInMinutes) return;
+            setMaxTimePerTaskInMinutes(maxTimePerTaskInMinutes);
+        };
+            break;
+        default: break;
+    }
 });
 
 const setTasksPerBatcher = (number) => { sessionStorage.tasksPerBatcher = number; };
+const setMaxTimePerTaskInMinutes = (number) => { sessionStorage.maxTimePerTaskInMinutes = number; };
 
 setTimeout(() => {
     updateTasks();
@@ -85,6 +99,7 @@ const batchingTime = (allRoutes) => {
         const children = tasks.children[0].children;
         //children[0].innerHTML = "test"
         const cells = {};
+        cells.dom = tasks.children[0];
         cells.jobId = { root: children[0] };
         cells.jobId.value = cells.jobId.root.innerText.trim()
         cells.destination = { root: children[1] };
@@ -104,11 +119,22 @@ const batchingTime = (allRoutes) => {
         const matchedRoutes = inProgressRoutes.find(route => route.associateId == matchedTasks.batcher.value);
 
         const ppstSpan = matchedTasks.ppst.root.children[0].children[1];
-        ppstSpan.innerText = `${matchedTasks.ppst.root.innerText.split(" ( ")[0]} ( ${matchedRoutes.batchingTime.toFixed(2)} )`;
+        ppstSpan.innerText = `${matchedTasks.ppst.root.innerText.split(" [")[0]} [ ET : ${matchedRoutes.batchingTime.toFixed(2)} ] `;
 
+        if (matchedRoutes.batchingTime > sessionStorage.maxTimePerTaskInMinutes) {
+            ppstSpan.style.color = "red";
+            ppstSpan.style.fontWeight = "bold";
+            ppstSpan.style.fontSize = ".85em";
+
+            matchedTasks.batcher.root.style.color = "red";
+            matchedTasks.batcher.root.style.fontWeight = "bold";
+
+
+
+        }
         return matchedTasks
     })
 
     }
 
-setInterval(() => batchingTime(sessionStorage.allRoutes), 100);
+setInterval(() => batchingTime(sessionStorage.allRoutes), 150);

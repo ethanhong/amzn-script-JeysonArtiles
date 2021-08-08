@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.7
+// @version      0.8
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*
@@ -82,9 +82,7 @@ const batchingTasks = async (STORE_ID) => {
 
 
     const activeRoutes = routes.all.map(route => {
-        route.batchingTime = route.batchingTime / 90;
-
-        return route
+        return route.batchingTime
     })
 
     routes.assignable = routes.all.filter(({taskState, associateId}) => taskState == "ASSIGNABLE" && associateId == null);

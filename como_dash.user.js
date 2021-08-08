@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.5
+// @version      0.7
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*
@@ -80,8 +80,9 @@ const batchingTasks = async (STORE_ID) => {
     const routes = {};
     routes.all = data;
 
+
     const activeRoutes = routes.all.map(route => {
-        route.batchingTime = route.batchingTime / 60;
+        route.batchingTime = route.batchingTime / 90;
 
         return route
     })
@@ -111,6 +112,8 @@ const batchingTasks = async (STORE_ID) => {
         const packagesFromRoute = await Promise.all(
             routes.all.map(async (route) => fetchPackagesFromRoute(route.jobId))
         )
+
+        sessionStorage.allRoutes = JSON.stringify(routes)
 
         sessionStorage.activeTasks = JSON.stringify(packagesFromRoute);
 };

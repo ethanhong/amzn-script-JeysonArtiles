@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.9
 // @description  MONITOR BATCHING TASKS: SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER. SHOW ELAPSED TIME (ET) PER TASK W/ 40 SEC BUFFER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -12,9 +12,7 @@
 // @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
 // ==/UserScript==
 
-
-const STORE_ID_BACKUP = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
-const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || STORE_ID_BACKUP;
+const STORE_ID = window.location.href.split("store/")[1].split("/")[0];
 
 sessionStorage.tasksPerBatcher = 4;
 sessionStorage.maxTimePerTaskInMinutes = 9;

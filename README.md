@@ -10,7 +10,8 @@
 
 ---
 ## Batching Monitor
-**LINK:** ![BATCHING MONITOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js)
+**LINK:** ![BATCHING MONITOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js) | ![DEPENDENCY: INSTALL THIS TO GET DATA FOR BATCHING MONITOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/como_route.user.js)
+
 1. Go to **COMO Dashboard**
 2. Refresh page to confirm script is active
  

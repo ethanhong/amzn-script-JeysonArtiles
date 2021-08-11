@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         COMO - Get Routes
 // @namespace    mailto:jeyartil@amazon.com
-// @version      0.8
+// @version      0.9
 // @description  Get Routes
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*
@@ -14,9 +14,8 @@
 // EXAMPLE (COMO LINK): https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/dash
 // STORE ID = f170be3c-eda4-43dd-b6bd-2325b4d3c719
 
-const REPLACE_WITH_YOUR_STORE_ID = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
-
-const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || REPLACE_WITH_YOUR_STORE_ID;
+const STORE_ID_BACKUP = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
+const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || STORE_ID_BACKUP;
 
 const fetchAllPackages = async (STORE_ID) => {
     const response = await fetch(`https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/packages`);

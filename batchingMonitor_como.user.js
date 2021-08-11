@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      1.7
-// @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
+// @version      1.8
+// @description  MONITOR BATCHING TASKS: SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER. SHOW ELAPSED TIME (ET) PER TASK W/ 40 SEC BUFFER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js

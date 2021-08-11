@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7
 // @description  MONITOR BATCHERS. SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -12,6 +12,9 @@
 // @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
 // ==/UserScript==
 
+
+const STORE_ID_BACKUP = "f170be3c-eda4-43dd-b6bd-2325b4d3c719";
+const STORE_ID = window.location.href.split("store/")[1].split("/")[0] || STORE_ID_BACKUP;
 
 sessionStorage.tasksPerBatcher = 4;
 sessionStorage.maxTimePerTaskInMinutes = 9;
@@ -43,7 +46,7 @@ setTimeout(() => {
 
 const fetchData = async () => {
     const response = await fetch(
-        "https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/activeJobSummary"
+        "https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/activeJobSummary"
     );
 
     const data = await response.json();

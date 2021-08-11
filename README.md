@@ -51,7 +51,7 @@
 
 ---
 ## Find Bags
-### BATCHERS MUST STAGE BAGS IN THE SAME AREA / SAME ASILE FOR THIS TO WORK
+### BATCHERS MUST STAGE BAGS IN THE SAME BIN GROUP OR ASILE FOR THIS TO BE EFFECTIVE
 
 **LINKS:** ![AFTLITE WMS](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_aftlite.user.js) + ![COMO LABOR](https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js)
 

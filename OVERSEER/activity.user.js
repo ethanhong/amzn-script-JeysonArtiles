@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ OVERSEER ] ACTIVITY TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.3
+// @version      0.4
 // @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
 // @match        https://*.amazon.com/*
@@ -10,8 +10,6 @@
 // @grant        GM_xmlhttpRequest
 // @connect      chime.aws
 // ==/UserScript==
-
-// WILL THIS BE UPDATED TO 0.3? DO YOU NEED TO CHANGE THE VERSION?
 
 const name = "NAME";
 

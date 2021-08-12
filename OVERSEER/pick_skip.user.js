@@ -4,7 +4,7 @@
 // @version      0.2
 // @description  try to take over the world!
 // @author       You
-// @match        http://*/*
+// @match        https://*/*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/OVERSEER/pick_skip.user.js
 // @grant        GM_xmlhttpRequest

@@ -6,12 +6,12 @@
 // @author       JEYARTIL
 // @match        https://*/*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/OVERSEER/pick_skip.user.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/OVERSEER/activity.user.js
 // @grant        GM_xmlhttpRequest
 // @connect      chime.aws
 // ==/UserScript==
 
-// WILL THIS BE UPDATED TO 0.3?
+// WILL THIS BE UPDATED TO 0.3? DO YOU NEED TO CHANGE THE VERSION?
 
 const name = prompt("Enter your name:");
 

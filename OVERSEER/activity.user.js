@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 // 0.6
-const name = "@Artiles, Jeyson";
+const name = "jeyartil@amazon.com";
 
 const trackActivity = async (action) => {
 

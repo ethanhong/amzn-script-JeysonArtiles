@@ -11,7 +11,7 @@
 // @connect      chime.aws
 // ==/UserScript==
 
-// 0.6
+// 0.6 AWESOME
 const name = "jeyartil@amazon.com";
 
 const trackActivity = async (action) => {

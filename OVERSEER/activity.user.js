@@ -4,7 +4,7 @@
 // @version      0.3
 // @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
-// @match        https://*/*
+// @match        https://*.amazon.com/*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/OVERSEER/activity.user.js
 // @grant        GM_xmlhttpRequest
@@ -13,7 +13,7 @@
 
 // WILL THIS BE UPDATED TO 0.3? DO YOU NEED TO CHANGE THE VERSION?
 
-const name = prompt("Enter your name:");
+const name = "NAME";
 
 const trackActivity = async (action) => {
 

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ OVERSEER ] ACTIVITY TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.4
+// @version      0.5
 // @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
 // @match        https://*.amazon.com/*
@@ -11,7 +11,7 @@
 // @connect      chime.aws
 // ==/UserScript==
 
-const name = "NAME";
+const name = "TESTING";
 
 const trackActivity = async (action) => {
 

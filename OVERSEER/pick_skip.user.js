@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         WebHook Test
-// @namespace    http://tampermonkey.net/
+// @name         [ OVERSEER ] PICK SKIP TRACKER
+// @namespace    https://github.com/JeysonArtiles/amzn
 // @version      0.2
-// @description  try to take over the world!
-// @author       You
+// @description  TRACK PICK SKIPS IN REAL TIME
+// @author       JEYARTIL
 // @match        https://*/*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/OVERSEER/pick_skip.user.js

@@ -6,7 +6,7 @@
 // @author       You
 // @match        https://aftlite-na.amazon.com/wms/index
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/pick_skip.user.user.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/pick_skip.user.js
 // @grant        GM_xmlhttpRequest
 // @connect      chime.aws
 // ==/UserScript==

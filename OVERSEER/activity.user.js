@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ OVERSEER ] ACTIVITY TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.6
+// @version      0.8
 // @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
 // @match        https://*.amazon.com/*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 // 0.6 AWESOME
-const name = "WORKING";
+const name = "this is 0.8";
 
 const trackActivity = async (action) => {
 

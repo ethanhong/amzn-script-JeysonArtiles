@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         [ OVERSEER ] PICK SKIP TRACKER
+// @name         [ OVERSEER ] ACTIVITY TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
 // @version      0.3
-// @description  TRACK PICK SKIPS IN REAL TIME
+// @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
 // @match        https://*/*
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com

@@ -11,12 +11,18 @@
 // @connect      chime.aws
 // ==/UserScript==
 
-// 0.6 AWESOME
 const name = "this is 0.8";
 
 const trackActivity = async (action) => {
+    const RESPONSE = await fetch(`https://aftlite-na.amazon.com/labor_tracking/find_people`);
+    const DATA = response.text();
+    const PAGE = new DOMParser().parseFromString(DATA, "text/html");
+
+    console.log(PAGE);
 
 }
+
+/*
 
 GM_xmlhttpRequest({
     method: "POST",
@@ -29,3 +35,5 @@ GM_xmlhttpRequest({
         console.log(response.responseText);
     }
 });
+
+*/

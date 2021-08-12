@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ OVERSEER ] PICK SKIP TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.2
+// @version      0.3
 // @description  TRACK PICK SKIPS IN REAL TIME
 // @author       JEYARTIL
 // @match        https://*/*
@@ -10,6 +10,8 @@
 // @grant        GM_xmlhttpRequest
 // @connect      chime.aws
 // ==/UserScript==
+
+// WILL THIS BE UPDATED TO 0.3?
 
 const name = prompt("Enter your name:");
 

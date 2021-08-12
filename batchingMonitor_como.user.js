@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
 // @namespace    https://github.com/JeysonArtiles/amzns
-// @version      2.0
+// @version      2.1
 // @description  MONITOR BATCHING TASKS: SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER. SHOW ELAPSED TIME (ET) PER TASK W/ 40 SEC BUFFER.
 // @author       You
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
@@ -44,7 +44,7 @@ setTimeout(() => {
 
 const fetchData = async () => {
     const response = await fetch(
-        "https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/activeJobSummary"
+        `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/activeJobSummary`
     );
 
     const data = await response.json();

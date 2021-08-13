@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ OVERSEER ] ACTIVITY TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      1.0
+// @version      0.8
 // @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
 // @match        https://aftlite-na.amazon.com/labor_tracking/find_people
@@ -11,15 +11,16 @@
 // @connect      chime.aws
 // ==/UserScript==
 
-sessionStorage.pickSkips1 = JSON.stringify([]);
-sessionStorage.pickSkips2 = JSON.stringify([]);
+sessionStorage.activity_1 = JSON.stringify([]);
+sessionStorage.activity_2 = JSON.stringify([]);
 
 const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
     const formatString = (AA, ITEM, LOCATION) => {
         switch(ACTION) {
-            case "skip/pack": return `AA: ${AA} SKIPPED: ${ITEM} LOCATION: ${LOCATION}`;
-            case "pack": return `AA: ${AA} PACKED: ${ITEM} LOCATION: ${LOCATION}`;
-            case "bcc": return `AA: ${AA} COUNTED: ${ITEM} LOCATION: ${LOCATION}`;
+            case "skip/pack": return `AA: ${AA} has SKIPPED: ${ITEM} @ LOCATION: ${LOCATION}`;
+            case "pack": return `AA: ${AA} has PACKED: ${ITEM} @ LOCATION: ${LOCATION}`;
+            case "bcc": return `AA: ${AA} is COUNTING @ LOCATION: ${LOCATION}`;
+            case "TIMEOFFTASK": return `AA: ${AA} is TIMEOFFTASK`;
         }
     }
 
@@ -70,7 +71,7 @@ const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
 
         let pickSkipsString = pickSkipsLog.map(({location, notes, person}) => formatString(person.value, notes.value, location.value));
 
-        sessionStorage.pickSkips1 = JSON.stringify(pickSkipsString);
+        sessionStorage.activity_1 = JSON.stringify(pickSkipsString);
     }
 
     const fetchFindPeople2 = async () => {
@@ -120,15 +121,15 @@ const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
 
         let pickSkipsString = pickSkipsLog.map(({location, notes, person}) => formatString(person.value, notes.value, location.value));
 
-        sessionStorage.pickSkips2 = JSON.stringify(pickSkipsString);
+        sessionStorage.activity_2 = JSON.stringify(pickSkipsString);
     }
 
     setInterval(() => fetchFindPeople1(), EVERY_X_SECONDS * 1000);
     setInterval(() => fetchFindPeople2(), (EVERY_X_SECONDS * 1000) + 1000);
 
     const update = () => {
-        const arr1 = JSON.parse(sessionStorage.pickSkips1);
-        const arr2 = JSON.parse(sessionStorage.pickSkips2);
+        const arr1 = JSON.parse(sessionStorage.activity_1);
+        const arr2 = JSON.parse(sessionStorage.activity_2);
 
         let unique1 = arr1.filter((o) => arr2.indexOf(o) === -1);
         let unique2 = arr2.filter((o) => arr1.indexOf(o) === -1);
@@ -137,11 +138,11 @@ const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
 
         console.log(unique);
 
-        unique.map(skip => {
+        unique.map(ACTIVITY => {
             GM_xmlhttpRequest({
                 method: "POST",
                 url: "https://hooks.chime.aws/incomingwebhooks/0bdacf4c-58d1-4838-a9da-e743bc37a632?token=RDJpUDNkTk98MXxPMHh1b08wQnhxbmlKMThlS0RyMlFNVHBjZzg3ZmpxUF94OFl2RERSQ1Jr",
-                data: `{"Content":"${skip}"}`,
+                data: `{"Content":"${ACTIVITY}"}`,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -152,7 +153,6 @@ const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
         })
     }
     setInterval(() => update(), (EVERY_X_SECONDS * 1000) + 2000);
-
 }
 
-trackActivity("pack", 5);
+trackActivity("skip/pack", 5);

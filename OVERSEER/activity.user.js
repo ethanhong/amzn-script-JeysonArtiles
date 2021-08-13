@@ -141,7 +141,7 @@ const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
         unique.map(ACTIVITY => {
             GM_xmlhttpRequest({
                 method: "POST",
-                url: "https://hooks.chime.aws/incomingwebhooks/0bdacf4c-58d1-4838-a9da-e743bc37a632?token=RDJpUDNkTk98MXxPMHh1b08wQnhxbmlKMThlS0RyMlFNVHBjZzg3ZmpxUF94OFl2RERSQ1Jr",
+                url: "https://hooks.chime.aws/incomingwebhooks/680b81b4-920f-4e76-87ea-e79d9dbce0ba?token=N3ZBVGc5Q3Z8MXxJT0IzVERyNWJJZ3hMTzNZQ0FUNzhVZkZwVWdYZGxQbDRaZUtYUTNCVzY4",
                 data: `{"Content":"${ACTIVITY}"}`,
                 headers: {
                     "Content-Type": "application/json"

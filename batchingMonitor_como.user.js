@@ -3,7 +3,7 @@
 // @namespace    https://github.com/JeysonArtiles/amzn
 // @version      2.1
 // @description  MONITOR BATCHING TASKS: SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER. SHOW ELAPSED TIME (ET) PER TASK W/ 40 SEC BUFFER.
-// @author       You
+// @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/dash
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js
 // @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/batchingMonitor_como.user.js

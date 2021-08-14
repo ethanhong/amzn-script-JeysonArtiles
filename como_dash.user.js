@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         COMO - Get Routes
-// @namespace    mailto:jeyartil@amazon.com
+// @namespace    https://github.com/JeysonArtiles/amzn
 // @version      1.0
 // @description  Get Routes
 // @author       jeyartil

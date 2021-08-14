@@ -3,7 +3,7 @@
 // @namespace    https://github.com/JeysonArtiles/amzn
 // @version      0.6
 // @description  INSERT FOUND BAGS INTO FOOTER COMO LABOR PAGE
-// @author       You
+// @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/labor*
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js
 // @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/findBags_como.user.js

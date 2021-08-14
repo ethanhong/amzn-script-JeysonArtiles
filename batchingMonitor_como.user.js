@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [ BATCHING MONITOR ] COMO
-// @namespace    https://github.com/JeysonArtiles/amzns
+// @namespace    https://github.com/JeysonArtiles/amzn
 // @version      2.1
 // @description  MONITOR BATCHING TASKS: SET RECOMMENDED BATCHERS. SET TASKS PER BATCHER. SHOW ELAPSED TIME (ET) PER TASK W/ 40 SEC BUFFER.
 // @author       You

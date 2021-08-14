@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         [ FIND BAGS ] AFTLITE
-// @namespace    mailto:jeyartil@amazon.com
+// @namespace    https://github.com/JeysonArtiles/amzn
 // @version      0.4
 // @description  Get Routes
 // @author       jeyartil

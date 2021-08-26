@@ -62,15 +62,15 @@
                 break;
             case "receive_direct":
                 document.querySelector("#rateTitle").innerText = "Stowers";
-                defaultRate = 180;
+                defaultRate = 220;
                 break;
             case "receive2_direct":
                 document.querySelector("#rateTitle").innerText = "Stowers";
-                defaultRate = 180;
+                defaultRate = 200;
                 break;
             case "stow":
                 document.querySelector("#rateTitle").innerText = "Stowers";
-                defaultRate = 200;
+                defaultRate = 180;
                 break;
             default:
                 document.querySelector("#rateTitle").innerText = "AA's";
@@ -135,11 +135,11 @@
             if (aa.rate.value < rate || (aa.rate.value < rate && aa.hours.value > 0.5)) {
                 offTrack++;
                 // aa.units.root.innerText += " (slow)";
-                picker.style.backgroundColor = "#F38BA0";
+                picker.style.color = "red";
                 picker.setAttribute("class", "blink_me");
             } else {
                 onTrack++;
-                picker.style.backgroundColor = "#ACFFAD";
+                picker.style.color = "green";
                 picker.removeAttribute("blink_me");
             }
         });

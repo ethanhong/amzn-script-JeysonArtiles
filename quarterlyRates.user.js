@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         QUARTERLY RATES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.1
+// @version      0.2
 // @description  Get Quarterly Rates
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
 // @match        https://aftlite-na.amazon.com/login/signin*
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/quarterlyRates.user.js
 // @grant        none
 // ==/UserScript==
 
@@ -55,6 +54,8 @@ const quarterButtons = (DAY_NIGHT) => {
 
 zone.value = "--";
 
+form.appendChild(br);
+
 const day = document.createElement('h5');
 day.innerHTML = "DAY:&nbsp;";
 day.style.display = "inline";
@@ -66,40 +67,6 @@ night.innerHTML = "&nbsp;&nbsp;&nbsp;NIGHT:&nbsp;";
 night.style.display = "inline";
 form.appendChild(night);
 quarterButtons("NIGHT");
-
-const time = document.createElement('h5');
-time.innerHTML = "&nbsp;&nbsp;&nbsp;TIME:&nbsp;";
-time.style.display = "inline";
-form.appendChild(time);
-
-// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ grajef ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-createButton("Current Hour").onclick = () => {
-    var d = new Date();
-    setDate(d, d);
-}
-
-createButton("Last Hour").onclick = () => {
-    var d = new Date();
-    var date = new Date(d.getTime() - 3600000) // subtract one hour
-    setDate(date, date);
-}
-
-createButton("Today").onclick =() => {
-    var d = new Date();
-    var endDate = new Date(d.getTime() - 3600000)
-    d.setHours(0);
-    setDate(d, endDate);
-}
-
-createButton("Yesterday").onclick =() => {
-    var d = new Date();
-    d = new Date(d.getTime() - 3600000 * 24); // subtract one day
-    var endDate = new Date(d);
-    d.setHours(0);
-    endDate.setHours(23);
-    setDate(d, endDate);
-}
-// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ grajef ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {
     let startDate = new Date();

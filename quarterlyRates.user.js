@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         QUARTERLY RATES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.2
+// @version      0.3
 // @description  QUARTERLY RATES FOR MOST RECENT DAY/NIGHT
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
@@ -109,4 +109,3 @@ const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {
 
 //columnHeaders.cells[4].click(); // SORT BY TOP PERFORMERS
 //columnHeaders.cells[4].click(); // SORT BY BOTTOM PERFORMERS
-

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         QUARTERLY RATES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.3
+// @version      0.2
 // @description  QUARTERLY RATES FOR MOST RECENT DAY/NIGHT
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
@@ -43,7 +43,6 @@ const setDate = (start, end) => {
 }
 // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ grajef ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
-
 const quarterButtons = (DAY_NIGHT) => {
     createButton("Q1").onclick = () => generateQuarterlyReport(DAY_NIGHT, 1);
     createButton("Q2").onclick = () => generateQuarterlyReport(DAY_NIGHT, 2);
@@ -51,8 +50,6 @@ const quarterButtons = (DAY_NIGHT) => {
     createButton("Q4").onclick = () => generateQuarterlyReport(DAY_NIGHT, 4);
     createButton("FULL").onclick = () => generateQuarterlyReport(DAY_NIGHT, 5);
 }
-
-
 
 zone.value = "--";
 
@@ -85,7 +82,6 @@ const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {
         } else {
             startDate.setHours(NIGHT_START); startDate.setDate(QUARTER == 5 ? startDayBefore : CALC_NIGHT);
             endDate.setHours(NIGHT_END); endDate.setDate(CALC_NIGHT);
-
         }
     }
 

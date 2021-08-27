@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         QUARTERLY RATES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.2
-// @description  Get Quarterly Rates
+// @version      0.3
+// @description  QUARTERLY RATES FOR MOST RECENT DAY/NIGHT
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
 // @match        https://aftlite-na.amazon.com/login/signin*
@@ -52,6 +52,8 @@ const quarterButtons = (DAY_NIGHT) => {
     createButton("FULL").onclick = () => generateQuarterlyReport(DAY_NIGHT, 5);
 }
 
+
+
 zone.value = "--";
 
 form.appendChild(br);
@@ -69,36 +71,41 @@ form.appendChild(night);
 quarterButtons("NIGHT");
 
 const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {
+    const currentDate = new Date();
     let startDate = new Date();
     let endDate = new Date(startDate);
 
-    startDate.setDate((startDate.getHours() >= 0 && startDate.getHours() < 18) && startDate.getDate() - 1);
-    endDate.setDate((endDate.getHours() >= 0 && endDate.getHours() < 18) && endDate.getDate() - 1);
+    let startDayBefore = currentDate.getHours() >= 18 || currentDate.getHours() < 6 ? startDate.getDate() - 1 : startDate.getDate() - 2;
+    let startNightBefore = (currentDate.getHours() >= 0 || currentDate.getHours() < 6) && startDate.getDate() - 1;
+
+    const setDates = (DAY_NIGHT, DAY_START, DAY_END, NIGHT_START, NIGHT_END, CALC_DAY, CALC_NIGHT) => {
+        if (DAY_NIGHT == "DAY") {
+            startDate.setHours(DAY_START); startDate.setDate(CALC_DAY);
+            endDate.setHours(DAY_END); endDate.setDate(CALC_DAY);
+        } else {
+            startDate.setHours(NIGHT_START); startDate.setDate(QUARTER == 5 ? startDayBefore : CALC_NIGHT);
+            endDate.setHours(NIGHT_END); endDate.setDate(CALC_NIGHT);
+
+        }
+    }
 
     switch (QUARTER) {
         case 1:
-            DAY_NIGHT == "DAY" && startDate.setHours(6) || startDate.setHours(18);
-            DAY_NIGHT == "DAY" && endDate.setHours(8) || endDate.setHours(20);
+            setDates(DAY_NIGHT, 6, 8, 18, 20, startDayBefore, startDayBefore);
             break;
         case 2:
-            DAY_NIGHT == "DAY" && startDate.setHours(9) || startDate.setHours(21);
-            DAY_NIGHT == "DAY" && endDate.setHours(11) || endDate.setHours(23);
+            setDates(DAY_NIGHT, 9, 11, 21, 23, startDayBefore, startDayBefore);
             break;
         case 3:
-            DAY_NIGHT == "DAY" && startDate.setHours(12) || startDate.setHours(0);
-            DAY_NIGHT == "DAY" && endDate.setHours(14) || endDate.setHours(2);
+            setDates(DAY_NIGHT, 12, 14, 0, 2, startDayBefore, currentDate.getDate());
             break;
         case 4:
-            DAY_NIGHT == "DAY" && startDate.setHours(15) || startDate.setHours(3);
-            DAY_NIGHT == "DAY" && endDate.setHours(17) || endDate.setHours(5);
-            DAY_NIGHT == "NIGHT" && endDate.setDate(endDate.getDate() + 1);
+            setDates(DAY_NIGHT, 15, 17, 3, 5, startDayBefore, currentDate.getDate());
             break;
-            case 5:
-            DAY_NIGHT == "DAY" && startDate.setHours(6) || startDate.setHours(18);
-            DAY_NIGHT == "DAY" && endDate.setHours(17) || endDate.setHours(5);
-            DAY_NIGHT == "NIGHT" && endDate.setDate(endDate.getDate() + 1);
+        case 5:
+            setDates(DAY_NIGHT, 6, 17, 18, 5, startDayBefore, currentDate.getDate());
             break;
-        default: break;
+        default: alert("broken - disable script");
     }
 
     setDate(startDate, endDate);

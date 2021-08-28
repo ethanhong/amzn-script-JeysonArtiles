@@ -1,156 +1,136 @@
 // ==UserScript==
-// @name         UPH Drilldown - Check Rates
+// @name         QUARTERLY RATES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      1.3
-// @description  Highlight rates.
-// @author       jeyartil
-// @match        https://*.amazon.com/labor_tracking/uph_drilldown
-// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @version      0.4
+// @description  QUARTERLY RATES FOR MOST RECENT DAY/NIGHT
+// @author       jeyartil / grajef = createButton() + setDate()
+// @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
+// @match        https://aftlite-na.amazon.com/login/signin*
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_uph.user.js
-// @updateURL    https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftlite_uph.user.js
 // ==/UserScript==
 
-(function () {
-    "use strict";
+const autoLog = () => {
+    const signIn = document.querySelector("input[name=commit]");
+    if (window.location.href.indexOf("/login") != -1) signIn.click();
+}
 
-    const form = document.querySelector("form");
-    const authToken = form[1].value.replace(/[^a-z0-9]/gi, "");
-    const start = { month: form[2], day: form[3], year: form[4], hour: form[5] };
-    const end = { month: form[6], day: form[7], year: form[8], hour: form[9] };
-    const path = form[10];
-    const zone = form[11];
-    const submit = form[12];
+autoLog();
 
-    // DEFAULT
-    zone.value = "--";
+const form = document.querySelector("form");
+const func = document.querySelector("input[name=function]");
+const zone = document.querySelector("input[name=zone]");
+const generateReportButton = document.querySelector("input[name=commit]"); generateReportButton.insertAdjacentHTML("afterend", `<br><br>`);
+const columnHeaders = document.querySelector("tr[class=columnHeaders]");
+const br = document.createElement("br");
 
-    document.onkeyup = function (e) {
-        if (e.shiftKey && e.which == 82) {
-            checkRate();
+// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ grajef ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+const createButton = (name) => {
+    const button = document.createElement('button');
+    button.innerHTML = name;
+    form.appendChild(button);
+    return button;
+}
+
+const setDate = (start, end) => {
+    document.getElementById("date_start_hour").selectedIndex = start.getHours();
+    document.getElementById("date_start_day").value = start.getDate();
+    document.getElementById("date_start_month").selectedIndex = start.getMonth();
+    document.getElementById("date_start_year").value = start.getFullYear();
+    document.getElementById("date_end_hour").selectedIndex = end.getHours();
+    document.getElementById("date_end_day").value = end.getDate();
+    document.getElementById("date_end_month").selectedIndex = end.getMonth();
+    document.getElementById("date_end_year").value = end.getFullYear();
+}
+// ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ grajef ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+const quarterButtons = (DAY_NIGHT) => {
+    createButton("Q1").onclick = () => generateQuarterlyReport(DAY_NIGHT, 1);
+    createButton("Q2").onclick = () => generateQuarterlyReport(DAY_NIGHT, 2);
+    createButton("Q3").onclick = () => generateQuarterlyReport(DAY_NIGHT, 3);
+    createButton("Q4").onclick = () => generateQuarterlyReport(DAY_NIGHT, 4);
+    createButton("FULL").onclick = () => generateQuarterlyReport(DAY_NIGHT, 5);
+}
+
+zone.value = "--";
+
+form.appendChild(br);
+
+const day = document.createElement('h5');
+day.innerHTML = "DAY:&nbsp;";
+day.style.display = "inline";
+form.appendChild(day);
+quarterButtons("DAY");
+
+const night = document.createElement('h5');
+night.innerHTML = "&nbsp;&nbsp;NIGHT:&nbsp;";
+night.style.display = "inline";
+form.appendChild(night);
+quarterButtons("NIGHT");
+
+const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {
+    const currentDate = new Date();
+    let startDate = new Date();
+    let endDate = new Date(startDate);
+
+    const setDates = (DAY_NIGHT, DAY_START, DAY_END, NIGHT_START, NIGHT_END, CALC_DAY, CALC_NIGHT) => {
+        const shift = {};
+        shift.day = currentDate.getHours() >= 6 && currentDate.getHours() < 18;
+        shift.night = currentDate.getHours() >= 18 && currentDate.getHours() < 6;
+        shift.nightFirstHalf = currentDate.getHours() >= 18 && currentDate.getHours() < 24;
+        shift.nightSecondHalf = currentDate.getHours() >= 0 && currentDate.getHours() < 6;
+
+        shift.q1 = QUARTER == 1;
+        shift.q2 = QUARTER == 2;
+        shift.q3 = QUARTER == 3;
+        shift.q4 = QUARTER == 4;
+        shift.full = QUARTER == 5;
+
+        const checkQ3Q4FirstHalf = (shift.q3 || shift.q4) && shift.nightFirstHalf;
+
+        let CALC_DAY_START = CALC_DAY; let CALC_DAY_END = CALC_DAY;
+        let CALC_NIGHT_START = CALC_NIGHT; let CALC_NIGHT_END = CALC_NIGHT;
+
+        if (DAY_NIGHT == "DAY") {
+            if (shift.nightSecondHalf) { CALC_DAY_START--; CALC_DAY_END--; }
+
+            startDate.setDate(CALC_DAY_START); startDate.setHours(DAY_START);
+            endDate.setDate(CALC_DAY_END); endDate.setHours(DAY_END);
         }
-        if (e.shiftKey && e.which == 13) {
-            form.submit();
+
+        if (DAY_NIGHT == "NIGHT") {
+            if (shift.nightFirstHalf && (shift.q3 || shift.q4)) { CALC_NIGHT_START++; CALC_NIGHT_END++; }
+            else if (shift.nightSecondHalf && (shift.q1 || shift.q2)) { CALC_NIGHT_START--; CALC_NIGHT_END--; }
+            else if (shift.nightSecondHalf && shift.full) { CALC_NIGHT_START--; }
+            else if (shift.nightFirstHalf && shift.full) { CALC_NIGHT_END++; }
+            else if (shift.day) { CALC_NIGHT_START--; CALC_NIGHT_END--; }
+
+            startDate.setDate(CALC_NIGHT_START); startDate.setHours(NIGHT_START);
+            endDate.setDate(CALC_NIGHT_END); endDate.setHours(NIGHT_END);
         }
-    };
 
-    let pickers = [...document.querySelectorAll("tbody")][1];
+    }
 
-    localStorage.currentRate = Number(
-        Number([...document.querySelectorAll("tr>td")].slice(2, 8)[1].innerText).toFixed(3)
-    );
-    localStorage.currentUnits = Number(
-        Number([...document.querySelectorAll("tr>td")].slice(2, 8)[3].innerText).toFixed(3)
-    );
+    switch (QUARTER) {
+        case 1:
+            setDates(DAY_NIGHT, 6, 8, 18, 20, currentDate.getDate(), currentDate.getDate());
+            break;
+        case 2:
+            setDates(DAY_NIGHT, 9, 11, 21, 23, currentDate.getDate(), currentDate.getDate());
+            break;
+        case 3:
+            setDates(DAY_NIGHT, 12, 14, 0, 2, currentDate.getDate(), currentDate.getDate());
+            break;
+        case 4:
+            setDates(DAY_NIGHT, 15, 17, 3, 5, currentDate.getDate(), currentDate.getDate());
+            break;
+        case 5:
+            setDates(DAY_NIGHT, 6, 17, 18, 5, currentDate.getDate(), currentDate.getDate());
+            break;
+        default: alert("broken - disable script");
+    }
 
-    localStorage.pickersCount = "--";
-    pickers.innerHTML += `<td id='rateTitle'></td><td id="rateValue"></td>`;
+    setDate(startDate, endDate);
+}
 
-    let defaultRate;
-
-    const updateThings = () => {
-        const rateValue = document.querySelector("#rateValue").innerText;
-
-        switch (path.value.toLowerCase()) {
-            case "pack":
-                document.querySelector("#rateTitle").innerText = "Pickers";
-                defaultRate = 70;
-                break;
-            case "bcc":
-                document.querySelector("#rateTitle").innerText = "Counters";
-                defaultRate = 200;
-                break;
-            case "receive_direct":
-                document.querySelector("#rateTitle").innerText = "Stowers";
-                defaultRate = 220;
-                break;
-            case "receive2_direct":
-                document.querySelector("#rateTitle").innerText = "Stowers";
-                defaultRate = 200;
-                break;
-            case "stow":
-                document.querySelector("#rateTitle").innerText = "Stowers";
-                defaultRate = 180;
-                break;
-            default:
-                document.querySelector("#rateTitle").innerText = "AA's";
-                break;
-        }
-    };
-
-    const checkRate = () => {
-        updateThings();
-
-        let rate = prompt("Desired Rate", defaultRate || 70);
-        if(rate == null) return;
-
-        let table = [...document.querySelectorAll("tr>td")].slice(2, 8);
-
-        let par = {};
-        par.rate = {
-            pointer: table[1],
-            value: Number(Number(table[1].innerText).toFixed(3)),
-        };
-
-        par.units = {
-            pointer: table[3],
-            value: Number(Number(table[3].innerText).toFixed(3)),
-        };
-        par.duration = {
-            title: table[4],
-            pointer: table[5],
-            value: Number(Number(table[5].innerText).toFixed(3)),
-        };
-
-        let expected_units = par.duration.value * rate;
-        let expected_rate = (expected_units / par.duration.value).toFixed(0);
-
-        par.rate.pointer.innerHTML = `<b>${localStorage.currentRate}</b> / ${expected_rate}`;
-        par.units.pointer.innerHTML = `<b>${localStorage.currentUnits}</b> / ${expected_units}`;
-        par.duration.pointer.innerHTML = `<b>${par.duration.value}</b>`;
-
-        let aa = [...document.querySelectorAll(`tr[id=${path.value}]`)];
-
-        let count = 0;
-        let onTrack = 0;
-        let offTrack = 0;
-        aa.map((picker) => {
-            // console.log(picker.cells);
-            count++;
-
-            let aa = {};
-            aa.name = { root: picker.cells[0], value: picker.cells[0].innerText };
-
-            aa.agency = { root: picker.cells[1], value: picker.cells[1].innerText };
-            aa.units = { root: picker.cells[2], value: Number(picker.cells[2].innerText) };
-            aa.hours = {
-                root: picker.cells[3],
-                value: Number(picker.cells[3].innerText.split(" ")[0]),
-            };
-            aa.rate = { root: picker.cells[4], value: Number(picker.cells[4].innerText) };
-
-            //if (aa.hours.value < 0.5) console.log(aa.name.value, aa.rate.value, rate)
-
-            //				aa.hours.value < (rate / aa.hours.value) &&
-            if (aa.rate.value < rate || (aa.rate.value < rate && aa.hours.value > 0.5)) {
-                offTrack++;
-                // aa.units.root.innerText += " (slow)";
-                picker.style.color = "red";
-                picker.setAttribute("class", "blink_me");
-            } else {
-                onTrack++;
-                picker.style.color = "green";
-                picker.removeAttribute("blink_me");
-            }
-        });
-
-        document.querySelector(
-            "#rateValue"
-        ).innerHTML = `<b>${count} ( <span style="color: green">${onTrack}⇑</span> / <span style="color: red">${offTrack}⇓</span> )</b>`;
-
-        const columnHeaders = document.querySelector("tr.columnHeaders");
-        const ratePerHourHeader = columnHeaders.cells[4];
-
-        ratePerHourHeader.click();
-    };
-})();
+//columnHeaders.cells[4].click(); // SORT BY TOP PERFORMERS
+//columnHeaders.cells[4].click(); // SORT BY BOTTOM PERFORMERS

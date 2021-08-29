@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         QUARTERLY RATES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.7
+// @version      0.8
 // @description  QUARTERLY RATES FOR MOST RECENT DAY/NIGHT
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
@@ -22,6 +22,8 @@ const zone = document.querySelector("input[name=zone]");
 const generateReportButton = document.querySelector("input[name=commit]"); generateReportButton.insertAdjacentHTML("afterend", `<br><br>`);
 const columnHeaders = document.querySelector("tr[class=columnHeaders]");
 const br = document.createElement("br");
+
+zone.value = "--";
 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ grajef ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 const createButton = (name) => {
@@ -76,6 +78,7 @@ createButton("STOW").onclick = () => { func.value = "stow"; }
 createButton("PACK").onclick = () => { func.value = "pack"; }
 createButton("BCC").onclick = () => { func.value = "bcc"; }
 createButton("BATCHING").onclick = () => { func.value = "BATCHING"; }
+createButton("TIMEOFFTASK").onclick = () => { func.value = "TIMEOFFTASK"; }
 createButton("IDLE").onclick = () => { func.value = "IDLE"; }
 createButton("BRK").onclick = () => { func.value = "BRK"; }
 

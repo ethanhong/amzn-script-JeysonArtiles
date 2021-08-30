@@ -9,13 +9,6 @@
 // @grant        none
 // ==/UserScript==
 
-const autoLog = () => {
-    const signIn = document.querySelector("input[name=commit]");
-    if (window.location.href.indexOf("/login") != -1) signIn.click();
-}
-
-autoLog();
-
 const form = document.querySelector("form");
 const func = document.querySelector("input[name=function]");
 const zone = document.querySelector("input[name=zone]");

@@ -1,11 +1,13 @@
 // ==UserScript==
-// @name         QUARTERLY RATES
+// @name         SHIFT BREAKDOWN
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.8
-// @description  QUARTERLY RATES FOR MOST RECENT DAY/NIGHT
+// @version      1.0
+// @description  Q1 / Q2 /Q3 /Q4 / FULL SHIFT
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
-// @match        https://aftlite-na.amazon.com/login/signin*
+// @match        https://aftlite-na.amazon.com/labor_tracking/view_daily_detail*
+// @match        https://aftlite-na.amazon.com/labor_tracking/labor_summary
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/shiftBreakdown.user.js
 // @grant        none
 // ==/UserScript==
 
@@ -16,7 +18,9 @@ const generateReportButton = document.querySelector("input[name=commit]"); gener
 const columnHeaders = document.querySelector("tr[class=columnHeaders]");
 const br = document.createElement("br");
 
-zone.value = "--";
+if (zone) {
+    zone.value = "--";
+}
 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ grajef ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 const createButton = (name) => {
@@ -60,30 +64,35 @@ night.style.display = "inline";
 form.appendChild(night);
 quarterButtons("NIGHT");
 
-const path = document.createElement('h5');
-path.innerHTML = "FUNCTION:&nbsp;";
-path.style.display = "inline";
-form.insertAdjacentHTML("beforeend", "<br>");
-form.appendChild(path);
-createButton("RECEIVE 1").onclick = () => { func.value = "receive_direct"; }
-createButton("RECEIVE 2").onclick = () => { func.value = "receive2_direct"; }
-createButton("STOW").onclick = () => { func.value = "stow"; }
-createButton("PACK").onclick = () => { func.value = "pack"; }
-createButton("BCC").onclick = () => { func.value = "bcc"; }
-createButton("BATCHING").onclick = () => { func.value = "BATCHING"; }
-createButton("TIMEOFFTASK").onclick = () => { func.value = "TIMEOFFTASK"; }
-createButton("IDLE").onclick = () => { func.value = "IDLE"; }
-createButton("BRK").onclick = () => { func.value = "BRK"; }
+if (zone) {
+    const path = document.createElement('h5');
+    path.innerHTML = "FUNCTION:&nbsp;";
+    path.style.display = "inline";
+    form.insertAdjacentHTML("beforeend", "<br>");
+    form.appendChild(path);
+    createButton("RECEIVE 1").onclick = () => { func.value = "receive_direct"; }
+    createButton("RECEIVE 2").onclick = () => { func.value = "receive2_direct"; }
+    createButton("STOW").onclick = () => { func.value = "stow"; }
+    createButton("PACK").onclick = () => { func.value = "pack"; }
+    createButton("BCC").onclick = () => { func.value = "bcc"; }
+    createButton("BATCHING").onclick = () => { func.value = "BATCHING"; }
+    createButton("TIMEOFFTASK").onclick = () => { func.value = "TIMEOFFTASK"; }
+    createButton("IDLE").onclick = () => { func.value = "IDLE"; }
+    createButton("BRK").onclick = () => { func.value = "BRK"; }
 
-const tempZone = document.createElement('h5');
-tempZone.innerHTML = "ZONE:&nbsp;";
-tempZone.style.display = "inline";
-form.insertAdjacentHTML("beforeend", "<br>");
-form.appendChild(tempZone);
-createButton("AMBIENT").onclick = () => { zone.value = "ambient"; }
-createButton("CHILLED").onclick = () => { zone.value = "chilled"; }
-createButton("FROZEN").onclick = () => { zone.value = "frozen"; }
-createButton("PRODUCE").onclick = () => { zone.value = "produce"; }
+    const tempZone = document.createElement('h5');
+    tempZone.innerHTML = "ZONE:&nbsp;";
+    tempZone.style.display = "inline";
+    form.insertAdjacentHTML("beforeend", "<br>");
+    form.appendChild(tempZone);
+    createButton("AMBIENT").onclick = () => { zone.value = "ambient"; }
+    createButton("CHILLED").onclick = () => { zone.value = "chilled"; }
+    createButton("FROZEN").onclick = () => { zone.value = "frozen"; }
+    createButton("PRODUCE").onclick = () => { zone.value = "produce"; }
+}
+
+
+
 
 
 const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {

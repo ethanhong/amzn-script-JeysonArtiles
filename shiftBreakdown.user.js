@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SHIFT BREAKDOWN
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      1.0
+// @version      1.1
 // @description  Q1 / Q2 /Q3 /Q4 / FULL SHIFT
 // @author       jeyartil / grajef = createButton() + setDate()
 // @match        https://aftlite-na.amazon.com/labor_tracking/uph_drilldown*
@@ -18,9 +18,7 @@ const generateReportButton = document.querySelector("input[name=commit]"); gener
 const columnHeaders = document.querySelector("tr[class=columnHeaders]");
 const br = document.createElement("br");
 
-if (zone) {
-    zone.value = "--";
-}
+if (zone) zone.value = "--";
 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ grajef ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 const createButton = (name) => {
@@ -90,10 +88,6 @@ if (zone) {
     createButton("FROZEN").onclick = () => { zone.value = "frozen"; }
     createButton("PRODUCE").onclick = () => { zone.value = "produce"; }
 }
-
-
-
-
 
 const generateQuarterlyReport = (DAY_NIGHT, QUARTER) => {
     const currentDate = new Date();

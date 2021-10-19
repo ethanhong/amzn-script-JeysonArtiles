@@ -165,15 +165,15 @@ const problemSolve = () => {
     const addToteBtn = document.querySelector(`form[action="/wms/set_tote"]`);
 
     const addAsin = document.querySelector(`input[name="asin_or_upc"]`);
+//
+    const missing = [...document.querySelectorAll(`tr[valign="top"]`)];
 
-    const missing = [...document.querySelectorAll(`tr[style="background-color: yellow;"]`)];
+    //const test = document.querySelector(`form[action="/wms/finish_packing_picklist"]`);
+    //const barcodeDiv = document.createElement(`div`);
 
-    const test = document.querySelector(`form[action="/wms/finish_packing_picklist"]`);
-    const barcodeDiv = document.createElement(`div`);
+    //barcodeDiv.innerHTMl = "TEST"
 
-    barcodeDiv.innerHTMl = "TEST"
-
-    test.appendChild(barcodeDiv)
+    //test.appendChild(barcodeDiv)
     const totes = [...new Set([...[...document.querySelectorAll("a")].filter(a => a.innerText.includes("Sp"))].map(a => a.innerText))];
 
     addToteText.value = totes;

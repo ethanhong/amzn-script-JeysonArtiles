@@ -92,7 +92,7 @@ const findPalletReceive = () => {
 
         const receiveDate = Number(receiveTime.innerText.split(", ")[1].split(" ")[0]);
 
-        receiveDate > (today - 1) && GM_xmlhttpRequest({
+        receiveDate > (today - 7) && GM_xmlhttpRequest({
             method: "GET",
             url: `https://aftlite-na.amazon.com/dock_receive/pallets?receivable_order_id=${PO}`,
             onload: async (response) => {
@@ -101,6 +101,7 @@ const findPalletReceive = () => {
                 const TABLE_POINTER = [...PAGE.querySelectorAll('.reportLayout > tbody > tr')];
 
                 let palletIds = [];
+                let discarded = 0;
 
                 TABLE_POINTER.map(tr => {
                     const cells = [...tr.cells];
@@ -113,10 +114,11 @@ const findPalletReceive = () => {
 
                     const pa = ` ${category.innerText.toUpperCase()} = <b>${palletId.innerText}</b>`;
 
-                    palletIds.push(pa);
+                    status.innerText != "DISCARDED" && palletIds.push(pa);
+                    const discarded = status.innerText == "DISCARDED" && ``
                 })
 
-                po.innerHTML = `<span style="color:#404040">${po.innerText}</span> <br> ${palletIds}`;
+                po.innerHTML = `<span style="color:#404040">${po.innerText}</span> <br> ${palletIds} ${discarded > 0 ? discarded : ""}`;
             }
         });
     }
@@ -165,7 +167,7 @@ const problemSolve = () => {
     const addToteBtn = document.querySelector(`form[action="/wms/set_tote"]`);
 
     const addAsin = document.querySelector(`input[name="asin_or_upc"]`);
-//
+    //
     const missing = [...document.querySelectorAll(`tr[valign="top"]`)];
 
     //const test = document.querySelector(`form[action="/wms/finish_packing_picklist"]`);

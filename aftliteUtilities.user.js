@@ -10,6 +10,7 @@
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
 // @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
 // @require      https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/barcodes/JsBarcode.code128.min.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftliteUtilities.user.js
 // ==/UserScript==
 
 /*

@@ -206,7 +206,7 @@ const problemSolve = () => {
 
                     const falseSkipBtn = document.querySelector("#falseSkipBtn");
 
-                    const FALSE_SKIP_LOG = `/md **${FALSE_SKIP_LOCATION.trim()}** » **${item.asin.innerText}** *(${item.title.innerText})* » **${PICKER.toUpperCase()}** » ${totes}`;
+                    const FALSE_SKIP_LOG = `/md **${FALSE_SKIP_LOCATION.trim()}** » **${item.asin.innerText}** *(${item.title.innerText})* » **${PICKER.toUpperCase()}** » **${totes}**`;
 // https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR
                     falseSkipBtn.addEventListener("click", () => {
                         GM_xmlhttpRequest({

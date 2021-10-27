@@ -73,10 +73,7 @@ const findPalletAsin = () => {
                 po.innerHTML = `<span style="color:#404040">${po.innerText}</span> <br> ${palletIds}`;
             }
         });
-    }
-                      )
-
-
+    })
 }
 
 const findPalletReceive = () => {
@@ -130,7 +127,6 @@ const findPalletReceive = () => {
 
 
 }
-
 
 const asinLaborTrack = () => {
     const asinH2 = document.querySelector("h2").innerText.split(" ");
@@ -198,7 +194,6 @@ const problemSolve = () => {
 
             const missingItemCubiscanBtn = cubiscanBtn.filter(btn => btn.previousSibling.previousSibling.value == item.asin.innerText )[0];
 
-            //missingItemCubiscanBtn.innerHTML += "<button href='#'>False Skip</button>";
             item.location.innerHTML += "<br><button id='falseSkipBtn'>False Skip</button>";
 
             GM_xmlhttpRequest({
@@ -211,7 +206,7 @@ const problemSolve = () => {
 
                     const falseSkipBtn = document.querySelector("#falseSkipBtn");
 
-                    const FALSE_SKIP_LOG = `${PICKER.toUpperCase()} => ${item.asin.innerText} @ ${FALSE_SKIP_LOCATION.trim()} (${item.title.innerText})`;
+                    const FALSE_SKIP_LOG = `/md **${FALSE_SKIP_LOCATION.trim()}** » **${item.asin.innerText}** *(${item.title.innerText})* » **${PICKER.toUpperCase()}**`;
 
                     falseSkipBtn.addEventListener("click", () => {
                         GM_xmlhttpRequest({
@@ -226,10 +221,8 @@ const problemSolve = () => {
                             }
                         });
 
-                        falseSkipBtn.hidden = true;
+                        item.location.innerHTML = "<span style='color:red; font-weight:bold'>False Skip Reported</span>";
                     })
-
-
 
                     item.weight.innerText = realWeight;
                 }
@@ -247,21 +240,82 @@ const problemSolve = () => {
     });
 }
 
+const rateReport = () => {
+    const table = [...document.querySelectorAll("#labor_summary_table > tbody > tr")];
+    const hr = [...document.querySelectorAll("hr")][1];
 
-if (location.pathname.includes("/dock_receive/view_received")) {
-    findPalletReceive();
+    const inboundRoles = table.map(tr => {
+        const cells = {};
+        cells.func = tr.cells[0].innerText.trim();
+        cells.zone = tr.cells[1].innerText.trim();
+        cells.units = tr.cells[2].innerText.trim();
+        cells.duration = tr.cells[3].innerText.trim();
+        cells.rate = tr.cells[4].innerText.trim();
+
+        cells.duration = Number(cells.duration).toFixed(2);
+
+        return cells
+    }).filter(roles => roles.func == "receive2_direct" || roles.func == "receive_direct" || roles.func == "stow");
+
+    const inboundDiv = document.createElement("div");
+    inboundDiv.style.color = "black"
+
+    hr.appendChild(inboundDiv);
+
+    let totalUnits = 0;
+    let avgRate = 0;
+    let funcTally = 0;
+    let totalDuration = 0;
+    inboundRoles.map( ({func, zone, units, duration, rate }) => {
+        funcTally++;
+        inboundDiv.innerHTML += `<b>${func.toUpperCase()}</b> = <b>UNITS:</b> <span style="font-size:20px;font-weight:900px">${units.toUpperCase()}</span> <b>DURATION:</b> <span style="font-size:20px;font-weight:900px">${duration.toUpperCase()}</span> <b>RATE:</b> <span style="font-size:20px;font-weight:900px">${rate.toUpperCase()}</span> <br>`;
+        inboundDiv.innerHTML += `<br>`;
+        totalUnits += Number(units);
+        avgRate += Number(rate)
+        totalDuration += Number(duration);
+    })
+    inboundDiv.innerHTML += `<b>TOTAL UNITS:</b> <span style="font-size:20px;font-weight:900px">${totalUnits}</span> `;
 }
 
-if (location.pathname.includes("/receive/pos_by_asin")) {
-    findPalletAsin();
+const closePallet = () => {
+
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: `https://aftlite-na.amazon.com/dock_receive/view_nyr_pallets`,
+        onload: async (response) => {
+            const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+            const TABLE = [...PAGE.querySelectorAll("#nyr_pallets > tbody > tr")];
+
+            TABLE.map(tr => {
+            const palletId = tr.cells[0];
+                const po = tr.cells[0];
+                const category = tr.cells[0];
+                const location = tr.cells[0];
+                const status = tr.cells[0];
+                const lastUpdated = tr.cells[0];
+                const close = tr.cells[0];
+            })
+        }
+    });
 }
 
-if (location.pathname.includes("/inventory/view_inventory_for_asin")) {
-    asinLaborTrack();
-}
 
-if (location.pathname.includes("/wms/pack_by_picklist")) {
-    problemSolve();
-}
+    if (location.pathname.includes("/labor_tracking/labor_summary")) {
+        rateReport();
+    }
 
+    if (location.pathname.includes("/dock_receive/view_received")) {
+        findPalletReceive();
+    }
 
+    if (location.pathname.includes("/receive/pos_by_asin")) {
+        findPalletAsin();
+    }
+
+    if (location.pathname.includes("/inventory/view_inventory_for_asin")) {
+        asinLaborTrack();
+    }
+
+    if (location.pathname.includes("/wms/pack_by_picklist")) {
+        problemSolve();
+    }

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFTLITE UTILITIES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.1
+// @version      0.2
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*
@@ -163,6 +163,7 @@ const asinLaborTrack = () => {
 
 const problemSolve = () => {
     const ORDER_ID = [...document.querySelectorAll("#summary_table > tbody > tr")][0].children[1].innerText;
+    const PSOLVER = document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
 
     const addToteForm = document.querySelector(`form[action="/wms/set_tote"]`);
     const addToteText = document.querySelector(`input[name="tote_code"]`);
@@ -187,7 +188,7 @@ const problemSolve = () => {
         const realWeight = item.weight.innerText;
         item.weight.innerText = item.location.innerText.split("(")[0];
 
-        let FALSE_SKIP_LOCATION = item.weight.innerText;
+        let PSOLVE_LOCATION = item.weight.innerText;
 
         if (item.location.innerText.includes("skipped")) {
             const cubiscanBtn = [...document.querySelectorAll("button")].filter(btn => btn.innerText.includes("Cubiscan"));
@@ -195,6 +196,7 @@ const problemSolve = () => {
             const missingItemCubiscanBtn = cubiscanBtn.filter(btn => btn.previousSibling.previousSibling.value == item.asin.innerText )[0];
 
             item.location.innerHTML += "<br><button id='falseSkipBtn'>False Skip</button>";
+            item.location.innerHTML += "<br><button id='shortBtn'>Short</button>";
 
             GM_xmlhttpRequest({
                 method: "GET",
@@ -205,9 +207,9 @@ const problemSolve = () => {
                     const PICKER = TABLE[TABLE.length - 1].cells[12].innerText;
 
                     const falseSkipBtn = document.querySelector("#falseSkipBtn");
-
-                    const FALSE_SKIP_LOG = `/md [**${FALSE_SKIP_LOCATION.trim()}**](https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${FALSE_SKIP_LOCATION.trim()}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack)`;
-// https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j
+                    const FALSE_SKIP_LOG = `/md [** * ${PSOLVER} * **]() » [**${PSOLVE_LOCATION.trim()}**](https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack)`;
+                    // test = https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j
+                    // https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR
                     falseSkipBtn.addEventListener("click", () => {
                         GM_xmlhttpRequest({
                             method: "POST",
@@ -222,6 +224,27 @@ const problemSolve = () => {
                         });
 
                         item.location.innerHTML = "<span style='color:red; font-weight:bold'>False Skip Reported</span>";
+                    })
+
+                    const SHORTED = Number(item.picked.innerText) - Number(item.packed.innerText);
+
+                    const shortBtn = document.querySelector("#shortBtn");
+                    const SHORT_LOG = `/md [** * ${PSOLVER} * **]() » [**${PSOLVE_LOCATION.trim()}**](https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack) » **${SHORTED}**`;
+                    // https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j
+                    shortBtn.addEventListener("click", () => {
+                        GM_xmlhttpRequest({
+                            method: "POST",
+                            url: "https://hooks.chime.aws/incomingwebhooks/1f5eaae4-f8c3-46be-b614-dba9f47fb2e4?token=cFA3WVdZYzN8MXx3YVVNNVd4YWx4V1pDWWx1RFZhaVQwWXZZZ1JLeVpzVE02Zzl1OVpnUmZ3",
+                            data: `{"Content":"${SHORT_LOG}"}`,
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            onload: function(response) {
+                                //console.log(response.responseText);
+                            }
+                        });
+
+                        item.location.innerHTML = "<span style='color:red; font-weight:bold'>Short Reported</span>";
                     })
 
                     item.weight.innerText = realWeight;
@@ -287,7 +310,7 @@ const closePallet = () => {
             const TABLE = [...PAGE.querySelectorAll("#nyr_pallets > tbody > tr")];
 
             TABLE.map(tr => {
-            const palletId = tr.cells[0];
+                const palletId = tr.cells[0];
                 const po = tr.cells[0];
                 const category = tr.cells[0];
                 const location = tr.cells[0];
@@ -300,22 +323,22 @@ const closePallet = () => {
 }
 
 
-    if (location.pathname.includes("/labor_tracking/labor_summary")) {
-        rateReport();
-    }
+if (location.pathname.includes("/labor_tracking/labor_summary")) {
+    rateReport();
+}
 
-    if (location.pathname.includes("/dock_receive/view_received")) {
-        findPalletReceive();
-    }
+if (location.pathname.includes("/dock_receive/view_received")) {
+    findPalletReceive();
+}
 
-    if (location.pathname.includes("/receive/pos_by_asin")) {
-        findPalletAsin();
-    }
+if (location.pathname.includes("/receive/pos_by_asin")) {
+    findPalletAsin();
+}
 
-    if (location.pathname.includes("/inventory/view_inventory_for_asin")) {
-        asinLaborTrack();
-    }
+if (location.pathname.includes("/inventory/view_inventory_for_asin")) {
+    asinLaborTrack();
+}
 
-    if (location.pathname.includes("/wms/pack_by_picklist")) {
-        problemSolve();
-    }
+if (location.pathname.includes("/wms/pack_by_picklist")) {
+    problemSolve();
+}

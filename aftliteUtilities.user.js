@@ -219,6 +219,7 @@ const problemSolve = () => {
                         console.log(notes.split(":")[1]) */
                         GM_xmlhttpRequest({
                             method: "POST",
+                            url: "https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR",
                             data: `{"Content":"${FALSE_SKIP_LOG}"}`,
                             headers: {
                                 "Content-Type": "application/json"
@@ -333,6 +334,47 @@ const highlightPsolve = () => {
     psolveLists.map(tr => { tr.style.backgroundColor = "yellow" });
 
     console.log(psolveLists)
+}
+
+const showPoQty = () => {
+    const PO = document.querySelector("hr").nextSibling.textContent.split("[")[1].split("]")[0];
+    console.log(PO)
+
+    const loadingText = document.createElement('div');
+    loadingText.style.textAlign = 'center';
+    loadingText.innerText = "Loading ASIN Labor Tracking."
+
+    setInterval(() => { loadingText.innerText += "." }, 1000);
+
+    loadingText.style.fontWeight = "bold";
+
+    const FORM = document.querySelector('form[action="/po_report/index"]');
+
+    FORM.appendChild(loadingText);
+
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: `https://aftlite-na.amazon.com/dock_receive/reconcile_shorts_overages?po=${PO}`,
+        onload: async (response) => {
+            const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+            const TABLE = PAGE.querySelector('table[id="Still Unpacking"]');
+            const TABLE_POINTER = PAGE.querySelector('.reportLayout > tbody');
+            console.log(TABLE_POINTER)
+
+            FORM.appendChild(TABLE);
+            loadingText.hidden = true;
+
+            //const reportLayout = [...tablePointer.children];
+            //reportLayout.shift();
+        }
+    });
+
+
+}
+
+
+if (location.pathname.includes("/po_report")) {
+    showPoQty();
 }
 
 if (location.pathname.includes("/wms/view_order")) {

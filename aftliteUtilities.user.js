@@ -190,7 +190,7 @@ const problemSolve = () => {
 
         let PSOLVE_LOCATION = item.weight.innerText;
 
-        if (item.location.innerText.includes("skipped")) {
+        if (item.location.innerText.includes("skipped") || item.location.innerText.includes("unknown")) {
             const cubiscanBtn = [...document.querySelectorAll("button")].filter(btn => btn.innerText.includes("Cubiscan"));
 
             const missingItemCubiscanBtn = cubiscanBtn.filter(btn => btn.previousSibling.previousSibling.value == item.asin.innerText )[0];
@@ -209,16 +209,17 @@ const problemSolve = () => {
                     console.log(TABLE)
 
                     const falseSkipBtn = document.querySelector("#falseSkipBtn");
-                    const FALSE_SKIP_LOG = `/md [** * ${PSOLVER} * **]() » [**${PSOLVE_LOCATION.trim()}**](https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack)`;
+                    let FALSE_SKIP_LOG = `/md [** * ${PSOLVER} * **]() » [**${PSOLVE_LOCATION.trim()}**](https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack)`;
                     // test = https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j
                     // https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR
                     falseSkipBtn.addEventListener("click", () => {
-                        let notes = prompt("Enter any comments", "");
-                        if(notes == null) notes = `NOTES: ${notes}`;
+                        /* let notes = prompt("Enter any comments. Press Escape if no comment.", "");
+                        notes = `**NOTES**: ${notes}`;
+                        if(notes !== null || notes.split(":")[1] == "") FALSE_SKIP_LOG += notes;
+                        console.log(notes.split(":")[1]) */
                         GM_xmlhttpRequest({
                             method: "POST",
-                            url: "https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j",
-                            data: `{"Content":"${FALSE_SKIP_LOG} ${notes}"}`,
+                            data: `{"Content":"${FALSE_SKIP_LOG}"}`,
                             headers: {
                                 "Content-Type": "application/json"
                             },

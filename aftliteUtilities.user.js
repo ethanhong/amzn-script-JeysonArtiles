@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFTLITE UTILITIES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.3
+// @version      0.5
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*
@@ -160,7 +160,6 @@ const asinLaborTrack = () => {
         }
     });
 }
-
 
 const problemSolve = () => {
     const ORDER_ID = [...document.querySelectorAll("#summary_table > tbody > tr")][0].children[1].innerText;

@@ -243,7 +243,7 @@ const problemSolve = () => {
                     const SHORT_URL = "https://hooks.chime.aws/incomingwebhooks/1f5eaae4-f8c3-46be-b614-dba9f47fb2e4?token=cFA3WVdZYzN8MXx3YVVNNVd4YWx4V1pDWWx1RFZhaVQwWXZZZ1JLeVpzVE02Zzl1OVpnUmZ3"
 
                     shortBtn.addEventListener("click", () => {
-                        let note = prompt(`Why are you shorting "${item.title.innerText}}"`, "Not In Stock");
+                        let note = prompt(`Why are you shorting "${item.title.innerText}"`, "Not In Stock");
                         SHORT_LOG += note.length > 0 || note == "null" ? ` » *${note} *` : note;
                         GM_xmlhttpRequest({
                             method: "POST",

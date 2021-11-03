@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         AFTLITE UTILITIES
+// @name         AFTLITE UTILITIES / TEST SERVER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.5
+// @version      0.6
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*
@@ -29,8 +29,18 @@ hotkeys('shift+/', function() {
     //if (script == null) return;
 });
 */
+function addColumn(TABLE) {
+    [...TABLE].forEach((row, i) => {
+        const input = document.createElement("input")
+        input.setAttribute('type', 'text')
+        const cell = document.createElement(i ? "td" : "th")
+        cell.appendChild(input)
+        row.appendChild(cell)
+    });
+}
 
 const AUTH_TOKEN = document.querySelector("meta[name=csrf-token]").content;
+const LOGGED_USER = document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
 
 const findPalletAsin = () => {
     const purchaseOrders = [...document.querySelectorAll(`#sortable-table-0 > tbody > tr`)];
@@ -54,8 +64,6 @@ const findPalletAsin = () => {
 
                 let palletIds = [];
 
-                console.log(TABLE)
-
                 TABLE_POINTER.map(tr => {
                     const cells = [...tr.cells];
                     const palletId = cells[0];
@@ -76,56 +84,73 @@ const findPalletAsin = () => {
     })
 }
 
-const findPalletReceive = () => {
-    const purchaseOrders = [...document.querySelectorAll(`#received_pos > tbody > tr`)];
+const paNYR = () => {
+    const nyrPallets = [...document.querySelectorAll(`#nyr_pallets > tbody > tr`)];
 
-    const today = new Date().getDate();
-
-    purchaseOrders.map(tr => {
+    nyrPallets.map(tr => {
         const cells = [...tr.cells];
-        const po = cells[0];
-        const vendor = cells[1];
-        const name = cells[2];
-        const receiver = cells[3];
-        const receiveTime = cells[4];
+        const palletId = cells[0];
+        const po = cells[1];
+        const category = cells[2];
+        const location = cells[3];
+        const status = cells[4];
+        const lastUpdated = cells[5];
+        const warning = cells[6];
+        const close = cells[7];
 
-        const PO = po.innerText;
+        palletId.innerHTML = `<a href=https://aftlite-na.amazon.com/dock_receive/print_labels?pallet_id=${palletId.innerText}&receivable_order_id=${po.innerText}>${palletId.innerText}</a>`;
+    })
+}
 
-        const receiveDate = Number(receiveTime.innerText.split(", ")[1].split(" ")[0]);
+const showPA = () => {
+    const purchaseOrders = [...document.querySelectorAll(`#received_pos tr`)];
 
-        receiveDate > (today - 7) && GM_xmlhttpRequest({
-            method: "GET",
-            url: `https://aftlite-na.amazon.com/dock_receive/pallets?receivable_order_id=${PO}`,
-            onload: async (response) => {
-                const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
-                const TABLE = PAGE.querySelector('.resultSet');
-                const TABLE_POINTER = [...PAGE.querySelectorAll('.reportLayout > tbody > tr')];
+    purchaseOrders.map((row, i) => {
+        const cell = document.createElement(i ? "td" : "th");
+        const PO = row.cells[0].innerText;
 
-                let palletIds = [];
-                let discarded = 0;
+        if (i == 0) {
+            cell.className = "sortcol";
+            cell.innerText = "Pallet No.";
+        } else {
+            cell.style.paddingRight = "10px";
+            cell.style.background = "white";
+            cell.style.textAlign = "center";
+            cell.style.valign = "top";
 
-                TABLE_POINTER.map(tr => {
-                    const cells = [...tr.cells];
-                    const palletId = cells[0];
-                    const category = cells[1];
-                    const location = cells[2];
-                    const status = cells[3];
-                    const temperature = cells[4];
-                    const lastUpdated = cells[5];
+            i < 123 && GM_xmlhttpRequest({
+                method: "GET",
+                url: `https://aftlite-na.amazon.com/dock_receive/pallets?receivable_order_id=${PO}`,
+                onload: async (response) => {
+                    const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+                    const TABLE = PAGE.querySelector('.resultSet');
+                    const TABLE_POINTER = [...PAGE.querySelectorAll('.reportLayout > tbody > tr')];
 
-                    const pa = ` ${category.innerText.toUpperCase()} = <b>${palletId.innerText}</b>`;
+                    let palletIds = [];
+                    let discarded = 0;
 
-                    status.innerText != "DISCARDED" && palletIds.push(pa);
-                    const discarded = status.innerText == "DISCARDED" && ``
-                })
+                    TABLE_POINTER.map(tr => {
+                        const cells = [...tr.cells];
+                        const palletId = cells[0];
+                        const category = cells[1];
+                        const location = cells[2];
+                        const status = cells[3];
+                        const temperature = cells[4];
+                        const lastUpdated = cells[5];
 
-                po.innerHTML = `<span style="color:#404040">${po.innerText}</span> <br> ${palletIds} ${discarded > 0 ? discarded : ""}`;
-            }
-        });
-    }
-                      )
+                        const pa = ` ${category.innerText.toUpperCase()} = <b> <a href=https://aftlite-na.amazon.com/dock_receive/print_labels?pallet_id=${palletId.innerText}&receivable_order_id=${PO}>${palletId.innerText}</a></b>`;
 
+                        status.innerText != "DISCARDED" && palletIds.push(pa);
+                        const discarded = status.innerText == "DISCARDED" && ``
 
+                    })
+                    cell.innerHTML = `${palletIds} ${discarded > 0 ? discarded : ""}`;
+                }
+            });
+        }
+
+        row.cells[0].after(cell);
+    });
 }
 
 const asinLaborTrack = () => {
@@ -206,13 +231,14 @@ const problemSolve = () => {
                     const TABLE = [...PAGE.querySelectorAll(".reportLayout > tbody > tr")];
                     const PICKER = TABLE[TABLE.length - 1].cells[12].innerText;
 
-                    console.log(TABLE)
+                    //console.log(TABLE)
 
                     const falseSkipBtn = document.querySelector("#falseSkipBtn");
 
                     const PSOLVE_LOCATION_URL = !PSOLVE_LOCATION.trim().includes("unknown") ? `https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}` : "";
                     let FALSE_SKIP_LOG = `/md *${PSOLVER}* ➥ [**${PSOLVE_LOCATION.trim()}**](${PSOLVE_LOCATION_URL}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack)`;
 
+                    //const SKIP_URL = "https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j";
                     const SKIP_URL = "https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR";
 
                     falseSkipBtn.addEventListener("click", () => {
@@ -240,6 +266,7 @@ const problemSolve = () => {
                     const SHORT_LOG_URL = !PSOLVE_LOCATION.trim().includes("unknown") ? `https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}` : "";
                     let SHORT_LOG = `/md *${PSOLVER}* ➥ [**${PSOLVE_LOCATION.trim()}**](${SHORT_LOG_URL}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack) » **QTY ${SHORTED}**`;
 
+                    //const SHORT_URL = "https://hooks.chime.aws/incomingwebhooks/f3d10f18-0d4b-4f9c-b65c-313ef3d1a48f?token=VUprbmpnNDd8MXxLQk9ITTNWN04ta2x2d1o4OGl1T2hWUjBsSmRkT2RnVVhfd3RHa2xtbXFv";
                     const SHORT_URL = "https://hooks.chime.aws/incomingwebhooks/1f5eaae4-f8c3-46be-b614-dba9f47fb2e4?token=cFA3WVdZYzN8MXx3YVVNNVd4YWx4V1pDWWx1RFZhaVQwWXZZZ1JLeVpzVE02Zzl1OVpnUmZ3"
 
                     shortBtn.addEventListener("click", () => {
@@ -314,7 +341,6 @@ const rateReport = () => {
 }
 
 const closePallet = () => {
-
     GM_xmlhttpRequest({
         method: "GET",
         url: `https://aftlite-na.amazon.com/dock_receive/view_nyr_pallets`,
@@ -375,10 +401,17 @@ const showPoQty = () => {
             //reportLayout.shift();
         }
     });
-
-
 }
 
+switch(location.pathname) {
+    case "/dock_receive/view_received":
+        LOGGED_USER !== "CHNUNEZB" && showPA();
+        break;
+    case "/dock_receive/view_nyr_pallets":
+        paNYR();
+        break;
+    default: console.log(location.pathname)
+}
 
 if (location.pathname.includes("/po_report")) {
     showPoQty();
@@ -390,10 +423,6 @@ if (location.pathname.includes("/wms/view_order")) {
 
 if (location.pathname.includes("/labor_tracking/labor_summary")) {
     rateReport();
-}
-
-if (location.pathname.includes("/dock_receive/view_received")) {
-    findPalletReceive();
 }
 
 if (location.pathname.includes("/receive/pos_by_asin")) {

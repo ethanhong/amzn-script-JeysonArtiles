@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         AFTLITE UTILITIES / TEST SERVER
+// @name         AFTLITE UTILITIES
 // @namespace    https://github.com/JeysonArtiles/amzn
 // @version      0.6
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive

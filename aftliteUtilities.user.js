@@ -9,26 +9,9 @@
 // @grant        GM_xmlhttpRequest
 // @connect      chime.aws
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
-// @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
-// @require      https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/barcodes/JsBarcode.code128.min.js
 // @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftliteUtilities.user.js
 // ==/UserScript==
 
-/*
-hotkeys('shift+/', function() {
-    const script = prompt(`==========\nSCRIPT STATUS\n==========\n\nEnter a number to toggle ON/OFF
-    \n1. ASIN LABOR TRACK: ${localStorage.asinLaborTrack}`).toUpperCase();
-
-    switch(script) {
-        case "1": localStorage.asinLaborTrack = !localStorage.asinLaborTrack || true;
-            break;
-        default: alert("teet")
-            break;
-    }
-
-    //if (script == null) return;
-});
-*/
 function addColumn(TABLE) {
     [...TABLE].forEach((row, i) => {
         const input = document.createElement("input")

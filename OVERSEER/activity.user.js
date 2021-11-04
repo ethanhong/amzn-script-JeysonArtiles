@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ OVERSEER ] ACTIVITY TRACKER
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      3.0
+// @version      4.0
 // @description  TRACK ACTIVITY IN REAL TIME
 // @author       JEYARTIL
 // @match        https://aftlite-na.amazon.com/labor_tracking/find_people
@@ -17,7 +17,7 @@ sessionStorage.activity_2 = JSON.stringify([]);
 const trackActivity = async (ACTION, EVERY_X_SECONDS) => {
     const formatString = (AA, ITEM, LOCATION) => {
         switch(ACTION) {
-            case "skip/pack": return `AA: ${AA} has SKIPPED: ${ITEM} @ LOCATION: ${LOCATION}`;
+            case "skip/pack": return `/md [**${AA.toUpperCase()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${AA}) » *${ITEM}* » [**${LOCATION}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?location_name=${LOCATION})`;
             case "pack": return `AA: ${AA} has PACKED: ${ITEM} @ LOCATION: ${LOCATION}`;
             case "bcc": return `AA: ${AA} is COUNTING @ LOCATION: ${LOCATION}`;
             case "TIMEOFFTASK": return `AA: ${AA} is TIMEOFFTASK`;

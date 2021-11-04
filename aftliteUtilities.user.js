@@ -182,6 +182,8 @@ const problemSolve = () => {
 
     const totes = [...new Set([...[...document.querySelectorAll("a")].filter(a => a.innerText.includes("Sp"))].map(a => a.innerText))];
 
+    if(totes == "") return;
+
     addToteText.value = totes;
 
     missing.map(itm => {

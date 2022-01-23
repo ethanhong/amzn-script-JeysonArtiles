@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ FIND BAGS ] COMO
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.6
+// @version      0.7
 // @description  INSERT FOUND BAGS INTO FOOTER COMO LABOR PAGE
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/labor*
@@ -11,6 +11,12 @@
 // @grant        none
 // @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
 // ==/UserScript==
+
+
+const STORE_ID = window.location.href.split("store/")[1].split("/")[0];
+localStorage.STORE_ID = STORE_ID;
+
+//alert(STORE_ID);
 
 hotkeys('shift+f', function() {
     const knownBags = JSON.parse(prompt("COPY FROM AFTLITE"));
@@ -63,7 +69,7 @@ const showStagedBags = async ({
 
 const comoPackages = async () => {
     const response = await fetch(
-        "https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/packages"
+        `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/packages`
     );
     const data = await response.json();
     let pkgs = [];
@@ -80,7 +86,7 @@ comoPackages();
 
 const comoMissingBags = async () => {
     const response = await fetch(
-        "https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/f170be3c-eda4-43dd-b6bd-2325b4d3c719/handoffTasks"
+        `https://como-operations-dashboard-iad.iad.proxy.amazon.com/api/store/${STORE_ID}/handoffTasks`
     );
 
     const { tasks } = await response.json();

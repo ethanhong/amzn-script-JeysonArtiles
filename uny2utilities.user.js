@@ -1,0 +1,541 @@
+// ==UserScript==
+// @name         AFTLITE UTILITIES
+// @namespace    https://github.com/JeysonArtiles/amzn
+// @version      0.8
+// @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
+// @author       jeyartil
+// @match        https://aftlite-na.amazon.com/*
+// @icon         https://www.google.com/s2/favicons?domain=amazon.com
+// @grant        GM_xmlhttpRequest
+// @connect      chime.aws
+// @require      https://code.jquery.com/jquery-3.6.0.min.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftliteUtilities.user.js
+// ==/UserScript==
+
+function addColumn(TABLE) {
+    [...TABLE].forEach((row, i) => {
+        const input = document.createElement("input")
+        input.setAttribute('type', 'text')
+        const cell = document.createElement(i ? "td" : "th")
+        cell.appendChild(input)
+        row.appendChild(cell)
+    });
+}
+
+const groupBy = function(xs, key) {
+    return xs.reduce(function(rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+};
+
+const AUTH_TOKEN = document.querySelector("meta[name=csrf-token]").content;
+const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
+
+const findPalletAsin = () => {
+    const purchaseOrders = [...document.querySelectorAll(`#sortable-table-0 > tbody > tr`)];
+
+    purchaseOrders.map(tr => {
+        const cells = [...tr.cells];
+        const po = cells[0];
+        const vendor = cells[1];
+        const quantityLeft = cells[2];
+        const lastVendorShip = cells[3];
+
+        const PO = po.innerText;
+
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: `https://aftlite-na.amazon.com/dock_receive/pallets?receivable_order_id=${PO}`,
+            onload: async (response) => {
+                const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+                const TABLE = PAGE.querySelector('.resultSet');
+                const TABLE_POINTER = [...PAGE.querySelectorAll('.reportLayout > tbody > tr')];
+
+                let palletIds = [];
+
+                TABLE_POINTER.map(tr => {
+                    const cells = [...tr.cells];
+                    const palletId = cells[0];
+                    const category = cells[1];
+                    const location = cells[2];
+                    const status = cells[3];
+                    const temperature = cells[4];
+                    const lastUpdated = cells[5];
+
+                    const pa = ` ${category.innerText.toUpperCase()} = <b>${palletId.innerText}</b>`;
+
+                    palletIds.push(pa);
+                })
+
+                po.innerHTML = `<span style="color:#404040">${po.innerText}</span> <br> ${palletIds}`;
+            }
+        });
+    })
+}
+
+const paNYR = () => {
+    const nyrPallets = [...document.querySelectorAll(`#nyr_pallets > tbody > tr`)];
+
+    nyrPallets.map(tr => {
+        const cells = [...tr.cells];
+        const palletId = cells[0];
+        const po = cells[1];
+        const category = cells[2];
+        const location = cells[3];
+        const status = cells[4];
+        const lastUpdated = cells[5];
+        const warning = cells[6];
+        const close = cells[7];
+
+        palletId.innerHTML = `<a href=https://aftlite-na.amazon.com/dock_receive/print_labels?pallet_id=${palletId.innerText}&receivable_order_id=${po.innerText}>${palletId.innerText}</a>`;
+    })
+}
+
+const showPA = () => {
+    const purchaseOrders = [...document.querySelectorAll(`#received_pos tr`)];
+
+    purchaseOrders.map((row, i) => {
+        const cell = document.createElement(i ? "td" : "th");
+        const PO = row.cells[0].innerText;
+
+        if (i == 0) {
+            cell.className = "sortcol";
+            cell.innerText = "Pallet No.";
+        } else {
+            cell.style.paddingRight = "10px";
+            cell.style.background = "white";
+            cell.style.textAlign = "center";
+            cell.style.valign = "top";
+
+            i < 123 && GM_xmlhttpRequest({
+                method: "GET",
+                url: `https://aftlite-na.amazon.com/dock_receive/pallets?receivable_order_id=${PO}`,
+                onload: async (response) => {
+                    const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+                    const TABLE = PAGE.querySelector('.resultSet');
+                    const TABLE_POINTER = [...PAGE.querySelectorAll('.reportLayout > tbody > tr')];
+
+                    let palletIds = [];
+                    let discarded = 0;
+
+                    TABLE_POINTER.map(tr => {
+                        const cells = [...tr.cells];
+                        const palletId = cells[0];
+                        const category = cells[1];
+                        const location = cells[2];
+                        const status = cells[3];
+                        const temperature = cells[4];
+                        const lastUpdated = cells[5];
+
+                        const pa = ` ${category.innerText.toUpperCase()} = <b> <a href=https://aftlite-na.amazon.com/dock_receive/print_labels?pallet_id=${palletId.innerText}&receivable_order_id=${PO}>${palletId.innerText}</a></b>`;
+
+                        status.innerText != "DISCARDED" && palletIds.push(pa);
+                        const discarded = status.innerText == "DISCARDED" && ``
+
+                    })
+                    cell.innerHTML = `${palletIds} ${discarded > 0 ? discarded : ""}`;
+                }
+            });
+        }
+
+        row.cells[0].after(cell);
+    });
+}
+
+const asinLaborTrack = () => {
+    const asinH2 = document.querySelector("h2").innerText.split(" ");
+    const ASIN = asinH2[asinH2.length - 1];
+
+    const loadingText = document.createElement('div');
+    loadingText.style.textAlign = 'center';
+    loadingText.innerText = "Loading ASIN Labor Tracking."
+
+    setInterval(() => { loadingText.innerText += "." }, 1000);
+
+    loadingText.style.fontWeight = "bold";
+
+    const FORM = document.querySelector('div[style="clear: both;"]');
+
+    FORM.appendChild(loadingText);
+
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: `https://aftlite-na.amazon.com/labor_tracking/lookup_history?asin=${ASIN}`,
+        onload: async (response) => {
+            const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+            const TABLE = PAGE.querySelector('.resultSet');
+            const TABLE_POINTER = PAGE.querySelector('.reportLayout > tbody');
+
+            FORM.appendChild(TABLE);
+            loadingText.hidden = true;
+
+            //const reportLayout = [...tablePointer.children];
+            //reportLayout.shift();
+        }
+    });
+}
+
+const problemSolve = () => {
+    const ORDER_ID = [...document.querySelectorAll("#summary_table > tbody > tr")][0].children[1].innerText;
+    const PSOLVER = document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
+
+    const addToteForm = document.querySelector(`form[action="/wms/set_tote"]`);
+    const addToteText = document.querySelector(`input[name="tote_code"]`);
+    const addToteBtn = document.querySelector(`form[action="/wms/set_tote"]`);
+    const addAsin = document.querySelector(`input[name="asin_or_upc"]`);
+
+    const missing = [...document.querySelectorAll(`tr[valign="top"]`)];
+
+    const totes = [...new Set([...[...document.querySelectorAll("a")].filter(a => a.innerText.includes("Sp"))].map(a => a.innerText))];
+
+    if(totes == "") return;
+
+    addToteText.value = totes;
+
+    missing.map(itm => {
+        const item = {};
+        item.location = itm.cells[0];
+        item.asin = itm.cells[1];
+        item.title = itm.cells[2];
+        item.weight = itm.cells[3];
+        item.picked = itm.cells[4];
+        item.packed = itm.cells[5];
+
+        const realWeight = item.weight.innerText;
+        item.weight.innerText = item.location.innerText.split("(")[0];
+
+        let PSOLVE_LOCATION = item.weight.innerText;
+
+        if (item.location.innerText.includes("skipped") || item.location.innerText.includes("unknown")) {
+            const cubiscanBtn = [...document.querySelectorAll("button")].filter(btn => btn.innerText.includes("Cubiscan"));
+
+            const missingItemCubiscanBtn = cubiscanBtn.filter(btn => btn.previousSibling.previousSibling.value == item.asin.innerText )[0];
+
+            item.location.innerHTML += "<br><button id='falseSkipBtn'>False Skip</button>";
+            item.location.innerHTML += "<br><button id='shortBtn'>Short</button>";
+
+            GM_xmlhttpRequest({
+                method: "GET",
+                url: `https://aftlite-na.amazon.com/labor_tracking/lookup_history?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}&tote_code=${totes}`,
+                onload: async (response) => {
+                    const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+                    const TABLE = [...PAGE.querySelectorAll(".reportLayout > tbody > tr")];
+                    const PICKER = TABLE[TABLE.length - 1].cells[12].innerText;
+
+                    //console.log(TABLE)
+
+                    const falseSkipBtn = document.querySelector("#falseSkipBtn");
+
+                    const PSOLVE_LOCATION_URL = !PSOLVE_LOCATION.trim().includes("unknown") ? `https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}` : "";
+                    let FALSE_SKIP_LOG = `/md *${PSOLVER}* ➥ [**${PSOLVE_LOCATION.trim()}**](${PSOLVE_LOCATION_URL}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack)`;
+
+                    //const SKIP_URL = "https://hooks.chime.aws/incomingwebhooks/a31525dd-151d-423f-a04b-ec74189d9506?token=VDBJbndTVVN8MXxjWE9vcTZ6VlhTblhXdGFfNTRRY2QtdkN4VXZxc2dwTnNNZWljX1dLSU1j";
+                    const SKIP_URL = "https://hooks.chime.aws/incomingwebhooks/dff6d61e-37e3-47b3-bda6-241bf8872987?token=eXJJbW9xNU58MXxuZExEdFhSYm5fbG9ZWktnbGtMU0QzQU1qU1dTUjVqZklHQzNScGpQUVJB";
+
+                    falseSkipBtn.addEventListener("click", () => {
+                        let note = prompt(`False Skip: "${item.title.innerText}"`, "");
+                        FALSE_SKIP_LOG += note.length > 0 || note == "null" ? ` » *${note} *` : note;
+                        GM_xmlhttpRequest({
+                            method: "POST",
+                            url: SKIP_URL,
+                            data: `{"Content":"${FALSE_SKIP_LOG}"}`,
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            onload: function(response) {
+                                //console.log(response.responseText);
+                            }
+                        });
+
+                        item.location.innerHTML = "<span style='color:red; font-weight:bold'>False Skip Reported</span>";
+                    })
+
+                    const SHORTED = Number(item.picked.innerText) - Number(item.packed.innerText);
+
+                    const shortBtn = document.querySelector("#shortBtn");
+
+                    const SHORT_LOG_URL = !PSOLVE_LOCATION.trim().includes("unknown") ? `https://aftlite-na.amazon.com/inventory/view_inventory_at?location_name=${PSOLVE_LOCATION.trim()}` : "";
+                    let SHORT_LOG = `/md *${PSOLVER}* ➥ [**${PSOLVE_LOCATION.trim()}**](${SHORT_LOG_URL}) » [**${item.asin.innerText}**](https://aftlite-na.amazon.com/inventory/view_inventory_for_asin?asin=${item.asin.innerText.trim()}) *(${item.title.innerText})* » [**${PICKER.toUpperCase().trim()}**](https://aftlite-na.amazon.com/labor_tracking/lookup_history?user_name=${PICKER.toLowerCase().trim()}) » [* **${totes}** *](https://aftlite-na.amazon.com/wms/pack_by_picklist?utf8=%E2%9C%93&authenticity_token=${AUTH_TOKEN}%3D&picklist_id=${totes}&pack=Pack) » **QTY ${SHORTED}**`;
+
+                    //const SHORT_URL = "https://hooks.chime.aws/incomingwebhooks/f3d10f18-0d4b-4f9c-b65c-313ef3d1a48f?token=VUprbmpnNDd8MXxLQk9ITTNWN04ta2x2d1o4OGl1T2hWUjBsSmRkT2RnVVhfd3RHa2xtbXFv";
+                    // UNJ1 const SHORT_URL = "https://hooks.chime.aws/incomingwebhooks/1f5eaae4-f8c3-46be-b614-dba9f47fb2e4?token=cFA3WVdZYzN8MXx3YVVNNVd4YWx4V1pDWWx1RFZhaVQwWXZZZ1JLeVpzVE02Zzl1OVpnUmZ3"
+                    const SHORT_URL = "https://hooks.chime.aws/incomingwebhooks/8d6191f1-3905-4a50-8d38-d3aa7707cc5d?token=S21lR1FEc1V8MXx5YTM0THpkZ2VwTlVYbXJzOHZfWXdONTEyYUtvX3gtZWVZYl9KRXlKTzln"
+
+                    shortBtn.addEventListener("click", () => {
+                        let note = prompt(`Why are you shorting: "${item.title.innerText}"`, "Not In Stock");
+                        SHORT_LOG += note.length > 0 || note == "null" ? ` » *${note} *` : note;
+                        GM_xmlhttpRequest({
+                            method: "POST",
+                            url: SHORT_URL,
+                            data: `{"Content":"${SHORT_LOG}"}`,
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            onload: function(response) {
+                                //console.log(response.responseText);
+                            }
+                        });
+
+                        item.location.innerHTML = "<span style='color:red; font-weight:bold'>Short Reported</span>";
+                    })
+
+                    item.weight.innerText = realWeight;
+                }
+            });
+
+        }
+
+        const itemName = item.title.innerText;
+        const itemAsin = item.asin.innerText;
+
+        const copyAsin = () => { addAsin.value = itemAsin };
+
+        item.title.addEventListener("click", () => copyAsin());
+        item.title.innerHTML = `<a href="#">${itemName}</a>`;
+    });
+}
+
+const rateReport = () => {
+    const table = [...document.querySelectorAll("#labor_summary_table > tbody > tr")];
+    const hr = [...document.querySelectorAll("hr")][1];
+
+    const inboundRoles = table.map(tr => {
+        const cells = {};
+        cells.func = tr.cells[0].innerText.trim();
+        cells.zone = tr.cells[1].innerText.trim();
+        cells.units = tr.cells[2].innerText.trim();
+        cells.duration = tr.cells[3].innerText.trim();
+        cells.rate = tr.cells[4].innerText.trim();
+
+        cells.duration = Number(cells.duration).toFixed(2);
+
+        return cells
+    }).filter(roles => roles.func == "receive2_direct" || roles.func == "receive_direct" || roles.func == "stow");
+
+    const inboundDiv = document.createElement("div");
+    inboundDiv.style.color = "black"
+
+    hr.appendChild(inboundDiv);
+
+    let totalUnits = 0;
+    let avgRate = 0;
+    let funcTally = 0;
+    let totalDuration = 0;
+    inboundRoles.map( ({func, zone, units, duration, rate }) => {
+        funcTally++;
+        inboundDiv.innerHTML += `<b>${func.toUpperCase()}</b> = <b>UNITS:</b> <span style="font-size:20px;font-weight:900px">${units.toUpperCase()}</span> <b>DURATION:</b> <span style="font-size:20px;font-weight:900px">${duration.toUpperCase()}</span> <b>RATE:</b> <span style="font-size:20px;font-weight:900px">${rate.toUpperCase()}</span> <br>`;
+        inboundDiv.innerHTML += `<br>`;
+        totalUnits += Number(units);
+        avgRate += Number(rate)
+        totalDuration += Number(duration);
+    })
+    inboundDiv.innerHTML += `<b>TOTAL UNITS:</b> <span style="font-size:20px;font-weight:900px">${totalUnits}</span> `;
+}
+
+const closePallet = () => {
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: `https://aftlite-na.amazon.com/dock_receive/view_nyr_pallets`,
+        onload: async (response) => {
+            const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+            const TABLE = [...PAGE.querySelectorAll("#nyr_pallets > tbody > tr")];
+
+            TABLE.map(tr => {
+                const palletId = tr.cells[0];
+                const po = tr.cells[0];
+                const category = tr.cells[0];
+                const location = tr.cells[0];
+                const status = tr.cells[0];
+                const lastUpdated = tr.cells[0];
+                const close = tr.cells[0];
+            })
+        }
+    });
+}
+
+const highlightPsolve = () => {
+    const table = [...document.querySelectorAll("#picklists_table > tbody > tr")];
+    const psolveLists = table.filter(tr => tr.cells[2].innerText == "Problem-solve");
+    psolveLists.map(tr => { tr.style.backgroundColor = "yellow" });
+
+    console.log(psolveLists)
+}
+
+const showPoQty = () => {
+    const PO = document.querySelector("hr").nextSibling.textContent.split("[")[1].split("]")[0];
+    console.log(PO)
+
+    const loadingText = document.createElement('div');
+    loadingText.style.textAlign = 'center';
+    loadingText.innerText = "Loading ASIN Labor Tracking."
+
+    setInterval(() => { loadingText.innerText += "." }, 1000);
+
+    loadingText.style.fontWeight = "bold";
+
+    const FORM = document.querySelector('form[action="/po_report/index"]');
+
+    FORM.appendChild(loadingText);
+
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: `https://aftlite-na.amazon.com/dock_receive/reconcile_shorts_overages?po=${PO}`,
+        onload: async (response) => {
+            const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
+            const TABLE = PAGE.querySelector('table[id="Still Unpacking"]');
+            const TABLE_POINTER = PAGE.querySelector('.reportLayout > tbody');
+            console.log(TABLE_POINTER)
+
+            FORM.appendChild(TABLE);
+            loadingText.hidden = true;
+
+            //const reportLayout = [...tablePointer.children];
+            //reportLayout.shift();
+        }
+    });
+}
+
+const autoLog = () => {
+    const inputUsername = document.querySelector('#name') || document.querySelector('#ap_email');
+    inputUsername.value = (window.location.href.indexOf("aftlite-portal") != -1) ? "jeyartil@amazon.com" : "jeyartil";
+
+    const inputPassword = document.querySelector('#password') || document.querySelector('#ap_password');
+    inputPassword.value = "123456";
+
+    const signIn = document.querySelector("input[name=commit]") || document.querySelector("#signInSubmit");
+    //if (window.location.href.indexOf("/login") != -1) signIn.click();
+    if (window.location.href.indexOf("aftlite-na") || window.location.href.indexOf("aftlite-portal")) signIn.click()
+
+}
+
+const pickAdminGroup = () => {
+    const picklistGroupTable = [...document.querySelectorAll("#wms_orders_in_state > tbody > tr")];
+
+    const picks = [];
+
+    picklistGroupTable.map(tr => {
+        const cells = [...tr.cells];
+
+        const picklistGroup = cells[0];
+        const assignedUser = cells[1];
+        const status = cells[2];
+        const completedAt = cells[3];
+        const picklist = cells[4];
+        const order = cells[5];
+        const zone = cells[6];
+
+        const pick = {
+            picklistGroup: { link: picklistGroup.firstChild.href, value: picklistGroup.innerText },
+            assignedUser: { link: assignedUser.firstChild.href, value: assignedUser.innerText },
+            status: { value: status.innerText },
+            completedAt: { value: completedAt.innerText },
+            picklist: { link: picklist.firstChild.href, value: picklist.innerText.split(" (")[0] },
+            picklistQty: { value: picklist.innerText.split("(")[1].split(" ")[0] },
+            order: { link: order.firstChild.href, value: order.innerText },
+            zone: { value: zone.innerText }
+        };
+
+        picks.push(pick);
+
+    })
+
+    console.log(picks)
+}
+
+const pickAdmin = () => {
+    const convertToWindowFormat = window => `${window.split(":")[0]}:00 - ${Number(window.split(":")[0]) === 24 && "00" || Number(window.split(":")[0]) + 2}:00`
+
+    const picklistGroupTable = [...document.querySelectorAll("#wms_orders_in_state > tbody > tr")];
+
+    const picks = [];
+
+    picklistGroupTable.map(tr => {
+        const cells = [...tr.cells];
+
+        const picklistId = cells[0];
+        const orderId = cells[1];
+        const state = cells[2];
+        const pickzone = cells[3];
+        const orderType = cells[4];
+        const numberTotes = cells[5];
+        const numberItems = cells[6];
+        const user = cells[7];
+        const pullTime = cells[8];
+        const created = cells[9];
+        const updated = cells[10];
+        const actions = cells[11];
+
+        const pick = {
+            picklistId: { link: picklistId.firstElementChild.href, value: picklistId.innerText },
+            orderId: { link: orderId.firstElementChild.firstElementChild.href, value: orderId.innerText },
+            internalId: { value: orderId.firstElementChild.firstElementChild.href.split("=")[1] },
+            state: { value: state.innerText },
+            pickzone: { value: pickzone.innerText },
+            orderType: { value: orderType.innerText },
+            numberTotes: { value: numberTotes.innerText },
+            numberItems: { value: numberItems.innerText },
+            user: { value: user.innerText },
+            pullTime: { value: pullTime.innerText },
+            created: { value: created.innerText },
+            updated: { value: updated.innerText },
+        };
+
+        picks.push(pick);
+
+    })
+
+    const pickWindowsRaw = picks.map(x => x.pullTime.value);
+    const pickWindows = [... new Set(picks.map(x => x.pullTime.value))];
+    const picklists = { pullTimes: pickWindows };
+
+    picklists.pullTimes.count = picklists.pullTimes.map(pullTime => {
+        return { pullTime, count: pickWindowsRaw.filter(pickWindow => pickWindow === pullTime).length };
+    });
+
+    picklists.pullTimes.count = picklists.pullTimes.count.sort((a, b) => b - a)
+
+    const h1 = document.querySelector("h1");
+    const pullTimesDiv = document.createElement("div");
+    pullTimesDiv.innerHTML = "<br>";
+
+    picklists.pullTimes.count.map(({pullTime, count}) => {
+        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} </span> &nbsp;`
+    })
+
+    h1.append(pullTimesDiv);
+}
+
+
+if (location.pathname.includes("/login/signin")) {
+    //autoLog();
+}
+
+if (location.pathname.includes("/po_report")) {
+    showPoQty();
+}
+
+if (location.pathname.includes("/wms/view_order")) {
+    highlightPsolve();
+}
+
+if (location.pathname.includes("/labor_tracking/labor_summary")) {
+    rateReport();
+}
+
+if (location.pathname.includes("/receive/pos_by_asin")) {
+    findPalletAsin();
+}
+
+if (location.pathname.includes("/inventory/view_inventory_for_asin")) {
+    asinLaborTrack();
+}
+
+if (location.pathname.includes("/wms/pack_by_picklist")) {
+    problemSolve();
+}
+
+if (location.pathname.includes("/wms/view_picklists")) {
+    pickAdmin();
+}
+

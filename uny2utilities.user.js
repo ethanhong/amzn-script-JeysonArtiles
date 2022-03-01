@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         UNY2 UTILITIES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      Q.0
+// @version      1.0
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*

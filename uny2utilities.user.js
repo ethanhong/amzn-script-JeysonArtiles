@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFTLITE UTILITIES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.8
+// @version      0.9
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*
@@ -31,6 +31,7 @@ const groupBy = function(xs, key) {
 
 const AUTH_TOKEN = document.querySelector("meta[name=csrf-token]").content;
 const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
+!(location.pathname.includes("/login")) && localStorage.setItem("logged_user", LOGGED_USER);
 
 const findPalletAsin = () => {
     const purchaseOrders = [...document.querySelectorAll(`#sortable-table-0 > tbody > tr`)];
@@ -397,14 +398,21 @@ const showPoQty = () => {
 }
 
 const autoLog = () => {
+    const login = localStorage.getItem("logged_user").toLowerCase();
+    const password = localStorage.getItem("password") == null && prompt("Enter Password to enable Auto-Login") || localStorage.getItem("password");
+
+    localStorage.setItem("password", password);
+    const getPassword = localStorage.getItem("password");
+
     const inputUsername = document.querySelector('#name') || document.querySelector('#ap_email');
-    inputUsername.value = (window.location.href.indexOf("aftlite-portal") != -1) ? "jeyartil@amazon.com" : "jeyartil";
+    inputUsername.value = (window.location.href.indexOf("aftlite-portal") != -1) ? `${login}@amazon.com` : login;
 
     const inputPassword = document.querySelector('#password') || document.querySelector('#ap_password');
-    inputPassword.value = "123456";
+    inputPassword.value = getPassword;
 
     const signIn = document.querySelector("input[name=commit]") || document.querySelector("#signInSubmit");
-    //if (window.location.href.indexOf("/login") != -1) signIn.click();
+
+    if (window.location.href.indexOf("/login") != -1) signIn.click();
     if (window.location.href.indexOf("aftlite-na") || window.location.href.indexOf("aftlite-portal")) signIn.click()
 
 }
@@ -508,7 +516,7 @@ const pickAdmin = () => {
 
 
 if (location.pathname.includes("/login/signin")) {
-    //autoLog();
+    autoLog();
 }
 
 if (location.pathname.includes("/po_report")) {

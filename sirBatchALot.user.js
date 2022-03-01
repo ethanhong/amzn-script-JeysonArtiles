@@ -3,7 +3,7 @@
 // @namespace    https://github.com/JeysonArtiles/amzn
 // @version      0.1
 // @description  BATCHING ALERTS @ T+5 & T+25
-// @author       You
+// @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/8064dfb4-ec83-417e-8dcf-089c0e72ea22/dash
 // @icon         https://www.google.com/s2/favicons?domain=amazon.com
 // @grant        GM_xmlhttpRequest

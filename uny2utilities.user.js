@@ -10,7 +10,7 @@
 // @grant        GM_xmlhttpRequest
 // @connect      chime.aws
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
-// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/aftliteUtilities.user.js
+// @downloadURL  https://raw.githubusercontent.com/JeysonArtiles/amzn/master/uny2Utilities.user.js
 // ==/UserScript==
 
 function addColumn(TABLE) {
@@ -517,7 +517,7 @@ const pickAdmin = () => {
 
 
 if (location.pathname.includes("/login/signin")) {
-    autoLog();
+    //autoLog();
 }
 
 if (location.pathname.includes("/po_report")) {

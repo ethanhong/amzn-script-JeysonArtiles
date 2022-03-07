@@ -421,3 +421,70 @@ if (location.pathname.includes("/inventory/view_inventory_for_asin")) {
 if (location.pathname.includes("/wms/pack_by_picklist")) {
     problemSolve();
 }
+
+const pickAdmin = () => {
+    const convertToWindowFormat = window => `${window.split(":")[0]}:00 - ${Number(window.split(":")[0]) === 24 && "00" || Number(window.split(":")[0]) + 2}:00`
+
+    const picklistGroupTable = [...document.querySelectorAll("#wms_orders_in_state > tbody > tr")];
+
+    const picks = [];
+
+    picklistGroupTable.map(tr => {
+        const cells = [...tr.cells];
+
+        const picklistId = cells[0];
+        const orderId = cells[1];
+        const state = cells[2];
+        const pickzone = cells[3];
+        const orderType = cells[4];
+        const numberTotes = cells[5];
+        const numberItems = cells[6];
+        const user = cells[7];
+        const pullTime = cells[8];
+        const created = cells[9];
+        const updated = cells[10];
+        const actions = cells[11];
+
+        const pick = {
+            picklistId: { link: picklistId.firstElementChild.href, value: picklistId.innerText },
+            orderId: { link: orderId.firstElementChild.firstElementChild.href, value: orderId.innerText },
+            internalId: { value: orderId.firstElementChild.firstElementChild.href.split("=")[1] },
+            state: { value: state.innerText },
+            pickzone: { value: pickzone.innerText },
+            orderType: { value: orderType.innerText },
+            numberTotes: { value: numberTotes.innerText },
+            numberItems: { value: numberItems.innerText },
+            user: { value: user.innerText },
+            pullTime: { value: pullTime.innerText },
+            created: { value: created.innerText },
+            updated: { value: updated.innerText },
+        };
+
+        picks.push(pick);
+
+    })
+
+    const pickWindowsRaw = picks.map(x => x.pullTime.value);
+    const pickWindows = [... new Set(picks.map(x => x.pullTime.value))];
+    const picklists = { pullTimes: pickWindows };
+
+    picklists.pullTimes.count = picklists.pullTimes.map(pullTime => {
+        return { pullTime, count: pickWindowsRaw.filter(pickWindow => pickWindow === pullTime).length };
+    });
+
+    picklists.pullTimes.count = picklists.pullTimes.count.sort((a, b) => Number(a.pullTime.split(" ")[1].split(":")[0]) - Number(b.pullTime.split(" ")[1].split(":")[0]))
+
+    const h1 = document.querySelector("h1");
+    const pullTimesDiv = document.createElement("div");
+    pullTimesDiv.innerHTML = "<br>";
+
+    picklists.pullTimes.count.map(({pullTime, count}) => {
+        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} </span> &nbsp;`
+    })
+
+    h1.append(pullTimesDiv);
+}
+
+if (location.pathname.includes("/wms/view_picklists")) {
+    pickAdmin();
+}

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFTLITE UTILITIES
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.6
+// @version      0.8
 // @description  Many scripts; Load ASIN Labor Track / Get PA Number ASIN + Receive
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*

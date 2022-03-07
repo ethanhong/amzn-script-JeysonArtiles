@@ -423,7 +423,7 @@ if (location.pathname.includes("/wms/pack_by_picklist")) {
 }
 
 const pickAdmin = () => {
-    const convertToWindowFormat = window => `${window.split(":")[0]}:00 - ${Number(window.split(":")[0]) === 24 && "00" || Number(window.split(":")[0]) + 2}:00`
+    const convertToWindowFormat = window => `${window.split(":")[0] == 24 && "00" || window.split(":")[0]}:00 - ${Number(window.split(":")[0]) + 2}:00`;
 
     const picklistGroupTable = [...document.querySelectorAll("#wms_orders_in_state > tbody > tr")];
 
@@ -479,7 +479,7 @@ const pickAdmin = () => {
     pullTimesDiv.innerHTML = "<br>";
 
     picklists.pullTimes.count.map(({pullTime, count}) => {
-        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} </span> &nbsp;`
+        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} units</span> &nbsp;`
     })
 
     h1.append(pullTimesDiv);

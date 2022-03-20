@@ -377,7 +377,7 @@ const pickAdmin = () => {
     pullTimesDiv.innerHTML = "<br>";
 
     picklists.pullTimes.count.map(({pullTime, count}) => {
-        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} units</span> &nbsp;`
+        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} picklists</span> &nbsp;`
     })
 
     h1.append(pullTimesDiv);

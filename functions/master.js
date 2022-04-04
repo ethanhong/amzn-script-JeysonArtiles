@@ -1,1 +1,1 @@
-const testAlert = () => alert("This alert function is  a test");
+const testAlert = () => alert("is changes");

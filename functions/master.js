@@ -1,4 +1,5 @@
 const parse = {};
+
 parse.link = (domElement) => {
     const a = [...domElement.children].find(child => child.href);
 
@@ -38,3 +39,24 @@ parse.table = (domTable) => {
 
     return table.parsed
 };
+
+const sort = {};
+
+sort.picklistGroup = (dataArray, key) => {
+    const sortBy = [... new Set(picklistGroups.table.map(x => x[key].value))];
+
+    let group = [];
+
+    sortBy.map(picker => {
+        const build = {};
+        build.param = picker;
+        build.picks = [];
+        dataArray.map(pick => {
+            if (picker == pick[key].value) build.picks.push(pick);
+
+        });
+        group.push(build)
+    })
+
+    return group
+}

@@ -374,13 +374,31 @@ const pickAdmin = () => {
 
     const h1 = document.querySelector("h1");
     const pullTimesDiv = document.createElement("div");
+    const totalUnitsDiv = document.createElement("div");
     pullTimesDiv.innerHTML = "<br>";
 
+    let units = [];
+    let totalUnits = 0;
+    pickWindows.map(window => {
+        let task = { window };
+        let count = 0;
+        picks.map(pick => {
+            if (window === pick.pullTime.value) {
+                count += Number(pick.numberItems.value)
+                totalUnits += Number(pick.numberItems.value)
+            }
+        })
+        task.count = count;
+
+        units.push(task)
+    });
     picklists.pullTimes.count.map(({pullTime, count}) => {
-        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${count} picklists</span> &nbsp;`
+        let unit = units.find(x => x.window == pullTime);
+        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; margin: 5px; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${unit.count} units (${count} picklists)</span> &nbsp;`
     })
 
     h1.append(pullTimesDiv);
+    h1.append();
 }
 
 if (location.pathname.includes("/wms/view_picklists")) {

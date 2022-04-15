@@ -51,17 +51,19 @@ const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySele
 let FC = document.title.split("]")[0].split("[")[1] || document.querySelector(".wms-name").innerText;
 FC = FC.trim();
 
-if(FC == "UNJ1" || FC == "UNY2") { } else { alert(`${FC} is not supported`); }
+if(FC == "UNJ1" || FC == "UNY2" || FC == "UFL6") { } else { alert(`${FC} is not supported`); }
 
-const hooks = { uny2: {}, unj1: {} };
+const hooks = { uny2: {}, unj1: {}, ufl6: {} };
 
 hooks.uny2.falseSkipTest = "https://hooks.chime.aws/incomingwebhooks/c2e5058a-7487-4ca3-a91c-ff47b77dbb27?token=S2NZZ1JLeVV8MXxQd0RkVS1aWG5hQ0hNU2Y2VjFzTk05bjAtVUgzb2dFaEVKSUVKaEd1dlJB";
 hooks.uny2.falseSkip = "https://hooks.chime.aws/incomingwebhooks/dff6d61e-37e3-47b3-bda6-241bf8872987?token=eXJJbW9xNU58MXxuZExEdFhSYm5fbG9ZWktnbGtMU0QzQU1qU1dTUjVqZklHQzNScGpQUVJB";
 hooks.uny2.short = "https://hooks.chime.aws/incomingwebhooks/8d6191f1-3905-4a50-8d38-d3aa7707cc5d?token=S21lR1FEc1V8MXx5YTM0THpkZ2VwTlVYbXJzOHZfWXdONTEyYUtvX3gtZWVZYl9KRXlKTzln";
+hooks.ufl6.short = "https://hooks.chime.aws/incomingwebhooks/7a35edd4-ac8f-4be0-8d19-e0e823497738?token=RldzOGQ4ZkR8MXw4TTkzZXk1ajFJZlNXbVNzeC1LSmZXZzdpdWhvM2VHM1NqVlFoLXFtVWk4";
 
 hooks.unj1.falseSkipTest = "https://hooks.chime.aws/incomingwebhooks/77851569-7f16-4247-8d46-9ec2ec315fce?token=OEdpczJNd1h8MXxjTVZKME5MeTd5MngxQkctQzhhcmpFdjFvOGdHODRmODI4VDAzMjhHSEk0";
 hooks.unj1.falseSkip = "https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR";
 hooks.unj1.short = "https://hooks.chime.aws/incomingwebhooks/1f5eaae4-f8c3-46be-b614-dba9f47fb2e4?token=cFA3WVdZYzN8MXx3YVVNNVd4YWx4V1pDWWx1RFZhaVQwWXZZZ1JLeVpzVE02Zzl1OVpnUmZ3";
+hooks.ufl6.short = "https://hooks.chime.aws/incomingwebhooks/3a428a19-8a16-4e56-920a-0789b1468ffa?token=eE9lOW5pa1V8MXxudzNtbkkwdnYzbUZIanV0akFHMzVYZ2R3NlNrTlZQdVRXVHNsMXpRZ1FR";
 
 const selectHook = (CHAT) => {
     switch(FC) {

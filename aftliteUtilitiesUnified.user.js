@@ -81,7 +81,7 @@ const selectHook = (CHAT) => {
                 case "SHORT": return hooks.unj1.short;
             }
             break;
-        case "UNJ1":
+        case "UFL6":
             switch(CHAT) {
                 case "FALSE_SKIP": return hooks.ufl6.falseSkip;
                 case "SHORT": return hooks.ufl6.short;

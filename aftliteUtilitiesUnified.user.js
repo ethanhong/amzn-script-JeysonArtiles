@@ -403,7 +403,7 @@ const pickAdmin = () => {
     });
     picklists.pullTimes.count.map(({pullTime, count}) => {
         let unit = units.find(x => x.window == pullTime);
-        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; margin: 5px; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${unit.count} units (${count} picklists)</span> &nbsp;`
+        pullTimesDiv.innerHTML += `<span style="background-color:#555555; color: white; margin: 5px; padding: 5px; font-weight: bold; text-align: center; min-width: 175px; display: inline-block"><b>${convertToWindowFormat(pullTime.split(" ")[1])} = </b> ${unit.count} units (${count} picklists / ${Math.ceil(count / 14)} pickers)</span> &nbsp;`
     totalUnitsDiv.innerHTML = `<h4>Total Units: ${totalUnits}</h4>`;
     })
 

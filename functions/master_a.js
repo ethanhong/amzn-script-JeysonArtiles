@@ -1,4 +1,6 @@
-const ifp = (pathname, func) => if (location.pathname.includes(pathname)) () => func
+const ifp = (pathname, func) => {
+    if (location.pathname.includes(pathname)) () => func;
+}
 
 const parse = { table: {} };
 

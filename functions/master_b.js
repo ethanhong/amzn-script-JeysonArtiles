@@ -40,10 +40,8 @@ parse.table = (domTable) => {
     return table.parsed
 };
 
-const sort = {};
-
-sort.picklistGroup = (dataArray, key) => {
-    const sortBy = [... new Set(picklistGroups.table.map(x => x[key].value))];
+const sort = (dataArray, key) => {
+    const sortBy = [... new Set(dataArray.map(x => x[key].value))];
 
     let group = [];
 

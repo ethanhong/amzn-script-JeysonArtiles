@@ -1,4 +1,4 @@
-const parse = {};
+const parse = { table: {} };
 
 parse.link = (domElement) => {
     const a = [...domElement.children].find(child => child.href);
@@ -11,7 +11,7 @@ parse.items = (domElement) => {
     if (qty.includes("item")) return Number(qty.split(" (")[1].split(" i")[0]);
 }
 
-parse.table = (domTable) => {
+parse.table.picklistGroup = (domTable) => {
     const table = {};
     table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
     table.rows = [...table.query.rows];

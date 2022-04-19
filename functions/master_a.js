@@ -11,7 +11,7 @@ parse.items = (domElement) => {
     if (qty.includes("item")) return Number(qty.split(" (")[1].split(" i")[0]);
 }
 
-parse.table.picklistGroup = (domTable) => {
+parse.table = (domTable) => {
     const table = {};
     table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
     table.rows = [...table.query.rows];

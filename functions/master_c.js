@@ -62,3 +62,19 @@ const sort = (dataArray, key) => {
 
     return group
 }
+
+const print = {};
+print.chime = (MSG, URL) => {
+    //const URL = "";
+    GM_xmlhttpRequest({
+        method: "POST",
+        url: URL,
+        data: `{"Content":"${MSG}"}`,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        onload: function(response) {
+            //console.log(response.responseText);
+        }
+    });
+}

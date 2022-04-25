@@ -78,3 +78,23 @@ print.chime = (MSG, URL) => {
         }
     });
 }
+
+
+
+
+
+if (location.hostname.includes("aftlite")) {
+    
+    const AUTH_TOKEN = document.querySelector("meta[name=csrf-token]").content;
+    const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
+
+    let FC = document.title.split("]")[0].split("[")[1] || document.querySelector(".wms-name").innerText;
+    FC = FC.trim();
+
+    !(location.pathname.includes("/login")) && localStorage.setItem("logged_user", LOGGED_USER);
+    
+    sessionStorage.setItem("AUTH_TOKEN", AUTH_TOKEN);
+    sessionStorage.setItem("LOGGED_USER", LOGGED_USER);
+    sessionStorage.setItem("FC", FC);
+    
+}

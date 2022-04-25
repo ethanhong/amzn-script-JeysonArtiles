@@ -106,8 +106,10 @@ if (location.hostname.includes("aftlite")) {
 }
 
 // REQUEST URLS
+const uphDrilldown = (AUTH_TOKEN, START_MONTH, START_DAY, START_YEAR, START_HOUR, END_MONTH, END_DAY, END_YEAR, END_HOUR, FUNCTION, ZONE = "--") => {
+    return `https://aftlite-na.amazon.com/labor_tracking/uph_drilldown?authenticity_token=${AUTH_TOKEN}&date[start_month]=${START_MONTH}&date[start_day]=${START_DAY}&date[start_year]=${START_YEAR}&date[start_hour]=${START_HOUR}&date[end_month]=${END_MONTH}&date[end_day]=${END_DAY}&date[end_year]=${END_YEAR}&date[end_hour]=${END_HOUR}&function=${FUNCTION}&zone=${ZONE}`;
+}
+
 const req = {};
-req.uphDrilldown = `https://aftlite-na.amazon.com/labor_tracking/uph_drilldown?authenticity_token=${AUTH_TOKEN}&date[start_month]=${START_MONTH}&date[start_day]=${START_DAY}&date[start_year]=${START_YEAR}&date[start_hour]=${START_HOUR}&date[end_month]=${END_MONTH}&date[end_day]=${END_DAY}&date[end_year]=${END_YEAR}&date[end_hour]=${END_HOUR}&function=${FUNCTION}&zone=${ZONE}`;
-
-
+req.uphDrilldown = uphDrilldown();
 

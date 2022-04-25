@@ -84,7 +84,6 @@ print.chime = (MSG, URL) => {
 
 
 if (location.hostname.includes("aftlite")) {
-    
     const AUTH_TOKEN = document.querySelector("meta[name=csrf-token]").content;
     const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();
 

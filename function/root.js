@@ -26,6 +26,8 @@ parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "", UPDATE_INTERVAL 
             const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
 
             PARSE_QUERY = ROOT_QUERY;
+            
+            console.log(PARSE_QUERY)
 
             if (UPDATE_INTERVAL > 0) {
                 setInterval(() => DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML, UPDATE_INTERVAL * 1000)

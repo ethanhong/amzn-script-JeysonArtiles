@@ -15,6 +15,8 @@ parse.items = (domElement) => {
     if (qty.includes("item")) return Number(qty.split(" (")[1].split(" i")[0]);
 }
 
+parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
+
 parse.html = (URL, EXECUTE) => {
     GM_xmlhttpRequest({
         method: "GET",

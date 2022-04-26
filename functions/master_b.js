@@ -1,7 +1,3 @@
-// ==UserScript==
-// @grant        GM_xmlhttpRequest
-// ==/UserScript==
-
 const ifp = (pathname, func) => {
     if (location.pathname.includes(pathname)) () => func;
 }

@@ -16,6 +16,7 @@ parse.items = (domElement) => {
 }
 
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
+
 /*
 parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
     GM_xmlhttpRequest({

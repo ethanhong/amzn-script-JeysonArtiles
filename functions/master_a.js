@@ -15,14 +15,15 @@ parse.items = (domElement) => {
     if (qty.includes("item")) return Number(qty.split(" (")[1].split(" i")[0]);
 }
 
-parse.html = (URL, ELEMENT, QUERY) => {
+parse.html = (URL, EXECUTE) => {
     GM_xmlhttpRequest({
         method: "GET",
         url: URL,
         onload: async (response) => {
             const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
 
-            ELEMENT.innerHTML = PAGE.querySelector(QUERY).innerHTML;
+            EXECUTE();
+            
             return PAGE
         }
     });

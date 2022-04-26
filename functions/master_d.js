@@ -22,6 +22,8 @@ parse.html = (URL) => {
         onload: async (response) => {
             const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
             
+            console.log(PAGE)
+            
             return PAGE
         }
     });

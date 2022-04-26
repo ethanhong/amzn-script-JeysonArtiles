@@ -26,7 +26,7 @@ parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "", UPDATE_INTERVAL 
                 const PARSED_HTML = parse.dom(response);
                 const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
 
-                PARSE_QUERY = ROOT_QUERY;
+                PARSE_QUERY == "" && PARSE_QUERY = ROOT_QUERY;
 
                 DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML
             }

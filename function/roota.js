@@ -17,21 +17,6 @@ parse.items = (domElement) => {
 
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
-parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
-    GM_xmlhttpRequest({
-        method: "GET",
-        url: URL,
-        onload: async (response) => {
-            const PARSED_HTML = parse.dom(response);
-            const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
-
-            if (PARSE_QUERY == "") PARSE_QUERY = ROOT_QUERY;
-
-            DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML
-        }
-    });
-}
-
 parse.table = (domTable) => {
     const table = {};
     table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
@@ -60,6 +45,38 @@ parse.table = (domTable) => {
 
     return table.parsed
 };
+
+const update = {};
+
+update.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: URL,
+        onload: async (response) => {
+            const PARSED_HTML = parse.dom(response);
+            const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
+
+            if (PARSE_QUERY == "") PARSE_QUERY = ROOT_QUERY;
+
+            DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML
+        }
+    });
+}
+
+update.text = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: URL,
+        onload: async (response) => {
+            const PARSED_HTML = parse.dom(response);
+            const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
+
+            if (PARSE_QUERY == "") PARSE_QUERY = ROOT_QUERY;
+
+            DOCUMENT.innerText = PARSED_HTML.querySelector(PARSE_QUERY).innerText
+        }
+    });
+}
 
 const sort = (dataArray, key) => {
     const sortBy = [... new Set(dataArray.map(x => x[key].value))];

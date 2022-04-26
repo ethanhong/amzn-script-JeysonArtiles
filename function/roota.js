@@ -98,6 +98,12 @@ print.chime = (MSG, URL) => {
     });
 }
 
+const routine = (FUNCTION, UPDATE_INTERVAL = 6000000) => {
+    setInterval(() => {
+        FUNCTION();
+    }, UPDATE_INTERVAL);
+}
+
 if (location.hostname.includes("aftlite")) {
     const AUTH_TOKEN = document.querySelector("meta[name=csrf-token]").content;
     const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySelector(".wms-welcome").innerText.split("(")[1].split(")")[0].toUpperCase().trim();

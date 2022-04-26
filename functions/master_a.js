@@ -22,9 +22,9 @@ parse.html = (URL) => {
         onload: async (response) => {
             const PAGE = new DOMParser().parseFromString(response.responseText, "text/html");
             
-            console.log(PAGE)
+            console.log(PAGE.all[0])
             
-            return PAGE
+            return PAGE.all[0]
         }
     });
 }

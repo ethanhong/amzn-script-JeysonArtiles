@@ -17,22 +17,24 @@ parse.items = (domElement) => {
 
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
-/*
-parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
+parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "", UPDATE_INTERVAL = 0) => {
     GM_xmlhttpRequest({
         method: "GET",
         url: URL,
         onload: async (response) => {
-            const PARSED_HTML = parsed.dom(response);
+            const PARSED_HTML = parse.dom(response);
             const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
-            
+
             PARSE_QUERY = ROOT_QUERY;
-            
-            DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML;
+
+            if (UPDATE_INTERVAL > 0) {
+                setInterval(() => DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML, UPDATE_INTERVAL * 1000)
+            } else {
+                DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML;
+            }
         }
     });
 }
-*/
 
 parse.table = (domTable) => {
     const table = {};

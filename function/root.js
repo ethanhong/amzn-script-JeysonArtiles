@@ -97,9 +97,7 @@ print.chime = (MSG, URL) => {
 }
 
 const routine = (FUNCTION, UPDATE_INTERVAL = 6000000) => {
-    setInterval(() => {
-        FUNCTION();
-    }, UPDATE_INTERVAL);
+    setInterval(() => FUNCTION(), UPDATE_INTERVAL);
 }
 
 if (location.hostname.includes("aftlite")) {

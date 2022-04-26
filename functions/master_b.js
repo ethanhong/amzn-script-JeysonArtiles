@@ -17,14 +17,15 @@ parse.items = (domElement) => {
 
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
-parse.html = (URL, ROOT_HTML, QUERY) => {
+parse.html = (URL, ROOT_DOCUMENT, QUERY) => {
     GM_xmlhttpRequest({
         method: "GET",
         url: URL,
         onload: async (response) => {
             const PARSED_HTML = parsed.dom(response);
+            const DOCUMENT = ROOT_DOCUMENT.querySelector(QUERY);
             
-            ROOT_HTML.innerHTML = PARSED_HTML.querySelector(QUERY).innerHTML;
+            DOCUMENT.innerHTML = PARSED_HTML.querySelector(QUERY).innerHTML;
         }
     });
 }

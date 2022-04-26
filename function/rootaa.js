@@ -18,6 +18,7 @@ parse.items = (domElement) => {
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
 parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "", UPDATE_INTERVAL = 6000000) => {
+        setInterval(() => {
         GM_xmlhttpRequest({
             method: "GET",
             url: URL,
@@ -30,6 +31,7 @@ parse.html = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "", UPDATE_INTERVAL 
                 DOCUMENT.innerHTML = PARSED_HTML.querySelector(PARSE_QUERY).innerHTML
             }
         });
+        }, UPDATE_INTERVAL)
 }
 
 parse.table = (domTable) => {
@@ -94,10 +96,6 @@ print.chime = (MSG, URL) => {
             //console.log(response.responseText);
         }
     });
-}
-
-const routine = (FUNCTION, UPDATE_INTERVAL = 6000000) => {
-    setInterval(() => FUNCTION(), UPDATE_INTERVAL);
 }
 
 if (location.hostname.includes("aftlite")) {

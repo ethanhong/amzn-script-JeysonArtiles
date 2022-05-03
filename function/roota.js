@@ -32,12 +32,16 @@ parse.table = (domTable) => {
 
             picklist[table.headers[x]] = { root: column[x], value: column[x].innerText };
 
-            parsed.link = parse.link(column[x]);
+            parsed.link = parse.l(column[x]);
             if (parsed.link !== undefined) picklist[table.headers[x]].link = parsed.link.value;
 
             parsed.picklist = parse.items(column[x]);
             if (parsed.picklist !== undefined) picklist[table.headers[x]].qty = parsed.picklist;
 
+            if (table.headers[x] == "order_id") {
+                picklist.order_id.internal_id = column[x].innerText.split(" ")[column[x].innerText.split(" ").length - 1];
+                picklist.order_id.value = picklist.order_id.value.replaceAll("\n", " ").split(" ")[0];
+            }
         }
 
         table.parsed.push(picklist)

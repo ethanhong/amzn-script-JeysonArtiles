@@ -5,9 +5,12 @@ const ifp = (pathname, func) => {
 const parse = { table: {} };
 
 parse.link = (domElement) => {
-    const a = [...domElement.children].find(child => child.href);
+    const link = [...domElement.children].find(child => child.href);
+    const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
 
-    if (a !== undefined) return { root: a, value: a.href }
+
+    if (alt !== undefined) return { root: alt.href, value: alt.href }
+    if (link !== undefined) return { root: link, value: link.href }
 }
 
 parse.items = (domElement) => {

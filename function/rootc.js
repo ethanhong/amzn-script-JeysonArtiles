@@ -21,7 +21,7 @@ parse.table = (domTable) => {
     const table = {};
     table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
     table.rows = [...table.query.rows];
-    table.headers = [...table.rows.shift().cells].map(x => x.innerText.trim().replace("\n", "_").replace(" ", "_").toLowerCase());
+    table.headers = [...table.rows.shift().cells].map(x => x.innerText.trim().replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase());
     table.columns = table.rows.map(x => [...x.cells]);
     table.parsed = [];
 

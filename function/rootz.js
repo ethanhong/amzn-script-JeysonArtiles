@@ -4,6 +4,29 @@ const ifp = (pathname, func) => {
 
 const parse = { table: {} };
 
+parse.dateTime = (date_string) => {
+            const date = { raw: date_string.split(" ")[0], string: date_string };
+            date.parsed = date.raw.split("-");
+            const time = { raw: date_string.split(" ")[1].split(":") };
+
+            date.year = Number(date.parsed[0]);
+            date.month = Number(date.parsed[1]);
+            date.day = Number(date.parsed[2]);
+
+            time.hrs = Number(time.raw[0]);
+            time.min = time.raw[1].slice(0, 2);
+            time.tod = time.raw[1].slice(-2);
+
+            if (date_string.includes("to")) {
+                time.start = { hrs: date_string.slice(11, 13), min: date_string.slice(14, 16) };
+                time.start.tod = date_string.slice(16, 19);
+                time.end = { hrs: date_string.slice(22, 24), min: date_string.slice(25, 27) };
+                time.end.tod = date_string.slice(27, 29);
+            }
+
+            return { time, date }
+        }
+
 parse.link = (domElement) => {
     const link = [...domElement.children].find(child => child.href);
     const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];

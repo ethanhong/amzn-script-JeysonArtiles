@@ -20,7 +20,7 @@ parse.items = (domElement) => {
 
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
-parse.title = (X) => X.trim().replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase();
+parse.title = (string) => string.trim().replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase();
 
 parse.table = (domTable) => {
     const table = {};

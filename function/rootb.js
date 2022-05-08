@@ -20,6 +20,8 @@ parse.items = (domElement) => {
 
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
+parse.title = (X) => X.trim().replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase();
+
 parse.table = (domTable) => {
     const table = {};
     table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);

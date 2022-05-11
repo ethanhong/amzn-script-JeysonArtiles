@@ -28,7 +28,7 @@ parse.dateTime = (date_string) => {
         }
 
 parse.node = (node) => {
-                    const value = node.textContent.trim();
+                    const value = parse.alphanum(node.textContent.trim());
                     return {
                         root: node, value
                     }

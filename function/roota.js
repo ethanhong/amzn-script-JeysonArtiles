@@ -27,14 +27,25 @@ parse.dateTime = (date_string) => {
             return { time, date }
         }
 
-parse.link = (domElement) => {
-    const link = [...domElement.children].find(child => child.href);
-    const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
+parse.node = (node) => {
+                    const value = node.textContent.trim();
+                    return {
+                        root: node, value
+                    }
+                }
 
+                parse.link = (domElement) => {
+                    const link = [...domElement.children].find(child => child.href);
+                    const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
 
-    if (alt !== undefined) return { root: alt.href, value: alt.href }
-    if (link !== undefined) return { root: link, value: link.href }
-}
+                    if (alt !== undefined) {
+                        return { root: alt, value: alt.href }
+                    } else if (link !== undefined) {
+                        return { root: link, value: link.href }
+                    } else {
+                        return { root: domElement, link: domElement.href, value: domElement.textContent }
+                    }
+                }
 
 parse.items = (domElement) => {
     const qty = domElement.innerText;
@@ -77,6 +88,19 @@ parse.table = (domTable) => {
 
     return table.parsed
 };
+
+const get = (URL, FUNCTION) => {
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: URL,
+        onload: async (response) => {
+            const PARSED_HTML = parse.dom(response);
+            const DOCUMENT = ROOT_DOCUMENT.querySelector(ROOT_QUERY);
+
+            () => FUNCTION
+        }
+    });
+}
 
 const update = {};
 

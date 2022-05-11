@@ -56,11 +56,17 @@ parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText,
 
 parse.title = (string) => string.trim().replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase();
 
-parse.table = (domTable) => {
+parse.table = (domTable = []) => {
     const table = {};
-    table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
-    table.rows = [...table.query.rows];
-    table.headers = [...table.rows.shift().cells].map(x => x.innerText.trim().replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase());
+
+    if (typeof domTable === "string") {
+        table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
+        table.rows = [...table.query.rows];
+    } else {
+        table.rows = [...domTable];
+    }
+
+    table.headers = [...table.rows.shift().cells].map(x => x.innerText.trim().replace(/[^a-z0-9]/gi,'').replaceAll("\n", "_").replaceAll(" ", "_").toLowerCase());
     table.columns = table.rows.map(x => [...x.cells]);
     table.parsed = [];
 

@@ -43,7 +43,7 @@ parse.node = (node) => {
                     } else if (link !== undefined) {
                         return { root: link, value: link.href }
                     } else {
-                        return { root: domElement, link: domElement.href, value: domElement.textContent }
+                        return { root: domElement, value: domElement.textContent }
                     }
                 }
 

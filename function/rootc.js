@@ -44,7 +44,7 @@ parse.node = (node) => {
                         return { root: link, value: link.href }
                     }
 
-                    if (domElement.textContent.includes("Sp")) return domElement.textContent
+                    if (domElement.textContent.includes("Sp")) return { link: domElement.href, value: domElement.textContent }
                 }
 
 parse.items = (domElement) => {

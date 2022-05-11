@@ -42,9 +42,9 @@ parse.node = (node) => {
                         return { root: alt, value: alt.href }
                     } else if (link !== undefined) {
                         return { root: link, value: link.href }
-                    } else {
-                        return undefined
                     }
+
+                    if (domElement.textContent.includes("Sp")) return domElement.textContent
                 }
 
 parse.items = (domElement) => {

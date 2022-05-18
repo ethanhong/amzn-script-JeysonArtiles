@@ -34,18 +34,21 @@ parse.node = (node) => {
                     }
                 }
 
-                parse.link = (domElement) => {
-                    const link = [...domElement.children].find(child => child.href);
-                    const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
+parse.link = (domElement) => {
+    const link = [...domElement.children].find(child => child.href);
+    const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
 
-                    if (alt !== undefined) {
-                        return { root: alt, value: alt.href }
-                    } else if (link !== undefined) {
-                        return { root: link, value: link.href }
-                    }
+    if (alt !== undefined) {
+        return { root: alt, value: alt.href }
+    } else if (link !== undefined) {
+        return { root: link, value: link.href }
+    }
 
-                    if (domElement.textContent.includes("Sp")) return { link: domElement.href, value: domElement.textContent }
-                }
+    if (domElement.textContent.includes("sP") || domElement.textContent.includes("sp") || domElement.textContent.includes("Sp") || domElement.textContent.includes("SP")) {
+        return { link: domElement.href, value: domElement.textContent }
+    }
+}
+
 
 parse.items = (domElement) => {
     const qty = domElement.innerText;

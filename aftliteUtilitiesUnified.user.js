@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFTLITE UTILITIES UNIFIED
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.5
+// @version      0.6
 // @description  SCRIPTS FOR AFTLITE
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*
@@ -51,7 +51,7 @@ const LOGGED_USER = document.querySelector(".wms-welcome") && document.querySele
 let FC = document.title.split("]")[0].split("[")[1] || document.querySelector(".wms-name").innerText;
 FC = FC.trim();
 
-if(FC == "UNJ1" || FC == "UNY2" || FC == "UFL6") { } else { alert(`${FC} chime features are not supported.`); }
+if(FC == "UNJ1" || FC == "UNY1" || FC == "UNY2" || FC == "UFL6") { } else { alert(`${FC} chime features are not supported.`); }
 
 const hooks = { uny2: {}, unj1: {}, ufl6: {}, uny1: {} };
 

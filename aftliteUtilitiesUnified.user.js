@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AFTLITE UTILITIES UNIFIED
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.4
+// @version      0.5
 // @description  SCRIPTS FOR AFTLITE
 // @author       jeyartil
 // @match        https://aftlite-na.amazon.com/*

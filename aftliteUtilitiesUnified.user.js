@@ -53,7 +53,7 @@ FC = FC.trim();
 
 if(FC == "UNJ1" || FC == "UNY2" || FC == "UFL6") { } else { alert(`${FC} chime features are not supported.`); }
 
-const hooks = { uny2: {}, unj1: {}, ufl6: {} };
+const hooks = { uny2: {}, unj1: {}, ufl6: {}, uny1: {} };
 
 hooks.uny2.falseSkipTest = "https://hooks.chime.aws/incomingwebhooks/c2e5058a-7487-4ca3-a91c-ff47b77dbb27?token=S2NZZ1JLeVV8MXxQd0RkVS1aWG5hQ0hNU2Y2VjFzTk05bjAtVUgzb2dFaEVKSUVKaEd1dlJB";
 hooks.uny2.falseSkip = "https://hooks.chime.aws/incomingwebhooks/dff6d61e-37e3-47b3-bda6-241bf8872987?token=eXJJbW9xNU58MXxuZExEdFhSYm5fbG9ZWktnbGtMU0QzQU1qU1dTUjVqZklHQzNScGpQUVJB";
@@ -61,6 +61,8 @@ hooks.uny2.short = "https://hooks.chime.aws/incomingwebhooks/8d6191f1-3905-4a50-
 
 hooks.ufl6.short = "https://hooks.chime.aws/incomingwebhooks/7a35edd4-ac8f-4be0-8d19-e0e823497738?token=RldzOGQ4ZkR8MXw4TTkzZXk1ajFJZlNXbVNzeC1LSmZXZzdpdWhvM2VHM1NqVlFoLXFtVWk4";
 hooks.ufl6.falseSkip = "https://hooks.chime.aws/incomingwebhooks/3a428a19-8a16-4e56-920a-0789b1468ffa?token=eE9lOW5pa1V8MXxudzNtbkkwdnYzbUZIanV0akFHMzVYZ2R3NlNrTlZQdVRXVHNsMXpRZ1FR";
+
+hooks.uny1.falseSkip = "https://hooks.chime.aws/incomingwebhooks/f736361f-177d-444a-903c-94408996e500?token=WDVhRThkU1B8MXxVN1p3UFhselJNbWtlSUNJWmJwc3lJV3JfQlpaQWlpQXdYaEV4T3BvSm1v";
 
 hooks.unj1.falseSkipTest = "https://hooks.chime.aws/incomingwebhooks/77851569-7f16-4247-8d46-9ec2ec315fce?token=OEdpczJNd1h8MXxjTVZKME5MeTd5MngxQkctQzhhcmpFdjFvOGdHODRmODI4VDAzMjhHSEk0";
 hooks.unj1.falseSkip = "https://hooks.chime.aws/incomingwebhooks/5bac1380-aad4-4b27-838f-288387eacad4?token=MDdBRktTc3h8MXxqZWFqUGVrRWc3YnU3Y0M5UFVvNWxOemJzUjhDOUNRRlBpRWJheWl4VEdR";
@@ -73,6 +75,12 @@ const selectHook = (CHAT) => {
                 case "FALSE_SKIP_TEST": return hooks.uny2.falseSkipTest;
                 case "FALSE_SKIP": return hooks.uny2.falseSkip;
                 case "SHORT": return hooks.uny2.short;
+            }
+            break;
+            case "UNY1":
+            switch(CHAT) {
+                case "FALSE_SKIP": return hooks.uny1.falseSkip;
+                //case "SHORT": return hooks.uny1.short;
             }
             break;
         case "UNJ1":

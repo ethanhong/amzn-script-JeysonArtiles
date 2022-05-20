@@ -313,7 +313,7 @@ if (location.pathname.includes("/labor_tracking/labor_summary")) {
     rateReport();
 }
 
-const autoLog = () => {
+const ' = () => {
     const login = localStorage.getItem("logged_user").toLowerCase();
     const password = localStorage.getItem("password") == null && prompt("Enter Password to enable Auto-Login") || localStorage.getItem("password");
 
@@ -334,8 +334,7 @@ const autoLog = () => {
 }
 
 if (location.pathname.includes("signin")) {
-    localStorage.getItem("logged_user") == "JEYARTIL" 
-    autoLog();
+    localStorage.getItem("logged_user") == "JEYARTIL" && autoLog();
 }
 
 const pickAdmin = () => {

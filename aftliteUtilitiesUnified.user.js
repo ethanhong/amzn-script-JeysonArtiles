@@ -334,7 +334,7 @@ const autoLog = () => {
 }
 
 if (location.pathname.includes("signin")) {
-    //localStorage.getItem("logged_user") == "JEYARTIL" || localStorage.getItem("logged_user") == "DAVICROF" && 
+    localStorage.getItem("logged_user") == "JEYARTIL" 
     autoLog();
 }
 

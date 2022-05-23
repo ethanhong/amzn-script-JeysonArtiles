@@ -147,6 +147,8 @@ update.text = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
     });
 }
 
+const sortP = (array, key, query) => array.filter(x => x[key].value == query);
+
 const sort = (dataArray, key) => {
     const sortBy = [... new Set(dataArray.map(x => x[key].value))];
 

@@ -163,7 +163,7 @@ const sort = (dataArray, key) => {
         group.push(build)
     })
 
-    return group
+    return { root: dataArray, sorted: group }
 }
 
 const print = {};

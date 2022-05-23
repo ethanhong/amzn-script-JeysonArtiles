@@ -154,7 +154,7 @@ const sort = (dataArray, key) => {
 
     sortBy.map(picker => {
         const build = {};
-        build.param = picker;
+        build.param = picker.toLowerCase();
         build.picks = [];
         dataArray.map(pick => {
             if (picker == pick[key].value) build.picks.push(pick);

@@ -35,6 +35,8 @@ parse.node = (node) => {
                 }
 
 parse.link = (domElement) => {
+    if (domElement == undefined) return
+
     const link = [...domElement.children].find(child => child.href);
     const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
 

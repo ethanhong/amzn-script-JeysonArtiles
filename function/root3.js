@@ -58,7 +58,6 @@ parse.items = (domElement) => {
 parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText, "text/html");
 
 parse.alphanum = (string) => string.replace(/[^a-z0-9_]/gi,'');
-fparse.
 parse.title = (string) => string.trim().replaceAll("\n", "_").replaceAll(" ", "_").replace(/[^a-z0-9_]/gi,'').toLowerCase();
 
 parse.table = (domTable = []) => {

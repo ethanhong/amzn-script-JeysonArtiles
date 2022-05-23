@@ -51,6 +51,7 @@ parse.link = (domElement) => {
     }
 }
 
+const sortP = (array, key, query) => picklists.filter(x => x[key].value == query);
 
 parse.items = (domElement) => {
     const qty = domElement.innerText;

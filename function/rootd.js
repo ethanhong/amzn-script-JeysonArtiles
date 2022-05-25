@@ -61,57 +61,7 @@ parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText,
 parse.alphanum = (string) => string.replace(/[^a-z0-9_]/gi,'');
 parse.title = (string) => string.trim().replaceAll("\n", "_").replaceAll(" ", "_").replace(/[^a-z0-9_]/gi,'').toLowerCase();
 
-parse.table = (domTable = []) => {
-    const table = {};
 
-    if (typeof domTable === "string") {
-        table.query = [ document.querySelector(`#${domTable}`), document.querySelector(`.${domTable}`) ].find(x => x !== null);
-        table.rows = [...table.query.rows];
-    } else {
-        table.rows = [...domTable];
-    }
-
-    let count = 0;
-    table.headers = [...table.rows.shift().cells].map(x => {
-        count++;
-
-        if (x.textContent == "") {
-            switch(count) {
-                case 6: x.innerText = "View Picklist"; break;
-                case 7: x.innerText = "Picklist History"; break;
-                case 8: x.innerText = "Pack"; break;
-            }
-        }
-        return parse.title(x.innerText.trim())
-    });
-
-    table.columns = table.rows.map(x => [...x.cells]);
-    table.parsed = [];
-
-    table.columns.map((column, i) => {
-        let picklist = {};
-        for(let x = 0; x < table.headers.length; x++) {
-            const parsed = {};
-
-            picklist[table.headers[x]] = { root: column[x], value: column[x].innerText };
-
-            parsed.link = parse.link(column[x]);
-            if (parsed.link !== undefined) picklist[table.headers[x]].link = parsed.link.value;
-
-            parsed.picklist = parse.items(column[x]);
-            if (parsed.picklist !== undefined) picklist[table.headers[x]].qty = parsed.picklist;
-
-            if (table.headers[x] == "order_id") {
-                picklist.order_id.internal_id = column[x].innerText.split(" ")[column[x].innerText.split(" ").length - 1];
-                picklist.order_id.value = picklist.order_id.value.replaceAll("\n", " ").split(" ")[0];
-            }
-        }
-
-        table.parsed.push(picklist)
-    })
-
-    return table.parsed
-};
 
 const get = (URL, FUNCTION) => {
     GM_xmlhttpRequest({

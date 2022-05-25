@@ -58,7 +58,7 @@ parse.link = (domElement) => {
     }
 
     if (domElement.textContent.includes("sP") || domElement.textContent.includes("sp") || domElement.textContent.includes("Sp") || domElement.textContent.includes("SP")) {
-        return { link: "3", value: domElement.textContent }
+        return { link: domElement.href, value: domElement.textContent }
     }
 }
 

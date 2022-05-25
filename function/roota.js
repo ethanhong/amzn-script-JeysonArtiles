@@ -52,9 +52,9 @@ parse.link = (domElement) => {
     const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
 
     if (alt !== undefined) {
-        return { root: "!", value: alt.href }
+        return { root: alt, value: alt.href }
     } else if (link !== undefined) {
-        return { root: "2", value: link.href }
+        return { root: link, value: link.href }
     }
 
     if (domElement.textContent.includes("sP") || domElement.textContent.includes("sp") || domElement.textContent.includes("Sp") || domElement.textContent.includes("SP")) {

@@ -45,7 +45,22 @@ parse.dom = (RESPONSE) => new DOMParser().parseFromString(RESPONSE.responseText,
 parse.alphanum = (string) => string.replace(/[^a-z0-9_]/gi,'');
 parse.title = (string) => string.trim().replaceAll("\n", "_").replaceAll(" ", "_").replace(/[^a-z0-9_]/gi,'').toLowerCase();
 
+parse.link = (domElement) => {
+    if (domElement == undefined && domElement.href.includes("http") == true) console.log("error", domElement)
 
+    const link = [...domElement.children].find(child => child.href);
+    const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];
+
+    if (alt !== undefined) {
+        return { root: alt, value: alt.href }
+    } else if (link !== undefined) {
+        return { root: link, value: link.href }
+    }
+
+    if (domElement.textContent.includes("sP") || domElement.textContent.includes("sp") || domElement.textContent.includes("Sp") || domElement.textContent.includes("SP")) {
+        return { link: domElement.href, value: domElement.textContent }
+    }
+}
 
 parse.table = (domTable = []) => {
     const table = {};

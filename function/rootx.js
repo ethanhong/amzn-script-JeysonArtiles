@@ -96,7 +96,6 @@ parse.table = (domTable = []) => {
 
             picklist[table.headers[x]] = { root: column[x], value: column[x].innerText };
 
-            console.log(column[x])
             parsed.link = parse.link(column[x]);
             if (parsed.link !== undefined) picklist[table.headers[x]].link = parsed.link.value;
 

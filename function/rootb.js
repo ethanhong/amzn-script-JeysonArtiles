@@ -46,7 +46,7 @@ parse.alphanum = (string) => string.replace(/[^a-z0-9_]/gi,'');
 parse.title = (string) => string.trim().replaceAll("\n", "_").replaceAll(" ", "_").replace(/[^a-z0-9_]/gi,'').toLowerCase();
 
 parse.link = (domElement) => {
-    if (domElement == undefined || !domElement.href) return
+    if (domElement == undefined || !domElement.href.includes("http")) return
 
     const link = [...domElement.children].find(child => child.href);
     const alt = [...[...domElement.children].map(child => [...child.children].find(child => child.href))][0];

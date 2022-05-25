@@ -62,6 +62,87 @@ parse.link = (domElement) => {
     }
 }
 
+parse.fTable = () => {
+    const table = {};
+
+    if (location.pathname.includes("/wms/view_order")) {
+        table.query = [...document.querySelectorAll("table")];
+        table.arr = [];
+
+        const tables = {};
+
+        if ((table.query[1]) !== undefined) tables.orderDetails = [...table.query[1].rows].slice(0, 10);
+        if ((table.query[3]) !== undefined) tables.picklists = [...table.query[3].rows];
+        if ((table.query[4]) !== undefined) tables.items = [...table.query[4].rows];
+        if ((table.query[2]) !== undefined) tables.allTotes = [...table.query[2].rows] || "";
+
+        const process = (element) => {
+            let tr = {};
+
+            element.map(x => {
+                const cell = [...x.cells];
+                let title = parse.title(cell[0].textContent);
+                let value = cell[1].innerText;
+
+                if (cell.length < 2) {
+                    value = cell
+                }
+
+                if (title.includes("order_creation") || title.includes("shipment_creation") || title.includes("pull_time") || title.includes("delivery_slot")) {
+                    value = parse.dateTime(value);
+                }
+
+                if (title.includes("item")) {
+                    const totes = cell.map(x => {
+                        const node = [...x.childNodes].filter(x => x.textContent.length > 7);
+
+                        const tote = {};
+                        tote.spoo = parse.link(node[0]);
+
+                        if (node.length < 3) {
+                            tote.tracking = null;
+                            tote.itemQty = parse.node(node[1]);
+                        } else {
+                            tote.tracking = parse.node(node[1]);
+                            tote.itemQty = parse.node(node[2]);
+
+                            tote.tracking.value = tote.tracking.root.textContent.split(":")[1].trim();
+                        }
+
+                        tote.itemQty.value = tote.itemQty.root.textContent.trim().split(" ")[0];
+
+
+                        return tote
+                    });
+
+                    title = "all";
+                    value = totes;
+
+                }
+
+                tr[title] = value;
+            })
+
+            return tr
+        }
+
+        const orderDetails = process(tables.orderDetails);
+        orderDetails.internal_id = parse.alphanum(orderDetails["fulfillment_shipment_id"].split(" ")[orderDetails["fulfillment_shipment_id"].split(" ").length - 1]);
+        orderDetails["fulfillment_shipment_id"] = orderDetails["fulfillment_shipment_id"].split(" ")[0];
+
+        const totes = process(tables.allTotes);
+
+        const picklists = { zone: sort(parse.table(tables.picklists), "pick_zone"), status: sort(parse.table(tables.picklists), "status") };
+
+        const items = parse.table(tables.items);
+        items.qty = {};
+        items.qty.asin = items.length;
+        items.qty.total = items.reduce((sum, item) => sum + Number(item.quantity.value), 0);
+
+        return { orderDetails, totes, picklists, items }
+    }
+};
+
 parse.table = (domTable = []) => {
     const table = {};
 

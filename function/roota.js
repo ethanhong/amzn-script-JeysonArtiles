@@ -71,7 +71,20 @@ parse.table = (domTable = []) => {
         table.rows = [...domTable];
     }
 
-    table.headers = [...table.rows.shift().cells].map(x => parse.title(x.innerText.trim()));
+    let count = 0;
+    table.headers = [...table.rows.shift().cells].map(x => {
+        count++;
+
+        if (x.textContent == "") {
+            switch(count) {
+                case 6: x.innerText = "View Picklist"; break;
+                case 7: x.innerText = "Picklist History"; break;
+                case 8: x.innerText = "Pack"; break;
+            }
+        }
+        return parse.title(x.innerText.trim())
+    });
+
     table.columns = table.rows.map(x => [...x.cells]);
     table.parsed = [];
 

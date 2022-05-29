@@ -313,7 +313,7 @@ if (location.pathname.includes("/labor_tracking/labor_summary")) {
     rateReport();
 }
 
-const ' = () => {
+const autoLog = () => {
     const login = localStorage.getItem("logged_user").toLowerCase();
     const password = localStorage.getItem("password") == null && prompt("Enter Password to enable Auto-Login") || localStorage.getItem("password");
 

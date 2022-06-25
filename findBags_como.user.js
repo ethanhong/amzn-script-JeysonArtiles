@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ FIND BAGS ] COMO
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.8
+// @version      0.9
 // @description  INSERT FOUND BAGS INTO FOOTER COMO LABOR PAGE
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/labor*
@@ -26,14 +26,14 @@ hotkeys('shift+f', function() {
 
 const showStagedBags = async ({
     name,
-    missingBag: { tracking },
+    missingBag: { tracking, zone },
     knownBags: { foundBags },
 }) => {
     const allPackages = await comoPackages();
-
     let temp = "";
     const stagedBags = allPackages.filter(({ scannableId, temperatureZone }) => {
-        temp = temperatureZone;
+        temp = zone.toUpperCase();
+
         const match = foundBags.filter((trackingNumber) => trackingNumber == scannableId);
         return match == scannableId;
     });
@@ -46,7 +46,7 @@ const showStagedBags = async ({
     const footerRoot = document.querySelector("footer");
     footerRoot.innerHTML = `
         <h3 style="text-align: center; font-weight: bold;">VERIFY BAGS NOT IN PROBLEM-SOLVE, WITH PICKER, ETC.</h3>
-        <h1 style="text-align: center">Check near these bins for <span style="font-weight: 999; padding: 5px;">${temp}</span> missing bag: ${missingBagTrackingNumber}<span style="font-weight: 999; padding: 5px;">${missingBagLastFour}</span> <a href=https://adapt-iad.amazon.com/#/employee-dashboard/${name}>(${name.toUpperCase()}</a>)</h1>
+        <h1 style="text-align: center">Check near these bins for <span style="font-weight: 999; padding: 5px;">${temp}</span> missing bag: ${missingBagTrackingNumber}<span style="font-weight: 999; padding: 5px;">${missingBagLastFour}</span> - <a href=https://adapt-iad.amazon.com/#/employee-dashboard/${name}><span style="font-weight: 999; padding: 5px;">${name.toUpperCase()}</span></a></h1>
 
         <div id="stagedLocations"></div>`;
 

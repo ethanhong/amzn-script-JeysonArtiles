@@ -45,7 +45,7 @@ const showStagedBags = async ({
 
     const footerRoot = document.querySelector("footer");
     footerRoot.innerHTML = `
-        <h3 style="text-align: center; font-weight: bold;">CONFIRM STAGE SLA IS <span style="color: red; font-weight: 900;">RED</span> & BAGS NOT IN PROBLEM-SOLVE / WITH PICKER / ETC.</h3>
+        <h3 style="text-align: center; font-weight: bold;">VERIFY BAGS NOT IN PROBLEM-SOLVE, WITH PICKER, ETC.</h3>
         <h1 style="text-align: center">Check near these bins for <span style="font-weight: 999; padding: 5px;">${temp}</span> missing bag: ${missingBagTrackingNumber}<span style="font-weight: 999; padding: 5px;">${missingBagLastFour}</span> (${name.toUpperCase()})</h1>
 
         <div id="stagedLocations"></div>`;

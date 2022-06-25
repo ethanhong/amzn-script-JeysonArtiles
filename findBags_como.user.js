@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [ FIND BAGS ] COMO
 // @namespace    https://github.com/JeysonArtiles/amzn
-// @version      0.7
+// @version      0.8
 // @description  INSERT FOUND BAGS INTO FOOTER COMO LABOR PAGE
 // @author       jeyartil
 // @match        https://como-operations-dashboard-iad.iad.proxy.amazon.com/store/*/labor*
@@ -31,12 +31,14 @@ const showStagedBags = async ({
 }) => {
     const allPackages = await comoPackages();
 
-    const stagedBags = allPackages.filter(({ scannableId }) => {
+    let temp = "";
+    const stagedBags = allPackages.filter(({ scannableId, temperatureZone }) => {
+        temp = temperatureZone;
         const match = foundBags.filter((trackingNumber) => trackingNumber == scannableId);
         return match == scannableId;
     });
 
-    console.log(stagedBags);
+    //console.log(stagedBags);
 
     const missingBagTrackingNumber = tracking.slice(0, -4);
     const missingBagLastFour = tracking.substr(tracking.length - 4);
@@ -44,7 +46,7 @@ const showStagedBags = async ({
     const footerRoot = document.querySelector("footer");
     footerRoot.innerHTML = `
         <h3 style="text-align: center; font-weight: bold;">CONFIRM STAGE SLA IS <span style="color: red; font-weight: 900;">RED</span> & BAGS NOT IN PROBLEM-SOLVE / WITH PICKER / ETC.</h3>
-        <h1 style="text-align: center">Check near these bins for missing bag: ${missingBagTrackingNumber}<span style="font-weight: 999; padding: 5px;">${missingBagLastFour}</span> (${name.toUpperCase()})</h1>
+        <h1 style="text-align: center">Check near these bins for <span style="font-weight: 999; padding: 5px;">${temp}</span> missing bag: ${missingBagTrackingNumber}<span style="font-weight: 999; padding: 5px;">${missingBagLastFour}</span> (${name.toUpperCase()})</h1>
 
         <div id="stagedLocations"></div>`;
 

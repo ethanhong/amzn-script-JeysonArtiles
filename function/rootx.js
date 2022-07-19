@@ -242,6 +242,26 @@ update.text = (URL, ROOT_DOCUMENT, ROOT_QUERY, PARSE_QUERY = "") => {
 
 const sortP = (array, key, query) => array.filter(x => x[key].value == query);
 
+
+const sorta = (dataarray, key) => {
+    const sortBy = [... new Set(dataarray.map(x => x[key].value))];
+
+    let group = [];
+
+    sortBy.map(x => {
+        const build = {};
+        build.param = parse.title(x.toLowerCase());
+        build.arrs = [];
+        dataarray.map(y => {
+            if (x == y[key].value) build.arrs.push(y);
+
+        });
+        group.push(build)
+    })
+
+    return { root: dataarray, sort: group }
+}
+
 const sort = (dataArray, key) => {
     const sortBy = [... new Set(dataArray.map(x => x[key].value))];
 
